@@ -9,13 +9,62 @@
 \usepackage[braket, qm]{qcircuit}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{subcaption}
+
+%% Gate matrices and quantum state vectors
+\newcommand{\igate}{
+  \begin{bmatrix}
+  1 & 0 \\
+  0 & 1 
+  \end{bmatrix}
+}
+\newcommand{\xgate}{
+  \begin{bmatrix}
+  0 & 1 \\
+  1 & 0 
+  \end{bmatrix}
+}
+\newcommand{\ygate}{
+  \begin{bmatrix}
+  0 & -i \\
+  i & \phantom{-}0
+  \end{bmatrix}
+}
+\newcommand{\zgate}{
+  \begin{bmatrix}
+  1 & \phantom{-}0 \\
+  0 & -1
+  \end{bmatrix}
+}
+\newcommand{\hgate}{
+  \dfrac{1}{\sqrt2}
+  \begin{bmatrix}
+  1 & \phantom{-}1 \\
+  1 & -1
+  \end{bmatrix}
+}
+\newcommand{\sgate}{
+  \begin{bmatrix}
+  1 & 0 \\
+  0 & i
+  \end{bmatrix}
+}
+
+\newcommand{\qstatezero}{
+  \begin{bmatrix}1 \\ 0\end{bmatrix}
+}
+\newcommand{\qstateone}{
+  \begin{bmatrix}0 \\ 1\end{bmatrix}
+}
+
 
 \renewcommand*{\arraystretch}{1.15}
 
 \pagestyle{fancy}
 \lhead{}
 
-\title{\textbf{Introduction to Quantum Computing}}
+\title{\textbf{Introduction to Quantum Computing \\
+\large Lectures by Leon Riesebos}}
 \author{Steven Oud \\ \emph{soud@pm.me}}
 \begin{document}
 
@@ -35,7 +84,7 @@
 
 \subsection{The Qubit}
 A qubit - like a classical bit - has a \emph{state}. In classical bits, this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (called \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, often called \emph{superpositions}. The state of a qubit can be denoted as following:
-\[|\psi\rangle = \alpha\ket{0} + \beta\ket{1}\]
+\[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 where $\alpha$ and $\beta$ are complex numbers. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us we can only acquire much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The sum of all probabilities is always equal to 1:
 \[|\alpha|^2 + |\beta|^2 = 1\]
 For example, a qubit in the state
@@ -47,11 +96,11 @@ gives 0 fifty percent of the time ($|1/\sqrt2|^2$), and 1 fifty percent of the t
 \subsection{Bloch Sphere}
 The Bloch sphere is a geometrical representation of a qubit's state. It's a spherical coordinate system in which a quantum state can be described as following:
 \[
-|\psi\rangle = e^{i\delta} \left(cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}\right)
+  \ket{\psi} = e^{i\delta} \left(cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}\right)
 \]
 where $\delta, \theta$ and $\phi$ are real numbers. We can ignore the factor $e^{i\delta}$ out the front, because it has no observable effect, allowing us to write
 \[
-|\psi\rangle = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}
+  \ket{\psi} = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}
 \]
 The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (Figure~\ref{fig:bloch}). The Bloch sphere visualization can be very useful for describing single qubit operations. It is however limited in that there is no simple generalization of the Bloch sphere known for multiple qubits.
 \begin{figure}[ht]
@@ -67,7 +116,7 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = I$, where $U^\dagger$ is the adjoint of $U$. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
 \subsubsection{Pauli Gates}
- The most simple quantum gates are the \emph{Pauli} gates \emph{I}, \emph{X}, \emph{Y} and \emph{Z}. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $X = X^\dagger$.
+ The most simple quantum gates are the \emph{Pauli} gates $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $X = X^\dagger$.
 
 \begin{figure}[ht]
   \begin{adjustwidth}{-2.5cm}{-2.5cm}
@@ -79,14 +128,16 @@ Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum
 
  
 \subsubsection{S Gate}
-The \emph{S} gate, also known as the phase (\emph{P}) gate, does a Z rotation of $\pi/2$ radians (90 degrees). It's essentially half a Pauli Z gate. The S gate belongs to the Clifford gates.
+The \emph{S} gate, also known as the phase ($P$) gate, does a Z rotation of $\pi/2$ radians (90 degrees). It's essentially half a Pauli Z gate. The S gate belongs to the Clifford gates.
 
 \begin{center}
 \includegraphics[scale=0.30]{images/s_gate.eps}
 \end{center}
 
 \subsubsection{Hadamard Gate}
-The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis. This gate is sometimes described as a ``square root of $NOT$" gate, because it turns $\ket{0}$ into $(\ket{0} + \ket{1})/\sqrt2$ (also written as $\ket{+}$), halfway between $\ket{0}$ and $\ket{1}$. The Hadamard gate also belongs to the Clifford gates.
+The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
+
+This gate is sometimes described as a ``square root of $NOT$" gate, because it turns $\ket{0}$ into $(\ket{0} + \ket{1})/\sqrt2$ (also written as $\ket{+}$), halfway between $\ket{0}$ and $\ket{1}$. The Hadamard gate also belongs to the Clifford gates.
 
 \begin{figure}[ht]
   \centering
@@ -96,22 +147,22 @@ The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to s
 
 \subsection{Measurement}
 Measuring a qubit collapses its state. The probabilistic result of a qubit measurement can be calculated based on the probability amplitudes:
-\[|\psi\rangle = \alpha\ket{0} + \beta\ket{1}\]
+\[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 \[P(\ket{0}) = \left|\alpha\right|^2\]
 \[P(\ket{1}) = \left|\beta\right|^2\]
 Consider the following simple single-qubit circuit:
 
 \begin{figure}[ht]
 \[
-  \Large{
+  \LARGE{
     \Qcircuit @C=1em @R=0em {
     \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \gate{Z} & \meter & \cw
     }
   }
 \]
-  \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
+\caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
-
+\noindent
 We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = \ket{-}$. Finally we measure. We can calculate the probabilities:
 \[\ket{-} = \dfrac{1}{\sqrt2} (\ket{0} - \ket{1})\]
 \[P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 = \dfrac{1}{2}\]
@@ -120,87 +171,182 @@ Giving us equal probabilities of our state being measured as $\ket{0}$ or $\ket{
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.385]{images/simple_circuit.eps}
+  \includegraphics[scale=0.37]{images/simple_circuit.eps}
   \caption{States of our qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H\ket{0}$ $\rightarrow$ $ZH\ket{0}.$}
   \label{fig:gate_rotations}
 \end{figure}
 
 \subsection{Matrix Notation} \label{sec:matrix_notation}
 Earlier we showed that we can represent a quantum state using the following formula:
-\[|\psi\rangle = \alpha\ket{0} + \beta\ket{1}\]
+\[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 For computational purposes we can use vectors to represent a quantum state. We define $\ket{0}$ and $\ket{1}$ as following:
-\[\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}\]
-\[\ket{1} = \begin{bmatrix}0 \\ 1\end{bmatrix}\]
+\[\ket{0} = \qstatezero{}\]
+\[\ket{1} = \qstateone{}\]
 Then by filling in the formula we can represent our quantum state with a vector. This has to be a normalized vector since we are talking probabilities, where $|\alpha|^2+|\beta|^2 = 1$. In general, a qubit's state is a unit vector in a two-dimensional complex vector space.
-\[|\psi\rangle = \alpha\begin{bmatrix}1\\ 0\end{bmatrix} + \beta\begin{bmatrix}0 \\ 1\end{bmatrix} =
-\begin{bmatrix}\alpha \\ \beta\end{bmatrix}\]
+\[
+  \ket{\psi} = \alpha\qstatezero{} + \beta\qstateone{} =
+\begin{bmatrix}\alpha \\ \beta\end{bmatrix}
+\]
 The single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
 \setlength\multicolsep{0pt}
 \begin{multicols}{3}
   \[
-    I =
-    \begin{bmatrix}
-    1 & 0 \\
-    0 & 1 
-    \end{bmatrix}
+    I = \igate{}
   \]
   \vfill
   \[
-    X =
-    \begin{bmatrix}
-    0 & 1 \\
-    1 & 0 
-    \end{bmatrix}
+    X = \xgate{}
   \]
   \vfill
   \[
-    Y =
-    \begin{bmatrix}
-    0 & -i \\
-    i & \phantom{-}0
-    \end{bmatrix}
+    Y = \ygate{}
   \]
 \end{multicols}
 
 \begin{multicols}{3}
   \[
-    Z =
-    \begin{bmatrix}
-    1 & \phantom{-}0 \\
-    0 & -1
-    \end{bmatrix}
+    Z = \zgate{}
   \]
   \vfill
   \[
-    H = \dfrac{1}{\sqrt2}
-    \begin{bmatrix}
-    1 & \phantom{-}1 \\
-    1 & -1
-    \end{bmatrix}
+    H = \hgate{}
   \]
   \vfill
   \[
-    S =
-    \begin{bmatrix}
-    1 & 0 \\
-    0 & i
-    \end{bmatrix}
+    S = \sgate{}
   \]
 \end{multicols}
 \bigskip
 \noindent
 Then a computation like $X\ket{0}$ can be calculated by matrix vector multiplication:
 \[
-X\ket{0} = 
-\begin{bmatrix}
-0 & 1 \\
-1 & 0
-\end{bmatrix}
-\begin{bmatrix}1 \\ 0\end{bmatrix} =
-\begin{bmatrix}0 \\ 1\end{bmatrix}
+X\ket{0} = \xgate{} \qstatezero{} = \qstateone{}
 \]
 And we find that $X\ket{0} = \ket{1}$. Or, more general:
 \[
-X\begin{bmatrix}\alpha \\ \beta\end{bmatrix} = \begin{bmatrix}\beta \\ \alpha\end{bmatrix}
+  X\begin{bmatrix}\alpha \\ \beta\end{bmatrix} = \begin{bmatrix}\beta \\ \alpha\end{bmatrix}
 \]
+
+You can combine quantum gates by multiplying their matrices. For example, let's verify that $H$ is self-inverse by applying it to itself:
+\[
+  H^2 = \hgate{} \hgate{} = \igate{} = I
+\]
+The result is the identity gate, showing that the inverse of $H$ is itself, or $H = H^\dagger$, making it a \emph{Hermitian matrix}.
+
+\newpage
+
+\section{Fundementals: A Multi-Qubit World}
+\subsection{The Step To Multi-Qubit}
+We can represent multiple qubits using the \emph{Kronocker product}:
+\[
+  \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+\]
+To represent \ket{00} for example:
+\[
+  \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} = 
+  \begin{bmatrix}
+    1\qstatezero{} \\[13pt]
+    0\qstatezero{}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    1 \\
+    0 \\
+    0 \\
+    0
+  \end{bmatrix}
+\]
+Note that the size of the vector of two qubits is twice as big as the vector for one qubit. This is where some of the power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states at the same time - an exponential growth.
+
+Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_0\ket{0_1 0_0}$. That is, put the first qubit through a Hadamard gate.\footnote{Note that when I say ``first" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's size. We can achieve this by taking the Kronocker product of the identity matrix and our single-qubit matrix (in this case $H$):
+\[
+  H_0\ket{0_1 0_0} = (I_1 \otimes H_0)\ket{0_1 0_0}
+\]
+Writing it out:
+\[
+I_1 \otimes H_0 = 
+  \igate{} \otimes \hgate{}
+  =
+  \dfrac{1}{\sqrt2}
+  \left(
+  \igate{}
+  \otimes
+  \begin{bmatrix}
+  1 & \phantom{-}1 \\
+  1 & -1
+  \end{bmatrix}
+  \right)
+\]
+\[
+= \dfrac{1}{\sqrt2}
+  \begin{bmatrix}
+  1 & 1 & 0 & \phantom{-}0 \\
+  1 & 1 & 0 & \phantom{-}0 \\
+  0 & 0 & 1 & \phantom{-}1 \\
+  0 & 0 & 1 & -1 \\
+  \end{bmatrix}
+\]
+Then we can put our state \ket{00} through it:
+\[
+  \dfrac{1}{\sqrt2}
+  \begin{bmatrix}
+  1 & 1 & 0 & \phantom{-}0 \\
+  1 & 1 & 0 & \phantom{-}0 \\
+  0 & 0 & 1 & \phantom{-}1 \\
+  0 & 0 & 1 & -1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    1 \\
+    0 \\
+    0 \\
+    0
+  \end{bmatrix}
+  =
+  \dfrac{1}{\sqrt2}
+  \begin{bmatrix}
+    1 \\
+    1 \\
+    0 \\
+    0
+  \end{bmatrix}
+\]
+Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ket{01})$.
+\subsection{Common Two-Qubit Gates}
+\subsubsection{CNOT Gate}
+The quantum gate controlled-$NOT$ ($C_{NOT}$) is comparable to a classical computer's XOR, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for $C_{NOT}$ can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $A$ represents the control and $B$ represents the target qubit.
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.45\textwidth}
+  \[
+    \LARGE
+    \Qcircuit @C=0.525em @R=0.6em @!R {
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{A}} & \ctrl{1} & \qw & \qw & & \ket{A} \\
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{B}} & \targ & \qw & \qw & & & & \ket{B \otimes A}    \\
+	}
+  \]
+  \caption{Circuit representation of $C_{NOT}$, where $\otimes$ is addition modulo two.}
+  \label{fig:cnot_circuit}
+\end{minipage}%
+\hspace*{.05\textwidth}
+\begin{minipage}{.45\textwidth}
+  \[
+  U_{CN} =
+  \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 0 \\
+  0 & 0 & 0 & 1 \\
+  0 & 0 & 1 & 0 \\
+  \end{bmatrix}
+  \]
+  \caption{Matrix representation of $C_{NOT}$.}
+\end{minipage}
+\end{figure}
+
+\subsubsection{CZ Gate}
+
+\subsection{Toffoli Gate}
+\subsection{Entanglement}
+Two qubits are entangled iff they have nonzero concurrence.
+
 \end{document}
