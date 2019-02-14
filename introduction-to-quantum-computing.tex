@@ -231,7 +231,7 @@ You can combine quantum gates by multiplying their matrices. For example, let's 
 \[
   H^2 = \hgate{} \hgate{} = \igate{} = I
 \]
-The result is the identity gate, showing that the inverse of $H$ is itself, or $H = H^\dagger$, making it a \emph{Hermitian matrix}.
+The result is the identity gate, showing that the inverse of $H$ is indeed itself, or $H = H^\dagger$. It is also a \emph{Hermitian matrix}, because it is equal to its own conjugate transpose.
 
 \newpage
 
@@ -245,26 +245,26 @@ To represent \ket{00} for example:
 \[
   \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} = 
   \begin{bmatrix}
-    1\qstatezero{} \\[13pt]
-    0\qstatezero{}
+  1\qstatezero{} \\[13pt]
+  0\qstatezero{}
   \end{bmatrix}
   =
   \begin{bmatrix}
-    1 \\
-    0 \\
-    0 \\
-    0
+  1 \\
+  0 \\
+  0 \\
+  0
   \end{bmatrix}
 \]
 Note that the size of the vector of two qubits is twice as big as the vector for one qubit. This is where some of the power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states at the same time - an exponential growth.
 
-Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_0\ket{0_1 0_0}$. That is, put the first qubit through a Hadamard gate.\footnote{Note that when I say ``first" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's size. We can achieve this by taking the Kronocker product of the identity matrix and our single-qubit matrix (in this case $H$):
+Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronocker product of the identity matrix and our single-qubit matrix (in this case $H$):
 \[
-  H_0\ket{0_1 0_0} = (I_1 \otimes H_0)\ket{0_1 0_0}
+  H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}
 \]
 Writing it out:
 \[
-I_1 \otimes H_0 = 
+I_0 \otimes H_1 = 
   \igate{} \otimes \hgate{}
   =
   \dfrac{1}{\sqrt2}
@@ -286,7 +286,7 @@ I_1 \otimes H_0 =
   0 & 0 & 1 & -1 \\
   \end{bmatrix}
 \]
-Then we can put our state \ket{00} through it:
+Then we can put our \ket{00} state through it:
 \[
   \dfrac{1}{\sqrt2}
   \begin{bmatrix}
@@ -296,33 +296,33 @@ Then we can put our state \ket{00} through it:
   0 & 0 & 1 & -1 \\
   \end{bmatrix}
   \begin{bmatrix}
-    1 \\
-    0 \\
-    0 \\
-    0
+  1 \\
+  0 \\
+  0 \\
+  0
   \end{bmatrix}
   =
   \dfrac{1}{\sqrt2}
   \begin{bmatrix}
-    1 \\
-    1 \\
-    0 \\
-    0
+  1 \\
+  1 \\
+  0 \\
+  0
   \end{bmatrix}
 \]
 Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ket{01})$.
 \subsection{Common Two-Qubit Gates}
 \subsubsection{CNOT Gate}
-The quantum gate controlled-$NOT$ ($C_{NOT}$) is comparable to a classical computer's XOR, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for $C_{NOT}$ can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $A$ represents the control and $B$ represents the target qubit.
+The quantum gate controlled-$NOT$ ($C_{NOT}$, sometimes called $controlled-X$) is comparable to a classical computer's XOR, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for $C_{NOT}$ can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $A$ represents the control qubit and $B$ represents the target qubit. It's essentially a Pauli $X$ gate with a control qubit.
 
 \begin{figure}[ht]
 \centering
 \begin{minipage}{.45\textwidth}
   \[
     \LARGE
-    \Qcircuit @C=0.525em @R=0.6em @!R {
-	  \push{\rule{0em}{1em}} & & \lstick{\ket{A}} & \ctrl{1} & \qw & \qw & & \ket{A} \\
-	  \push{\rule{0em}{1em}} & & \lstick{\ket{B}} & \targ & \qw & \qw & & & & \ket{B \otimes A}    \\
+    \Qcircuit @C=0.525em @R=1em @!R {
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{A}} & \ctrl{1} & \qw & & \ket{A} \\
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{B}} & \targ & \qw & & & & \ket{B \otimes A}    \\
 	}
   \]
   \caption{Circuit representation of $C_{NOT}$, where $\otimes$ is addition modulo two.}
@@ -344,8 +344,56 @@ The quantum gate controlled-$NOT$ ($C_{NOT}$) is comparable to a classical compu
 \end{figure}
 
 \subsubsection{CZ Gate}
+$CZ$, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In $CZ$ the operation is the Pauli $Z$ gate.
+\begin{figure}[ht]
+\[
+  \LARGE
+  \Qcircuit @C=0.5em @R=1em @!R {
+    \push{\rule{0em}{1em}} & &\lstick{} & \qw & \ctrl{1} & \qw & \qw\\
+    \push{\rule{0em}{1em}} & &\lstick{} & \qw & \gate{Z} & \qw & \qw\\
+  }
+\]
+\caption{Circuit representation of $CZ$.}
+\end{figure}
 
+\newpage
+\subsubsection{Controlled Gates}
+Controlled gates act on two or more qubits, where one or more qubits act as control for some operation. Generally, if $U$ is a gate that operates on single qubits with the following matrix representation:
+\[
+  U =
+  \begin{bmatrix}
+  u_{00} & u_{01} \\
+  u_{10} & u_{11} \\
+  \end{bmatrix}
+\]
+then the controlled-$U$ gate is a gate that operates on two qubits where the first qubit serves as control. The general matrix representation of the controlled-$U$ then looks as following:
+\[
+  C(U) =
+  \begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 0 \\
+  0 & 0 & u_{00} & u_{01} \\
+  0 & 0 & u_{10} & u_{11} \\
+  \end{bmatrix}
+\]
 \subsection{Toffoli Gate}
+We can simulate a classical circuit using a quantum circuit. Most classical gates are non-reversible. This is a problem for our quantum circuit, as it requires gates to be reversible. We can make use of a reversible gate known as the \emph{Toffoli gate} to make a quantum equivalent of any classical gate. The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit}), where two of the input qubits act as control bits. The third qubit is the target bit which is flipped if both control qubits are set to 1, otherwise it's left alone. For example, applying the Toffoli gate to the state \ket{110} flips the third qubit, resulting in the state \ket{111}.
+
+\begin{figure}[ht]
+\[
+  \LARGE
+  \Qcircuit @C=0.54em @R=1em @!R {
+    \push{\rule{0em}{1em}} & &\lstick{a} & \ctrl{1} & \qw & a\\
+    \push{\rule{0em}{1em}} & &\lstick{b} & \ctrl{1} & \qw & b\\
+    \push{\rule{0em}{1em}} & &\lstick{c} & \targ & \qw & & & c \otimes ab\\
+  }
+\]
+\caption{Circuit representation of the Toffoli gate, where $\otimes$ is addition modulo two.}
+\label{fig:toffoli_circuit}
+\end{figure}
+
+\newpage
+
 \subsection{Entanglement}
 Two qubits are entangled iff they have nonzero concurrence.
 
