@@ -270,11 +270,18 @@ To represent \ket{00} for example:
 \]
 Note that the size of the vector of two qubits is twice as big as the vector for one qubit. This is where some of the power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states at the same time - an exponential growth.
 
+For multi-qubit states the rule remains that the state vector has to be normalized. For two qubits for example: $\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11} = 1$. Or, more general, for a $n$ qubit state:
+\[
+\sum_{i}^n |\alpha_i|^2 = 1
+\]
+
 \subsection{Quantum State Evolution}
 Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronocker product of the identity matrix and our single-qubit matrix (in this case $H$):
 \[
   H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}
 \]
+\newpage
+\noindent
 Writing it out:
 \[
 I_0 \otimes H_1 = 
@@ -358,7 +365,7 @@ The quantum gate controlled-$NOT$ ($C_{NOT}$, sometimes called $controlled-X$) i
   \[
     \LARGE
     \Qcircuit @C=0.5em @R=0.5em @!R {
-	  \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+	  \push{\rule{0em}{1em}} & & & &  \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
 	  \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
 	}
   \]
@@ -378,8 +385,8 @@ Let's look at an example of a $C_{NOT}$ gate. Consider the following circuit:
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
-    \push{\rule{0em}{1.5em}} & & & & \lstick{q_{0}: \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
-    \push{\rule{0em}{1.5em}} & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{0}: \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
   }
 \]
 First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the $C_{NOT}$ gate:
@@ -416,7 +423,6 @@ $CZ$, or the controlled-$Z$ gate, acts in a similar way to other controlled gate
 \caption{Circuit representations of $CZ$.}
 \end{figure}
 
-\newpage
 \subsubsection{Controlled Gates}
 Controlled gates act on two or more qubits, where one or more qubits act as control for some operation. Generally, if $U$ is a gate that operates on single qubits with the following matrix representation:
 \[
