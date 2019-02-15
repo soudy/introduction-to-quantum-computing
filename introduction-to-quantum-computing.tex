@@ -166,7 +166,7 @@ Consider the following simple single-qubit circuit:
 
 \begin{figure}[ht]
 \[
-  \LARGE{
+  \Large{
     \Qcircuit @C=1em @R=0em {
     \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \gate{Z} & \meter & \cw
     }
@@ -328,7 +328,7 @@ Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ke
 \subsection{Partial Measurement}
 Say we want to measure the first qubit, $q_0$, in the following circuit:
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
     \push{\rule{0em}{1.5em}} & & & & \lstick{q_0: \ket{0}} & \qw & \gate{H} & \qw & \meter & \cw \\
     \push{\rule{0em}{1.5em}} & & & & \lstick{q_1: \ket{0}} & \qw & \gate{H} & \qw & \qw & \qw \\
@@ -376,7 +376,7 @@ The quantum gate controlled-$NOT$ ($C_{NOT}$, sometimes called $controlled-X$) i
 \noindent
 Let's look at an example of a $C_{NOT}$ gate. Consider the following circuit:
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
     \push{\rule{0em}{1.5em}} & & & & \lstick{q_{0}: \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
     \push{\rule{0em}{1.5em}} & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
@@ -407,7 +407,7 @@ The target qubit was flipped because the control qubit was set to 1, giving us \
 $CZ$, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In $CZ$ the operation is the Pauli $Z$ gate. $CZ$ is also Hermitian and belongs to the Clifford gates.
 \begin{figure}[ht]
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
     \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
     \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
@@ -443,7 +443,7 @@ The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit})
 
 \begin{figure}[ht]
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.54em @R=1em @!R {
     \push{\rule{0em}{1em}} & & \lstick{a} & \ctrl{1} & \qw & a\\
     \push{\rule{0em}{1em}} & & \lstick{b} & \ctrl{1} & \qw & b\\
@@ -514,7 +514,7 @@ The \emph{Bell states} are four maximally entangled quantum states of two qubits
 \]
 We can create a Bell state with the following circuit:
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
     \push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \qw & \qw & \gate{H} & \qw & \qw & \ctrl{1} & \qw  \\
     \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw & \qw & \qw & \qw &\targ & \qw \\
@@ -531,7 +531,7 @@ We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadam
 
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create a Bell state and measure both qubits.
 \[
-  \LARGE
+  \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
     \push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \qw & \ctrl{1} & \meter & \cw  \\
     \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw &\targ & \meter & \cw \\
