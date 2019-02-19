@@ -249,7 +249,7 @@ The result is the identity gate, showing that the inverse of $H$ is indeed itsel
 
 \section{Fundementals: A Multi-Qubit World}
 \subsection{The Step To Multi-Qubit}
-We can represent multiple qubits using the \emph{Kronocker product}:
+We can represent multiple qubits using the \emph{Kronecker product}:
 \[
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
 \]
@@ -276,7 +276,7 @@ For multi-qubit states the rule remains that the state vector has to be normaliz
 \]
 
 \subsection{Quantum State Evolution}
-Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronocker product of the identity matrix and our single-qubit matrix (in this case $H$):
+Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronecker product of the identity matrix and our single-qubit matrix (in this case $H$):
 \[
   H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}
 \]
