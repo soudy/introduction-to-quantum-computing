@@ -188,13 +188,13 @@ Giving us equal probabilities of our state being measured as $\ket{0}$ or $\ket{
   \label{fig:gate_rotations}
 \end{figure}
 
-\subsection{Matrix Notation} \label{sec:matrix_notation}
+\subsection{Vector Notation} \label{sec:matrix_notation}
 Earlier we showed that we can represent a quantum state using the following formula:
 \[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
-For computational purposes we can use vectors to represent a quantum state. We define $\ket{0}$ and $\ket{1}$ as following:
+The quantum states $\ket{\psi}$, $\ket{0}$ and $\ket{1}$ in the formula above are vectors. We define $\ket{0}$ and $\ket{1}$ as following:
 \[\ket{0} = \qstatezero{}\]
 \[\ket{1} = \qstateone{}\]
-Then by filling in the formula we can represent our quantum state with a vector. This has to be a normalized vector since we are talking probabilities, where $|\alpha|^2+|\beta|^2 = 1$. In general, a qubit's state is a unit vector in a two-dimensional complex vector space.
+A quantum state has to be a normalized vector since we are talking probabilities, where $|\alpha|^2+|\beta|^2 = 1$. In general, a qubit's state is a unit vector in a two-dimensional complex vector space. A state can be written out as a linear combination:
 \[
   \ket{\psi} = \alpha\qstatezero{} + \beta\qstateone{} =
 \begin{bmatrix}\alpha \\ \beta\end{bmatrix}
@@ -272,7 +272,7 @@ Note that the size of the vector of two qubits is twice as big as the vector for
 
 For multi-qubit states the rule remains that the state vector has to be normalized. For two qubits for example: $\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11} = 1$. Or, more general, for a $n$ qubit state:
 \[
-\sum_{i}^n |\alpha_i|^2 = 1
+\sum_{i}^{2^n} |\alpha_i|^2 = 1
 \]
 
 \subsection{Quantum State Evolution}
@@ -363,7 +363,7 @@ The quantum gate controlled-$NOT$ ($C_{NOT}$, sometimes called $controlled-X$) i
 \centering
 \begin{minipage}{.45\textwidth}
   \[
-    \LARGE
+    \Large
     \Qcircuit @C=0.5em @R=0.5em @!R {
 	  \push{\rule{0em}{1em}} & & & &  \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
 	  \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
@@ -443,7 +443,7 @@ then the controlled-$U$ gate is a gate that operates on two qubits where the fir
   \end{bmatrix}
 \]
 \subsection{Toffoli Gate}
-We can simulate a classical circuit using a quantum circuit. Most classical gates are non-reversible. This is a problem for our quantum circuit, as it requires gates to be reversible. We can make use of a reversible gate known as the \emph{Toffoli gate} to make a quantum equivalent of any classical gate.
+We can simulate a classical circuit using a quantum circuit. Most classical gates however are non-reversible. This is a problem for our quantum circuit, as it requires gates to be reversible. We can make use of a reversible gate known as the \emph{Toffoli gate} to make a quantum equivalent of any classical gate.
 
 The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit}), where two of the input qubits act as control bits. The third qubit is the target bit which is flipped if both control qubits are set to 1, otherwise it's left alone. For example, applying the Toffoli gate to the state \ket{110} flips the third qubit, resulting in the state \ket{111}.
 
@@ -491,7 +491,7 @@ However, consider the following state:
 \[
   \ket{\psi} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
 \]
-This is an entangled state. It cannot be expressed as two individual states. How do we know if a state is entangled? We say two qubits are entangled if they have \emph{nonzero concurrence}. We calculate the concurrence using the following formula:
+This is an entangled state. It cannot be expressed as two individual states. How do we know if a state is entangled? We say two qubits are entangled if they have \emph{nonzero concurrence}. The concurrence of a state can be calculated using the following formula:
 \[
   C(\ket{\psi}) = 2|\alpha_{00}\alpha_{11} - \alpha_{01}\alpha_{10}|
 \]
@@ -535,7 +535,7 @@ We can create a Bell state with the following circuit:
 \end{center}
 We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we $C_{NOT}$ that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$.
 
-The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create a Bell state and measure both qubits.
+The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
@@ -543,12 +543,12 @@ The significance of Bell states becomes apparent when we start measuring qubits 
     \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw &\targ & \meter & \cw \\
   }
 \]
-You will find that the measurement result of the two qubits is always the same, the measurement outcomes are correlated:
+You will find that the measurement results are correlated:
 \[
 M(q_0) = 0 \rightarrow \ket{00} \rightarrow M(q_1) = 0
 \]
 \[
 M(q_1) = 1 \rightarrow \ket{11} \rightarrow M(q_0) = 1
 \]
-If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa.
+If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa. The same goes for measuring $q_0$ as 1, $q_1$ will then also be 1 and vice versa. Note that in our example Bell state they correlate as being equal, but for the Bell state $\dfrac{1}{\sqrt2}(\ket{01} + \ket{10})$ they correlate as being opposites (measuring $q_0$ as 0 means $q_1$ will be 1).
 \end{document}
