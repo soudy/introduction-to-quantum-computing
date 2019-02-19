@@ -283,10 +283,10 @@ Doing single-qubit operations on a multi-qubit state is possible by combining th
 \newpage
 \noindent
 Writing it out:
-\[
-I_0 \otimes H_1 = 
-  \igate{} \otimes \hgate{}
-  =
+\begin{align}
+  I_0 \otimes H_1 &= 
+  \igate{} \otimes \hgate{} \\
+  &=
   \dfrac{1}{\sqrt2}
   \left(
   \igate{}
@@ -295,17 +295,15 @@ I_0 \otimes H_1 =
   1 & \phantom{-}1 \\
   1 & -1
   \end{bmatrix}
-  \right)
-\]
-\[
-= \dfrac{1}{\sqrt2}
+  \right) \\
+  &= \dfrac{1}{\sqrt2}
   \begin{bmatrix}
   1 & \phantom{-}1 & 0 & \phantom{-}0 \\
   1 & -1 & 0 & \phantom{-}0 \\
   0 & \phantom{-}0 & 1 & \phantom{-}1 \\
   0 & \phantom{-}0 & 1 & -1 \\
   \end{bmatrix}
-\]
+\end{align}
 Then we can put our \ket{00} state through it:
 \[
   \dfrac{1}{\sqrt2}
