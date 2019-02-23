@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{graphicx}
+\usepackage{epigraph}
 \usepackage{chngpage}
 \usepackage{fancyhdr}
 \usepackage[braket, qm]{qcircuit}
@@ -19,13 +20,13 @@
 \newcommand{\igate}{
   \begin{bmatrix}
   1 & 0 \\
-  0 & 1 
+  0 & 1
   \end{bmatrix}
 }
 \newcommand{\xgate}{
   \begin{bmatrix}
   0 & 1 \\
-  1 & 0 
+  1 & 0
   \end{bmatrix}
 }
 \newcommand{\ygate}{
@@ -69,6 +70,14 @@
   \begin{bmatrix}0 \\ 1\end{bmatrix}
 }
 
+\setlength\epigraphwidth{10cm}
+\setlength\epigraphrule{0pt}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
 
 \renewcommand*{\arraystretch}{1.15}
 
@@ -88,11 +97,9 @@
 \newpage
 
 \section{Fundementals: A One-Qubit World}
-\subsection{What Is Quantum Computing?}
-``\emph{Quantum computers are machines that rely on characteristically quantum phenomena, such as quantum interference and quantum entanglement, in order to perform computation.}" - Artur Ekert
+\epigraph{Quantum computers are machines that rely on characteristically quantum phenomena, such as quantum interference and quantum entanglement, in order to perform computation.}{--- Artur Ekert}
 
-\subsection{What Is Quantum Computing Not?}
-``\emph{It is tempting to say that a quantum computer is one whose operation is governed by the laws of quantum mechanics. But since the laws of quantum mechanics govern the behavior of all physical phenomena, this temptation must be resisted. Your laptop operates under the laws of quantum mechanics, but it is not a quantum computer.}" - N. David Mermin
+\epigraph{It is tempting to say that a quantum computer is one whose operation is governed by the laws of quantum mechanics. But since the laws of quantum mechanics govern the behavior of all physical phenomena, this temptation must be resisted. Your laptop operates under the laws of quantum mechanics, but it is not a quantum computer.}{--- N. David Mermin}
 
 \subsection{The Qubit}
 A qubit - like a classical bit - has a \emph{state}. In classical bits, this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (called \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, often called \emph{superpositions}. The state of a qubit can be denoted as following:
@@ -128,7 +135,7 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = I$, where $U^\dagger$ is the adjoint of $U$. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
 \subsubsection{Pauli Gates}
- The most simple quantum gates are the \emph{Pauli} gates $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $X = X^\dagger$.
+ The most simple quantum gates are the \emph{Pauli} gates $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
 
 \begin{figure}[ht]
   \begin{adjustwidth}{-2.5cm}{-2.5cm}
@@ -138,7 +145,7 @@ Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum
   \end{adjustwidth}
 \end{figure}
 
- 
+
 \subsubsection{S Gate}
 The \emph{S} gate, also known as the phase ($P$) gate, does a Z rotation of $\pi/2$ radians (90 degrees). It's essentially half a Pauli Z gate. The S gate belongs to the Clifford gates.
 
@@ -243,7 +250,7 @@ You can combine quantum gates by multiplying their matrices. For example, let's 
 \[
   H^2 = \hgate{} \hgate{} = \igate{} = I
 \]
-The result is the identity gate, showing that the inverse of $H$ is indeed itself, or $H = H^\dagger$. It is also a \emph{Hermitian matrix}, because it is equal to its own conjugate transpose.
+The result is the identity gate, showing that the inverse of $H$ is indeed itself. It is also a \emph{Hermitian matrix}, because it is equal to its own conjugate transpose: $H = H^\dagger$.
 
 \newpage
 
@@ -255,7 +262,7 @@ We can represent multiple qubits using the \emph{Kronecker product}:
 \]
 To represent \ket{00} for example:
 \[
-  \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} = 
+  \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} =
   \begin{bmatrix}
   1\qstatezero{} \\[13pt]
   0\qstatezero{}
@@ -268,7 +275,7 @@ To represent \ket{00} for example:
   0
   \end{bmatrix}
 \]
-Note that the size of the vector of two qubits is twice as big as the vector for one qubit. This is where some of the power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states at the same time - an exponential growth.
+Note that the size of the vector of two qubits is twice as big as the vector for one qubit. This is where some of the power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states at the same time - an exponential growth from classical bits.
 
 For multi-qubit states the rule remains that the state vector has to be normalized. For two qubits for example: $\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11} = 1$. Or, more general, for a $n$ qubit state:
 \[
@@ -284,7 +291,7 @@ Doing single-qubit operations on a multi-qubit state is possible by combining th
 \noindent
 Writing it out:
 \begin{align}
-  I_0 \otimes H_1 &= 
+  I_0 \otimes H_1 &=
   \igate{} \otimes \hgate{} \\
   &=
   \dfrac{1}{\sqrt2}
@@ -344,14 +351,17 @@ First, we put both qubits in our state \ket{00} through a Hadamard gate. This pu
 \[
   HH\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
 \]
-When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We can then write our state as following:
+When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We get either of the following states based on $M(q_0)$:
 \[
-  M(q_0) = 0 \rightarrow \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1})
+  \ket{\psi} = 
+  \begin{cases}
+  \begin{aligned}
+    \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = 0 \\
+    \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = 1
+  \end{aligned}
+  \end{cases}
 \]
-\[
-  M(q_0) = 1 \rightarrow \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1})
-\]
-We have two possible states after measurement, a state where $q_0$ is 0 and $q_1$ is in superposition, and a state where $q_0$ is 1 and $q_1$ is in superposition. Notice how the first qubits (underlined) in both states are equal to each other. This makes sense, we've measured that one so we're sure of its state.
+We have two possible states after measurement, a state where $q_0$ is 0 or a state where $q_0$ is 1. Qubit $q_1$ will stay in superposition because we haven't measured that one. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're sure of its state.
 
 \subsection{Common Two-Qubit Gates}
 \subsubsection{CNOT Gate}
@@ -389,7 +399,7 @@ Let's look at an example of a $C_{NOT}$ gate. Consider the following circuit:
 \]
 First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the $C_{NOT}$ gate:
 \[
-  C_{NOT}\ket{10} = \cnotgate{} 
+  C_{NOT}\ket{10} = \cnotgate{}
   \begin{bmatrix}
   0 \\
   0 \\
