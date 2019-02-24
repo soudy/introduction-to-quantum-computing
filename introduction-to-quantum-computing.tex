@@ -365,7 +365,7 @@ We have two possible states after measurement, a state where $q_0$ is 0 or a sta
 
 \subsection{Common Two-Qubit Gates}
 \subsubsection{CNOT Gate}
-The quantum gate controlled-$NOT$ ($CNOT$, sometimes called $controlled-X$) is comparable to a classical computer's XOR, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for $CNOT$ can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli $X$ gate with a control qubit. $CNOT$ is Hermitian and belongs to the Clifford gates.
+The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli $X$ gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
 
 \begin{figure}[ht]
 \centering
@@ -377,7 +377,7 @@ The quantum gate controlled-$NOT$ ($CNOT$, sometimes called $controlled-X$) is c
 	  \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
 	}
   \]
-  \caption{Circuit representations of $CNOT$. We will use the left representation.}
+  \caption{Circuit representations of \textsc{cnot}. We will use the left representation.}
   \label{fig:cnot_circuit}
 \end{minipage}%
 \hspace*{.05\textwidth}
@@ -385,11 +385,11 @@ The quantum gate controlled-$NOT$ ($CNOT$, sometimes called $controlled-X$) is c
   \[
     U_{CN} = \cnotgate{}
   \]
-  \caption{Matrix representation of $CNOT$.}
+  \caption{Matrix representation of \textsc{cnot}.}
 \end{minipage}
 \end{figure}
 \noindent
-Let's look at an example of a $CNOT$ gate. Consider the following circuit:
+Let's look at an example of a \textsc{cnot} gate. Consider the following circuit:
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
@@ -397,7 +397,7 @@ Let's look at an example of a $CNOT$ gate. Consider the following circuit:
     \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
   }
 \]
-First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the $CNOT$ gate:
+First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate:
 \[
   CNOT\ket{10} = \cnotgate{}
   \begin{bmatrix}
@@ -419,7 +419,7 @@ First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ g
 The target qubit was flipped because the control qubit was set to 1, giving us \ket{11}.
 
 \subsubsection{CZ Gate}
-$CZ$, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In $CZ$ the operation is the Pauli $Z$ gate. $CZ$ is also Hermitian and belongs to the Clifford gates.
+\textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In \textsc{cz} the operation is the Pauli $Z$ gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
 \begin{figure}[ht]
 \[
   \Large
@@ -428,7 +428,7 @@ $CZ$, or the controlled-$Z$ gate, acts in a similar way to other controlled gate
     \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
   }
 \]
-\caption{Circuit representations of $CZ$.}
+\caption{Circuit representations of \textsc{cz}.}
 \end{figure}
 
 \subsubsection{Controlled Gates}
@@ -468,7 +468,7 @@ The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit})
 \label{fig:toffoli_circuit}
 \end{figure}
 \noindent
-The Toffoli, or controlled-controlled-X ($CCX$) gate can be represented by a $8 \times 8$ matrix:
+The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented by a $8 \times 8$ matrix:
 \[
   \begin{bmatrix}
   1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
@@ -539,7 +539,7 @@ We can create a Bell state with the following circuit:
 %\draw[black, -triangle 60] (3.8, 0.0) -- (3.8, -0.7) node [below] {$\ket{\psi_2}$};
 \end{tikzpicture}
 \end{center}
-We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we $CNOT$ that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$.
+We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$.
 
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
