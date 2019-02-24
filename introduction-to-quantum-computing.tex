@@ -349,7 +349,7 @@ Say we want to measure the first qubit, $q_0$, in the following circuit:
 \noindent
 First, we put both qubits in our state \ket{00} through a Hadamard gate. This puts it in the following state:
 \[
-  HH\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
+  (H \otimes H)\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
 \]
 When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We get either of the following states based on $M(q_0)$:
 \[
