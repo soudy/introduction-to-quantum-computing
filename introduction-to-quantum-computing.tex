@@ -132,7 +132,7 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \newpage
 
 \subsection{Single-Qubit Quantum Operations}
-Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = I$, where $U^\dagger$ is the adjoint of $U$. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
+Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = I$, where $U^\dagger$ is the Hermitian adjoint of $U$. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
 \subsubsection{Pauli Gates}
  The most simple quantum gates are the \emph{Pauli} gates $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
@@ -250,7 +250,7 @@ You can combine quantum gates by multiplying their matrices. For example, let's 
 \[
   H^2 = \hgate{} \hgate{} = \igate{} = I
 \]
-The result is the identity gate, showing that the inverse of $H$ is indeed itself. It is also a \emph{Hermitian matrix}, because it is equal to its own conjugate transpose: $H = H^\dagger$.
+The result is the identity gate, showing that the inverse of $H$ is indeed itself. It is also a \emph{Hermitian matrix}, because it is equal to its own Hermitian adjoint: $H = H^\dagger$.
 
 \newpage
 
