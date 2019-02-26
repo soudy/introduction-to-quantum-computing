@@ -529,18 +529,12 @@ We can create a Bell state with the following circuit:
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \qw & \qw & \gate{H} & \qw & \qw & \ctrl{1} & \qw  \\
-    \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw & \qw & \qw & \qw &\targ & \qw \\
+    \push{\rule{0em}{1em}} & \ar@{.}[]+<3.25em,0.5em>;[d]+<3.25em,-1em> & & & & & \lstick{q_{0}: \ket{0}} & \qw & \qw & \gate{H} & \qw & \qw \ar@{.}[]+<0.05em,0.5em>;[d]+<0.05em,-1em> & \qw & \ctrl{1} & \qw & \qw & \qw \ar@{.}[]+<-0.7em,0.5em>;[d]+<-0.7em,-1em> \\
+    \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw & \qw & \qw & \qw & \qw &\targ & \qw & \qw & \qw \\
+    & \hspace{6.7em} \ket{\psi_{0}} & \hspace{12.3em} \ket{\psi_{1}} & \hspace{16.4em} \ket{\psi_{2}}
   }
 \]
-\begin{center}
-\begin{tikzpicture}[thick]
-\draw[black, -triangle 60] (0, 0.0) -- (-0.5, -0.7) node [below] {$\ket{\psi_0}$};
-\draw[black, -triangle 60] (1.8, 0.0) -- (1.8, -0.7) node [below] {$\ket{\psi_1}$};
-%\draw[black, -triangle 60] (3.8, 0.0) -- (3.8, -0.7) node [below] {$\ket{\psi_2}$};
-\end{tikzpicture}
-\end{center}
-We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$.
+We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ at $\ket{\psi_2}$.
 
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
