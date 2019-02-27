@@ -585,11 +585,11 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
 \[
   \Large
   \Qcircuit @C=1em @R=0.5em @!R {
-	\push{\rule{0em}{1em}} & & & \lstick{q_{0}: \ket{\phi}} \ar@{.}[]+<0.5em,0.5em>;[d]+<0.5em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw 
+	\push{\rule{0em}{1em}} & & \lstick{q_{0}: \ket{\phi}} \ar@{.}[]+<0.5em,0.5em>;[d]+<0.5em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw 
 	\ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> \\
-	\push{\rule{0em}{1em}} & & & \lstick{q_{1}: \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
-	\push{\rule{0em}{1em}} & & & \lstick{q_{2}: \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
-	& \hspace{5.2em} \ket{\psi_{0}} & \hspace{11.8em} \ket{\psi_{1}} & \hspace{13.5em} \ket{\psi_{2}} & \hspace{14.9em} \ket{\psi_{3}} & \hspace{16.5em} \ket{\psi_{4}} & \hspace{22.5em} \ket{\psi_{5}}
+	\push{\rule{0em}{1em}} & & \lstick{q_{1}: \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
+	\push{\rule{0em}{1em}} & & \lstick{q_{2}: \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
+	& \hspace{3.3em} \ket{\psi_{0}} & \hspace{9.8em} \ket{\psi_{1}} & \hspace{10em} \ket{\psi_{2}} & \hspace{10.6em} \ket{\psi_{3}} & \hspace{13em} \ket{\psi_{4}} & \hspace{18.2em} \ket{\psi_{5}}
   }
 \]
 	\caption{Quantum circuit teleporting a quantum state $\ket{\phi}$.}
