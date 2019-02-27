@@ -399,7 +399,7 @@ Let's look at an example of a \textsc{cnot} gate. Consider the following circuit
 \]
 First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate:
 \[
-  CNOT\ket{10} = \cnotgate{}
+  \textsc{CNOT}\ket{10} = \cnotgate{}
   \begin{bmatrix}
   0 \\
   0 \\
@@ -512,19 +512,12 @@ It has a non-zero concurrence, so we can say it's entangled. How about our non-e
 A concurrence of 0, so it is indeed not entangled.
 \subsection{The Bell States}
 The \emph{Bell states} are four maximally entangled quantum states of two qubits:
-\[
-\ket{\Phi^+} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
-\]
-\[
-\ket{\Phi^-} = \dfrac{1}{\sqrt2}(\ket{00} - \ket{11})
-\]
-\[
-\ket{\Psi^+} = \dfrac{1}{\sqrt2}(\ket{01} + \ket{10})
-\]
-\[
+\begin{align*}
+\ket{\Phi^+} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+\ket{\Phi^-} = \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+\ket{\Psi^+} = \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
 \ket{\Psi^-} = \dfrac{1}{\sqrt2}(\ket{01} - \ket{10})
-\]
-\newpage
+\end{align*}
 We can create a Bell state with the following circuit:
 \[
   \Large
@@ -534,6 +527,9 @@ We can create a Bell state with the following circuit:
     & \hspace{6.7em} \ket{\psi_{0}} & \hspace{12.3em} \ket{\psi_{1}} & \hspace{16.4em} \ket{\psi_{2}}
   }
 \]
+\vspace*{2mm}
+
+\noindent
 We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ at $\ket{\psi_2}$.
 
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
@@ -552,4 +548,78 @@ M(q_1) = 0 \text{ if } M(q_0) = 0
 M(q_1) = 1 \text{ if } M(q_0) = 1
 \]
 If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $\dfrac{1}{\sqrt2}(\ket{01} + \ket{10})$ they correlate as being opposites (measuring $q_0$ as 0 means $q_1$ will be 1).
+
+\subsection{Greenberger-Horne-Zeilinger State}
+A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
+\[
+\ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2}
+\]
+Where $\ket{i}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
+\[
+\ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}
+\]
+GHZ states are used for example in cryptography for secret sharing.
+\begin{figure}[ht]
+\[
+  \Large
+  \Qcircuit @C=0.5em @R=0.5em @!R {
+  	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw  \\
+	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw & \targ & \qw & \qw \\
+	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{2}: \ket{0}} & \qw & \qw & \qw &  \targ & \qw \\
+  }
+\]
+\caption{Circuit creating a three-qubit GHZ state.}
+\label{fig:ghz_3}
+\end{figure}
+
+\newpage
+
+\subsection{Calculating Parity}
+A simple quantum algorithm. Parallelism.
+% TODO
+
+\subsection{Quantum Teleportation}
+Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that are in a Bell state) that is shared between the sender and receiver. Note that we cannot simply clone a qubit. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation process works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit $\ket{\phi}$, whose state is unknown, to Bob.  Alice interacts the qubit $\ket{\phi}$ with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state $\ket{\phi}$.
+
+\begin{figure}[ht]
+\[
+  \Large
+  \Qcircuit @C=1em @R=0.5em @!R {
+	\push{\rule{0em}{1em}} & & & \lstick{q_{0}: \ket{\phi}} \ar@{.}[]+<0.5em,0.5em>;[d]+<0.5em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw 
+	\ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> \\
+	\push{\rule{0em}{1em}} & & & \lstick{q_{1}: \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
+	\push{\rule{0em}{1em}} & & & \lstick{q_{2}: \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
+	& \hspace{5.2em} \ket{\psi_{0}} & \hspace{11.8em} \ket{\psi_{1}} & \hspace{13.5em} \ket{\psi_{2}} & \hspace{14.9em} \ket{\psi_{3}} & \hspace{16.5em} \ket{\psi_{4}} & \hspace{22.5em} \ket{\psi_{5}}
+  }
+\]
+	\caption{Quantum circuit teleporting a quantum state $\ket{\phi}$.}
+	\label{fig:teleportation}
+\end{figure}
+The quantum circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at $\ket{\psi_0}$ with the state
+$\ket{\phi}\ket{00}$. Then we create an EPR pair with $q_1$ and $q_2$, where $q_1$ belongs to Alice and $q_2$ to Bob. This gives us the following state at $\ket{\psi_1}$:
+\[
+  \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
+\]
+Which we can rewrite as following
+\begin{align*}
+\ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+&= \dfrac{1}{\sqrt2}(\alpha\ket{000} + \beta\ket{100} + \alpha\ket{011} + \beta\ket{111})
+\end{align*}
+Alice then sends her qubit $q_0$ through a \textsc{cnot} gate, obtaining
+\[
+  \ket{\psi_2} = \dfrac{1}{\sqrt2}(\alpha\ket{000} + \beta\ket{110} + \alpha\ket{011} + \beta\ket{101})
+\]
+She then sends $q_0$ through a Hadamard gate, giving
+\[
+  \ket{\psi_3} = \dfrac{1}{2}(\alpha(\ket{0} + \ket{1})(\ket{00} + \ket{11}) + \beta(\ket{0} - \ket{1})(\ket{10} + \ket{01}))
+\]
+This state can be rewritten in the following way:
+\begin{align*}
+  \ket{\psi_3} = \dfrac{1}{2}(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \: +\\
+  &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0}))
+\end{align*}
+This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state $\ket{\phi}$. So in the case that Alice measures $M(q_0q_1) = \ket{00}$ at $\ket{\psi_4}$, then Bob's qubit will be in state $\ket{\phi}$. Depending on Alice's measurement at $\ket{\psi_4}$, Bob may have to ``fix" his state to recover $\ket{\phi}$ by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state $\ket{\phi}$ at $\ket{\psi_5}$.
+
+Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel to complete the teleportation.
+
 \end{document}
