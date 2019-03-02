@@ -54,6 +54,12 @@
   0 & i
   \end{pmatrix}
 }
+\newcommand{\phasegate}{
+  \begin{pmatrix}
+  1 & \phantom{e}0 \\
+  0 & e^{i\theta}
+  \end{pmatrix}
+}
 \newcommand{\cnotgate}{
   \begin{pmatrix}
   1 & 0 & 0 & 0 \\
@@ -135,23 +141,31 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
 \subsubsection{Pauli Gates}
- The most simple quantum gates are the \emph{Pauli} gates $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
+ The most simple quantum gates are the \emph{Pauli gates} $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
 
 \begin{figure}[ht]
   \begin{adjustwidth}{-2.5cm}{-2.5cm}
   \centering
-  \includegraphics[scale=0.25]{images/pauli_gates.eps}
+  \includegraphics[scale=0.2]{images/pauli_gates.eps}
   \caption{Pauli gates $X$, $Y$ and $Z$ visualized on the Bloch sphere.}
   \end{adjustwidth}
 \end{figure}
 
 
-\subsubsection{S Gate}
-The \emph{S} gate, also known as the phase ($P$) gate, does a Z rotation of $\pi/2$ radians (90 degrees). It's essentially half a Pauli Z gate. The S gate belongs to the Clifford gates.
+\subsubsection{Phase Gates}
+Another important single-qubit gate is the \emph{phase gate} $R_\theta$, which rotates the phase of the \ket{1} state by an angle $\theta$ and leaves the \ket{0} state unchanged:
+\begin{align*}
+R_\theta \ket{0} &= \ket{0} \\
+R_\theta \ket{1} &= e^{i\theta}\ket{1}
+\end{align*}
+A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can also be considered a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the S gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$.
 
-\begin{center}
-\includegraphics[scale=0.30]{images/s_gate.eps}
-\end{center}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.22]{images/s_gate.eps}
+  \caption{S gate rotation visualized on the Bloch sphere.}
+  \label{fig:s_bloch}
+\end{figure}
 
 \subsubsection{Hadamard Gate}
 The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
@@ -160,7 +174,7 @@ This gate is sometimes described as a ``square root of $NOT$" gate, because it t
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.25]{images/hadamard_gate.eps}
+  \includegraphics[scale=0.2]{images/hadamard_gate.eps}
   \caption{Hadamard gate visualized on the Bloch sphere.}
 \end{figure}
 
@@ -222,17 +236,21 @@ The single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
   \]
 \end{multicols}
 
-\begin{multicols}{3}
+\begin{multicols}{4}
+  \[
+    R_\theta = \phasegate{}
+  \]
+  \vfill
   \[
     Z = \zgate{}
   \]
   \vfill
   \[
-    H = \hgate{}
-  \]
-  \vfill
-  \[
     S = \sgate{}
+  \]
+    \vfill
+  \[
+    H = \hgate{}
   \]
 \end{multicols}
 \bigskip
