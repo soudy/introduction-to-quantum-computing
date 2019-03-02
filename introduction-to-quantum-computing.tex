@@ -226,7 +226,7 @@ A quantum state has to be a normalized vector. In general, a qubit's state is a 
   \ket{\psi} = \alpha\qstatezero{} + \beta\qstateone{} =
 \begin{pmatrix}\alpha \\ \beta\end{pmatrix}
 \]
-The single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
+Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
 \setlength\multicolsep{0pt}
 \begin{multicols}{3}
   \[
@@ -279,7 +279,6 @@ The result is the identity gate, showing that the inverse of $H$ is indeed itsel
 \newpage
 
 \chapter{Fundementals: A Multi-Qubit World}
-\section{The Step to Multi-Qubit}
 We can represent multiple qubits using the \emph{Kronecker product}:
 \[
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
@@ -317,14 +316,14 @@ Writing it out:
   \igate{} \otimes \hgate{} \\
   &=
   \dfrac{1}{\sqrt2}
-  \left(
+  \left[
   \igate{}
   \otimes
   \begin{pmatrix}
   1 & \phantom{-}1 \\
   1 & -1
   \end{pmatrix}
-  \right) \\
+  \right] \\
   &= \dfrac{1}{\sqrt2}
   \begin{pmatrix}
   1 & \phantom{-}1 & 0 & \phantom{-}0 \\
@@ -633,7 +632,7 @@ If you look closely at this state, you can see that $\ket{q_2}$ corresponds to t
 \end{aligned}
 \end{cases}
 \]
-Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{10} and \ket{01} have odd parity ($q_2 = 1$).
+Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{01} and \ket{10} have odd parity ($q_2 = 1$).
 
 \section{Quantum Teleportation}
 Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit $\ket{\phi}$, whose state is unknown, to Bob. Alice interacts the qubit $\ket{\phi}$ with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state $\ket{\phi}$.
