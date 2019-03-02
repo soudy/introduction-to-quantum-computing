@@ -659,11 +659,11 @@ $\ket{\phi}\ket{00}$. Then we create an EPR pair with $q_1$ and $q_2$, where $q_
 Which we can rewrite as following
 \begin{align*}
 \ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-&= \dfrac{1}{\sqrt2}(\alpha\ket{000} + \beta\ket{100} + \alpha\ket{011} + \beta\ket{111})
+&= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big)
 \end{align*}
 Alice then sends her qubits through a $\textsc{cnot}_{0, 1}$ gate, obtaining
 \[
-  \ket{\psi_2} = \dfrac{1}{\sqrt2}(\alpha\ket{000} + \beta\ket{110} + \alpha\ket{011} + \beta\ket{101})
+  \ket{\psi_2} = \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{10} + \ket{01})\Big)
 \]
 She then sends $q_0$ through a Hadamard gate, giving
 \[
