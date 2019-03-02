@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[11pt, notitlepage]{report}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -13,6 +13,13 @@
 \usepackage{subcaption}
 \usepackage[normalem]{ulem}
 \usepackage{tikz}
+\usepackage{sectsty}
+\usepackage{etoolbox}
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]   
+{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\huge}   
+\titlespacing*{\chapter}{0pt}{-50pt}{15pt}
 
 \usepgflibrary{arrows}
 
@@ -79,10 +86,9 @@
 \setlength\epigraphwidth{10cm}
 \setlength\epigraphrule{0pt}
 
-\usepackage{etoolbox}
-
 \makeatletter
 \patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\newcommand*{\toccontents}{\@starttoc{toc}}
 \makeatother
 
 \renewcommand*{\arraystretch}{1.1}
@@ -98,17 +104,17 @@
 \vfill
 \maketitle
 
-\tableofcontents
+\toccontents
 
 \newpage
 
-\section{Fundementals: A One-Qubit World}
+\chapter{Fundementals: A One-Qubit World}
 \epigraph{Quantum computers are machines that rely on characteristically quantum phenomena, such as quantum interference and quantum entanglement, in order to perform computation.}{--- Artur Ekert}
 
 \epigraph{It is tempting to say that a quantum computer is one whose operation is governed by the laws of quantum mechanics. But since the laws of quantum mechanics govern the behavior of all physical phenomena, this temptation must be resisted. Your laptop operates under the laws of quantum mechanics, but it is not a quantum computer.}{--- N. David Mermin}
 
-\subsection{The Qubit}
-A qubit - like a classical bit - has a \emph{state}. In classical bits this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (denoted in \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, often called \emph{superpositions}. The state of a qubit can be denoted as following:
+\section{The Qubit}
+A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. In classical bits this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (denoted in \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, often called \emph{superpositions}. The state of a qubit can be denoted as following:
 \[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 where $\alpha$ and $\beta$ are complex numbers. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us we can only acquire much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The sum of all probabilities is always equal to 1:
 \[|\alpha|^2 + |\beta|^2 = 1\]
@@ -117,8 +123,8 @@ For example, a qubit in the state
 \dfrac{1}{\sqrt2}\ket{0}+\dfrac{1}{\sqrt2}\ket{1}
 \]
 gives 0 fifty percent of the time ($|1/\sqrt2|^2$), and 1 fifty percent of the time. This state is often denoted by \ket{+}.
-\newpage
-\subsection{Bloch Sphere}
+
+\section{The Bloch Sphere}
 The Bloch sphere is a geometrical representation of a qubit's state. It's a spherical coordinate system in which a quantum state can be described as following:
 \[
   \ket{\psi} = e^{i\delta} \left(cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}\right)
@@ -137,10 +143,10 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \par
 \newpage
 
-\subsection{Single-Qubit Quantum Operations}
+\section{Single-Qubit Quantum Operations}
 Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
-\subsubsection{Pauli Gates}
+\subsection{Pauli Gates}
  The most simple quantum gates are the \emph{Pauli gates} $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
 
 \begin{figure}[ht]
@@ -152,7 +158,7 @@ Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum
 \end{figure}
 
 
-\subsubsection{Phase Gates}
+\subsection{Phase Gates}
 Another important single-qubit gate is the \emph{phase gate} $R_\theta$, which rotates the phase of the \ket{1} state by an angle $\theta$ and leaves the \ket{0} state unchanged:
 \begin{align*}
 R_\theta \ket{0} &= \ket{0} \\
@@ -167,7 +173,7 @@ A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visua
   \label{fig:s_bloch}
 \end{figure}
 
-\subsubsection{Hadamard Gate}
+\subsection{Hadamard Gate}
 The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
 
 This gate is sometimes described as a ``square root of $NOT$" gate, because it turns $\ket{0}$ into $(\ket{0} + \ket{1})/\sqrt2$ (also written as $\ket{+}$), halfway between $\ket{0}$ and $\ket{1}$. The Hadamard gate also belongs to the Clifford gates.
@@ -178,7 +184,7 @@ This gate is sometimes described as a ``square root of $NOT$" gate, because it t
   \caption{Hadamard gate visualized on the Bloch sphere.}
 \end{figure}
 
-\subsection{Measurement}
+\section{Measurement}
 Measuring a qubit collapses its state. The probabilistic result of a qubit measurement can be calculated based on the probability amplitudes:
 \[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 \[P(\ket{0}) = \left|\alpha\right|^2\]
@@ -209,7 +215,7 @@ Giving us equal probabilities of our state being measured as $\ket{0}$ or $\ket{
   \label{fig:gate_rotations}
 \end{figure}
 
-\subsection{Vector Notation} \label{sec:matrix_notation}
+\section{Vector Notation} \label{sec:matrix_notation}
 Earlier we showed that we can represent a quantum state using the following formula:
 \[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
 The quantum states $\ket{\psi}$, $\ket{0}$ and $\ket{1}$ in the formula above are vectors. We define $\ket{0}$ and $\ket{1}$ as following:
@@ -272,8 +278,8 @@ The result is the identity gate, showing that the inverse of $H$ is indeed itsel
 
 \newpage
 
-\section{Fundementals: A Multi-Qubit World}
-\subsection{The Step to Multi-Qubit}
+\chapter{Fundementals: A Multi-Qubit World}
+\section{The Step to Multi-Qubit}
 We can represent multiple qubits using the \emph{Kronecker product}:
 \[
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
@@ -300,7 +306,7 @@ For multi-qubit states the rule remains that the state vector has to be normaliz
 \sum_{i}^{2^n} |\alpha_i|^2 = 1
 \]
 
-\subsection{Quantum State Evolution}
+\section{Quantum State Evolution}
 Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronecker product of the identity matrix and our single-qubit matrix (in this case $H$):
 \[
   H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}
@@ -353,7 +359,7 @@ Then we can put our \ket{00} state through it:
 \]
 Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ket{01})$.
 
-\subsection{Partial Measurement}
+\section{Partial Measurement}
 Say we want to measure the first qubit, $q_0$, in the following circuit:
 \[
   \Large
@@ -379,8 +385,8 @@ When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We get ei
 \]
 We have two possible states after measurement, a state where $q_0$ is 0 or a state where $q_0$ is 1. Qubit $q_1$ will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
 
-\subsection{Common Two-Qubit Gates}
-\subsubsection{CNOT Gate}
+\section{Common Two-Qubit Gates}
+\subsection{CNOT Gate}
 The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli $X$ gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
 
 \begin{figure}[ht]
@@ -434,7 +440,7 @@ First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ g
 \]
 The target qubit was flipped because the control qubit was set to 1, giving us \ket{11}.
 
-\subsubsection{CZ Gate}
+\subsection{CZ Gate}
 \textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In \textsc{cz} the operation is the Pauli $Z$ gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
 \begin{figure}[ht]
 \[
@@ -447,7 +453,7 @@ The target qubit was flipped because the control qubit was set to 1, giving us \
 \caption{Circuit representations of \textsc{cz}.}
 \end{figure}
 
-\subsubsection{Controlled Gates}
+\subsection{Controlled Gates}
 Controlled gates act on two or more qubits, where one or more qubits act as control for some operation. Generally, if $U$ is a gate that operates on single qubits with the following matrix representation:
 \[
   U =
@@ -466,7 +472,7 @@ then the controlled-$U$ gate is a gate that operates on two qubits where the fir
   0 & 0 & u_{10} & u_{11} \\
   \end{pmatrix}
 \]
-\subsection{Toffoli Gate}
+\section{Toffoli Gate}
 We can simulate any classical circuit using a quantum circuit. Most classical gates however are non-reversible. This is a problem for our quantum circuit, as it requires gates to be reversible. We can make use of a reversible gate known as the \emph{Toffoli gate} to make a quantum equivalent of any classical gate.
 
 The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit}), where two of the input qubits act as control bits. The third qubit is the target bit which is flipped if both control qubits are set to 1, otherwise it's left alone. For example, applying the Toffoli gate to the state \ket{110} flips the third qubit, resulting in the state \ket{111}.
@@ -501,7 +507,7 @@ The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented b
 It is a non-Clifford gate.
 % Maybe: Show creating universal NAND gate with Toffoli gate
 
-\subsection{Entanglement}
+\section{Entanglement}
 Two qubits are entangled if and only if the state of those two qubits can \emph{not be expressed as two individual states} (non-separable). Let's first take a look at a separable, or non-entangled state:
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
@@ -527,7 +533,7 @@ It has a non-zero concurrence, so we can say it's entangled. How about our non-e
   C\left(\dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})\right) = 2\left|\dfrac{1}{2}\left(\dfrac{1}{2}\right) - \dfrac{1}{2}\left(\dfrac{1}{2}\right)\right| = 0
 \]
 A concurrence of 0, so it is indeed not entangled.
-\subsection{The Bell States}
+\section{The Bell States}
 The \emph{Bell states} are four maximally entangled quantum states of two qubits:
 \begin{align*}
 \ket{\Phi^+} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
@@ -566,7 +572,7 @@ M(q_1) = 1 \text{ if } M(q_0) = 1
 \]
 If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $\dfrac{1}{\sqrt2}(\ket{01} + \ket{10})$ they correlate as being opposites (measuring $q_0$ as 0 means $q_1$ will be 1).
 
-\subsection{Greenberger-Horne-Zeilinger State}
+\section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
 \[
 \ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2}
@@ -589,7 +595,7 @@ GHZ states are used for example in cryptography for secret sharing.
 \label{fig:ghz_3}
 \end{figure}
 
-\subsection{Calculating Parity}
+\section{Calculating Parity}
 Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of $\ket{q_0q_1}$ with $\ket{q_2}$.
 \begin{figure}[ht]
   \[
@@ -629,7 +635,7 @@ If you look closely at this state, you can see that $\ket{q_2}$ corresponds to t
 \]
 Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{10} and \ket{01} have odd parity ($q_2 = 1$).
 
-\subsection{Quantum Teleportation}
+\section{Quantum Teleportation}
 Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit $\ket{\phi}$, whose state is unknown, to Bob. Alice interacts the qubit $\ket{\phi}$ with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state $\ket{\phi}$.
 
 \begin{figure}[ht]
