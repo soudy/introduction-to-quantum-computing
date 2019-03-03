@@ -164,7 +164,7 @@ Another important single-qubit gate is the \emph{phase gate} $R_\theta$, which r
 R_\theta \ket{0} &= \ket{0} \\
 R_\theta \ket{1} &= e^{i\theta}\ket{1}
 \end{align*}
-A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can also be considered a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the S gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$. The probability of measuring a \ket{0} or \ket{1} is unchanged after these gates, however it modifies the phase of the quantum state.
+A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli $Z$ gate can also be considered a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli $Z$ gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$. The probability of measuring a \ket{0} or \ket{1} is unchanged after these gates, however it modifies the phase of the quantum state.
 
 \begin{figure}[ht]
   \centering
@@ -174,9 +174,9 @@ A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visua
 \end{figure}
 
 \subsection{Hadamard Gate}
-The Hadamard ($H$) gate maps the qubit-basis states $\ket{0}$ and $\ket{1}$ to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
+The Hadamard ($H$) gate maps the qubit-basis states \ket{0} and \ket{1} to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
 
-This gate is sometimes described as a ``square root of $NOT$" gate, because it turns $\ket{0}$ into $(\ket{0} + \ket{1})/\sqrt2$ (also written as $\ket{+}$), halfway between $\ket{0}$ and $\ket{1}$. The Hadamard gate also belongs to the Clifford gates.
+This gate is sometimes described as a ``square root of \textsc{not}" gate, because it turns \ket{0} into $(\ket{0} + \ket{1})/\sqrt2$ (also written as \ket{+}), halfway between \ket{0} and \ket{1}. The Hadamard gate also belongs to the Clifford gates.
 
 \begin{figure}[ht]
   \centering
@@ -206,7 +206,7 @@ We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = \ket{-}$. 
 \[\ket{-} = \dfrac{1}{\sqrt2} (\ket{0} - \ket{1})\]
 \[P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 = \dfrac{1}{2}\]
 \[P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 = \dfrac{1}{2}\]
-Giving us equal probabilities of our state being measured as $\ket{0}$ or $\ket{1}$.
+Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 
 \begin{figure}[ht]
   \centering
@@ -359,7 +359,7 @@ Then we can put our \ket{00} state through it:
 Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ket{01})$.
 
 \section{Partial Measurement}
-Say we want to measure the first qubit, $q_0$, in the following circuit:
+Say we measure the qubit \ket{q_0} in the following circuit:
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
@@ -372,7 +372,7 @@ First, we put both qubits in our state \ket{00} through a Hadamard gate. This pu
 \[
   (H \otimes H)\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
 \]
-When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We get either of the following states based on $M(q_0)$:
+When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. We get either of the following states based on $M(q_0)$:
 \[
   \ket{\psi} = 
   \begin{cases}
@@ -382,7 +382,7 @@ When we measure $q_0$ we have a 50/50 probability of getting a 0 or 1. We get ei
   \end{aligned}
   \end{cases}
 \]
-We have two possible states after measurement, a state where $q_0$ is 0 or a state where $q_0$ is 1. Qubit $q_1$ will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
+We have two possible states after measurement, a state where $q_0$ is 0 or a state where $q_0$ is 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
 
 \section{Common Two-Qubit Gates}
 \subsection{CNOT Gate}
@@ -418,7 +418,7 @@ Let's look at an example of a \textsc{cnot} gate. Consider the following circuit
     \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
   }
 \]
-First we put $q_0$ (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate:
+First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate:
 \[
   \textsc{CNOT}\ket{10} = \cnotgate{}
   \begin{pmatrix}
@@ -552,7 +552,7 @@ We can create a Bell state with the following circuit:
 \vspace*{2mm}
 
 \noindent
-We start with our state \ket{00} at $\ket{\psi_0}$. We put $q_0$ through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at $\ket{\psi_1}$. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ at $\ket{\psi_2}$.
+We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{10})$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ at \ket{\psi_2}.
 
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
@@ -585,9 +585,9 @@ GHZ states are used for example in cryptography for secret sharing.
 \[
   \Large
   \Qcircuit @C=0.5em @R=0.5em @!R {
-  	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw  \\
-	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw & \targ & \qw & \qw \\
-	\push{\rule{0em}{1em}} & & & & & & \lstick{q_{2}: \ket{0}} & \qw & \qw & \qw &  \targ & \qw \\
+  	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw  \\
+	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \qw & \qw & \targ & \qw & \qw \\
+	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \qw & \qw & \qw &  \targ & \qw \\
   }
 \]
 \caption{Circuit creating a three-qubit GHZ state.}
@@ -595,7 +595,7 @@ GHZ states are used for example in cryptography for secret sharing.
 \end{figure}
 
 \section{Calculating Parity}
-Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of $\ket{q_0q_1}$ with $\ket{q_2}$.
+Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0q_1} with \ket{q_2}.
 \begin{figure}[ht]
   \[
   \Large
@@ -610,7 +610,7 @@ Parity checking is one of the simplest forms of error detecting code. It tells u
 \end{figure}
 
 \noindent
-We start with putting $q_0$ and $q_1$ in an arbitrary superposition. In this case we apply a Hadamard gate to both qubits, giving us the state
+We start with putting \ket{q_0} and \ket{q_1} in an arbitrary superposition. In this case we apply a Hadamard gate to both qubits, giving us the state
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{100} + \ket{110})
 \]
@@ -622,7 +622,7 @@ And a $\textsc{cnot}_{1,2}$, giving us the final state
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110})
 \]
-If you look closely at this state, you can see that $\ket{q_2}$ corresponds to the parity of $\ket{q_0q_1}$. We have essentially calculated the parities of all possible states of $\ket{q_0q_1}$ in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure $\ket{q_2}$ the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring $\ket{q_2}$:
+If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0q_1}. We have essentially calculated the parities of all possible states of \ket{q_0q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
 \[
 \ket{\psi} = 
 \begin{cases}
@@ -635,7 +635,7 @@ If you look closely at this state, you can see that $\ket{q_2}$ corresponds to t
 Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{01} and \ket{10} have odd parity ($q_2 = 1$).
 
 \section{Quantum Teleportation}
-Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit $\ket{\phi}$, whose state is unknown, to Bob. Alice interacts the qubit $\ket{\phi}$ with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state $\ket{\phi}$.
+Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit \ket{\phi}, whose state is unknown, to Bob. Alice interacts the qubit \ket{\phi} with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state \ket{\phi}.
 
 \begin{figure}[ht]
 \[
@@ -648,11 +648,11 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
 	& \hspace{3.3em} \ket{\psi_{0}} & \hspace{9.8em} \ket{\psi_{1}} & \hspace{10em} \ket{\psi_{2}} & \hspace{10.6em} \ket{\psi_{3}} & \hspace{13em} \ket{\psi_{4}} & \hspace{18.2em} \ket{\psi_{5}}
   }
 \]
-  \caption{Quantum circuit teleporting a quantum state $\ket{\phi}$.}
+  \caption{Quantum circuit teleporting a quantum state \ket{\phi}.}
   \label{fig:teleportation}
 \end{figure}
-The quantum circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at $\ket{\psi_0}$ with the state
-$\ket{\phi}\ket{00}$. Then we create an EPR pair with $q_1$ and $q_2$, where $q_1$ belongs to Alice and $q_2$ to Bob. This gives us the following state at $\ket{\psi_1}$:
+The quantum circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
+\ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
 \[
   \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
 \]
@@ -674,8 +674,8 @@ This state can be rewritten in the following way:
   \ket{\psi_3} = \dfrac{1}{2}\Big(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) \, + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \\
   + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big)
 \end{align*}
-This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state $\ket{\phi}$. So in the case that Alice measures $M(q_0q_1) = \ket{00}$ at $\ket{\psi_4}$, Bob's qubit will be in state $\ket{\phi}$. Depending on Alice's measurement at $\ket{\psi_4}$, Bob may have to ``fix" his state to recover $\ket{\phi}$ by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state $\ket{\phi}$ at $\ket{\psi_5}$.
+This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = 00$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
 
-Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state $\ket{\phi}$, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state $\ket{\phi}$, so it never allows for cloning.
+Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state \ket{\phi}, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state \ket{\phi}, so it never allows for cloning.
 
 \end{document}
