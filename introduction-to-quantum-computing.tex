@@ -279,11 +279,11 @@ The result is the identity gate, showing that the inverse of $H$ is indeed itsel
 \newpage
 
 \chapter{Fundamentals: A Multi-Qubit World}
-We can represent multiple qubits using the \emph{Kronecker product}:
+We can represent multiple qubits using the \emph{Kronecker product} to combine single qubit states:
 \[
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
 \]
-To represent \ket{00} for example:
+More generally, we say that any linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. To represent \ket{00} for example:
 \[
   \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} =
   \begin{pmatrix}
@@ -372,7 +372,7 @@ First, we put both qubits in our state \ket{00} through a Hadamard gate. This pu
 \[
   (H \otimes H)\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
 \]
-When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. We get either of the following states based on $M(q_0)$:
+When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. Measuring \ket{q_0} collapses the state to one of the following states:
 \[
   \ket{\psi} = 
   \begin{cases}
@@ -382,7 +382,7 @@ When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. We ge
   \end{aligned}
   \end{cases}
 \]
-We have two possible states after measurement, a state where $q_0$ is 0 or a state where $q_0$ is 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
+This is called measurement projection. We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
 
 \section{Common Two-Qubit Gates}
 \subsection{CNOT Gate}
