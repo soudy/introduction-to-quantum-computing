@@ -129,14 +129,14 @@ The Bloch sphere is a geometrical representation of a qubit's state. It's a sphe
 \[
   \ket{\psi} = e^{i\delta} \left(cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}\right)
 \]
-where $\delta, \theta$ and $\phi$ are real numbers. We can ignore the factor $e^{i\delta}$ out the front, because it has no observable effect, allowing us to write
+where $\delta, \theta$ and $\phi$ are real numbers. Factor $e^{i\delta}$ is the global phase of the state. This factor does not influence measurement probabilities, since $\left|e^{i\delta}\right| = 1$. Therefore we can often omit it, allowing us to write
 \[
   \ket{\psi} = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}
 \]
 The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (Figure~\ref{fig:bloch}). The Bloch sphere visualization can be very useful for describing single qubit operations. It is however limited in that there is no simple generalization of the Bloch sphere known for multiple qubits.
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.2]{images/bloch_sphere.eps}
+  \includegraphics[scale=0.175]{images/bloch_sphere.eps}
   \caption{Bloch sphere representation of a qubit.}
   \label{fig:bloch}
 \end{figure}
@@ -302,7 +302,7 @@ Note that the state vector of two qubits is twice as big as the state vector for
 
 For multi-qubit states the rule remains that the state vector has to be normalized. For two qubits for example: $\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11} = 1$. Or, more general, for a $n$ qubit state:
 \[
-\sum_{i}^{2^n} |\alpha_i|^2 = 1
+\sum_{i = 1}^{2^n} |\alpha_i|^2 = 1
 \]
 
 \section{Quantum State Evolution}
