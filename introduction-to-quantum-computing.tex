@@ -8,7 +8,7 @@
 \usepackage{chngpage}
 \usepackage{fancyhdr}
 \usepackage[braket, qm]{qcircuit}
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[font=small,labelfont=bf, skip=3pt]{caption}
 \usepackage[hidelinks]{hyperref}
 \usepackage{subcaption}
 \usepackage[normalem]{ulem}
@@ -16,6 +16,8 @@
 \usepackage{sectsty}
 \usepackage{etoolbox}
 \usepackage{titlesec}
+\usepackage{dirtytalk}
+\usepackage{times}
 
 \titleformat{\chapter}[display]   
 {\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\huge}   
@@ -137,6 +139,7 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.175]{images/bloch_sphere.eps}
+  \vspace{2mm}
   \caption{Bloch sphere representation of a qubit.}
   \label{fig:bloch}
 \end{figure}
@@ -146,42 +149,44 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \section{Single-Qubit Quantum Operations}
 Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
 
-\subsection{Pauli Gates}
+\subsection{Pauli Gates}\label{pauli_gates}
  The most simple quantum gates are the \emph{Pauli gates} $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
 
 \begin{figure}[ht]
   \begin{adjustwidth}{-2.5cm}{-2.5cm}
   \centering
   \includegraphics[scale=0.2]{images/pauli_gates.eps}
+  \vspace{2mm}
   \caption{Pauli gates $X$, $Y$ and $Z$ visualized on the Bloch sphere.}
   \end{adjustwidth}
 \end{figure}
 
+\subsection{Hadamard Gate}
+The \emph{Hadamard} ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
 
-\subsection{Phase Gates}
-An important class of single-qubit gate are the \emph{phase gates} $R_\theta$, which rotate the phase of the \ket{1} state by an angle $\theta$ and leaves the \ket{0} state unchanged:
-\begin{align*}
-R_\theta \ket{0} &= \ket{0} \\
-R_\theta \ket{1} &= e^{i\theta}\ket{1}
-\end{align*}
-A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli $Z$ gate can also be considered a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli $Z$ gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$. The probability of measuring a \ket{0} or \ket{1} is unchanged after these gates, however it modifies the phase of the quantum state.
+This gate is sometimes described as a ``square root of \textsc{not}" gate, because it turns \ket{0} into $(\ket{0} + \ket{1})/\sqrt2$ (also written as \ket{+}), halfway between \ket{0} and \ket{1}. The Hadamard gate belongs to the Clifford gates.
 
 \begin{figure}[ht]
-  \centering
-  \includegraphics[scale=0.22]{images/s_gate.eps}
-  \caption{S gate rotation visualized on the Bloch sphere.}
-  \label{fig:s_bloch}
+    \centering
+    \includegraphics[scale=0.18]{images/hadamard_gate.eps}
+    \vspace{2mm}
+    \caption{Hadamard gate visualized on the Bloch sphere.}
 \end{figure}
 
-\subsection{Hadamard Gate}
-The Hadamard ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
-
-This gate is sometimes described as a ``square root of \textsc{not}" gate, because it turns \ket{0} into $(\ket{0} + \ket{1})/\sqrt2$ (also written as \ket{+}), halfway between \ket{0} and \ket{1}. The Hadamard gate also belongs to the Clifford gates.
+\subsection{Phase Gates}
+Rotation gates that rotate around the Z axis are considered \emph{phase gates}. They rotate the phase of the \ket{1} state by an angle $\theta$ and leave the \ket{0} state unchanged:
+\begin{align*}
+R_z(\theta) \ket{0} &= \ket{0} \\
+R_z(\theta) \ket{1} &= e^{i\theta}\ket{1}
+\end{align*}
+The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$ (half an $S$ gate).
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.2]{images/hadamard_gate.eps}
-  \caption{Hadamard gate visualized on the Bloch sphere.}
+  \includegraphics[scale=0.23]{images/s_gate.eps}
+  \vspace{2mm}
+  \caption{S gate rotation visualized on the Bloch sphere.}
+  \label{fig:s_bloch}
 \end{figure}
 
 \section{Measurement}
@@ -211,6 +216,7 @@ Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.37]{images/simple_circuit.eps}
+  \vspace{2mm}
   \caption{States of our qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H\ket{0}$ $\rightarrow$ $ZH\ket{0}.$}
   \label{fig:gate_rotations}
 \end{figure}
@@ -242,11 +248,7 @@ Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
   \]
 \end{multicols}
 
-\begin{multicols}{4}
-  \[
-    R_\theta = \phasegate{}
-  \]
-  \vfill
+\begin{multicols}{3}
   \[
     Z = \zgate{}
   \]
@@ -362,9 +364,9 @@ Which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ke
 Say we measure the qubit \ket{q_0} in the following circuit:
 \[
   \Large
-  \Qcircuit @C=0.5em @R=0.5em @!R {
-    \push{\rule{0em}{1.5em}} & & & & \lstick{q_0: \ket{0}} & \qw & \gate{H} & \qw & \meter & \cw \\
-    \push{\rule{0em}{1.5em}} & & & & \lstick{q_1: \ket{0}} & \qw & \gate{H} & \qw & \qw & \qw \\
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1.5em}} & & & \lstick{q_0: \ket{0}} & \gate{H} & \meter & \cw \\
+    \push{\rule{0em}{1.5em}} & & & \lstick{q_1: \ket{0}} & \gate{H} & \qw & \qw \\
   }
 \]
 \noindent
@@ -382,23 +384,23 @@ When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. Measu
   \end{aligned}
   \end{cases}
 \]
-This is called measurement projection. We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
+We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
 
 \section{Common Two-Qubit Gates}
 \subsection{CNOT Gate}
-The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli $X$ gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
+The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli X gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
 
 \begin{figure}[ht]
 \centering
 \begin{minipage}{.45\textwidth}
   \[
     \Large
-    \Qcircuit @C=0.5em @R=0.5em @!R {
-	  \push{\rule{0em}{1em}} & & & &  \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
-	  \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
+    \Qcircuit @C=1em @R=0.5em @!R {
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
 	}
   \]
-  \caption{Circuit representations of \textsc{cnot}. We will use the left representation.}
+  \caption{Two different circuit representations of \textsc{cnot}. We will use the left representation.}
   \label{fig:cnot_circuit}
 \end{minipage}%
 \hspace*{.05\textwidth}
@@ -413,9 +415,9 @@ The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called contro
 Let's look at an example of a \textsc{cnot} gate. Consider the following circuit:
 \[
   \Large
-  \Qcircuit @C=0.5em @R=0.5em @!R {
-    \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{0}: \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
-    \push{\rule{0em}{1.5em}} & & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1.5em}} & & & \lstick{q_{0}: \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
+    \push{\rule{0em}{1.5em}} & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \qw & \qw\\
   }
 \]
 First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate:
@@ -440,16 +442,16 @@ First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $
 The target qubit was flipped because the control qubit was set to 1, giving us \ket{11}.
 
 \subsection{CZ Gate}
-\textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In \textsc{cz} the operation is the Pauli $Z$ gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
+\textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is set to 1, otherwise do nothing. In \textsc{cz} the operation is the Pauli Z gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
 \begin{figure}[ht]
 \[
   \Large
-  \Qcircuit @C=0.5em @R=0.5em @!R {
+  \Qcircuit @C=1em @R=0.5em @!R {
     \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
     \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
   }
 \]
-\caption{Circuit representations of \textsc{cz}.}
+\caption{Two different circuit representations of \textsc{CZ}.}
 \end{figure}
 
 \subsection{Controlled Gates}
@@ -472,17 +474,15 @@ then the controlled-$U$ gate is a gate that operates on two qubits where the fir
   \end{pmatrix}
 \]
 \section{Toffoli Gate}
-We can simulate any classical circuit using a quantum circuit. Most classical gates however are non-reversible. This is a problem for our quantum circuit, as it requires gates to be reversible. We can make use of a reversible gate known as the \emph{Toffoli gate} to make a quantum equivalent of any classical gate.
-
 The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit}), where two of the input qubits act as control bits. The third qubit is the target bit which is flipped if both control qubits are set to 1, otherwise it's left alone. For example, applying the Toffoli gate to the state \ket{110} flips the third qubit, resulting in the state \ket{111}.
 
 \begin{figure}[ht]
 \[
   \Large
   \Qcircuit @C=0.54em @R=1em @!R {
-    \push{\rule{0em}{1em}} & & \lstick{a} & \ctrl{1} & \qw & a\\
-    \push{\rule{0em}{1em}} & & \lstick{b} & \ctrl{1} & \qw & b\\
-    \push{\rule{0em}{1em}} & & \lstick{c} & \targ & \qw & & & c \otimes ab\\
+    \push{\rule{0em}{1em}} & & & \lstick{a} & \ctrl{1} & \qw & a\\
+    \push{\rule{0em}{1em}} & & & \lstick{b} & \ctrl{1} & \qw & b\\
+    \push{\rule{0em}{1em}} & & & \lstick{c} & \targ & \qw & & & c \otimes ab\\
   }
 \]
 \caption{Circuit representation of the Toffoli gate, where $\otimes$ is addition modulo two.}
@@ -503,8 +503,13 @@ The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented b
   0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
   \end{pmatrix}
 \]
-It is a non-Clifford gate.
-% Maybe: Show creating universal NAND gate with Toffoli gate
+
+\section{Universal Gate Sets}
+In classical systems the \textsc{nand} gate is a universal gate, meaning that any other gate can be represented as a combination of \textsc{nand} gates. In quantum computing there exist universal gate sets. A universal gate set requires the full Clifford and Pauli groups, and one or more non-Clifford gates.
+
+We've seen the Pauli gates in Section \ref{pauli_gates}. On their own, Pauli gates have no interesting computational capabilities. The Clifford gates we've seen are $H$, $S$, \textsc{cnot} and \textsc{cz}. Clifford gates introduce the quantum phenomena superposition and entanglement. The Pauli and Clifford gates can be simulated efficiently by classical computers (\emph{Gottesman-Knill theorem}) - showing no increase in efficiency over classical computers.
+
+The non-Clifford gates, which are required for universal quantum computing, cannot be simulated efficiently and are exponentially hard to simulate. Some non-Clifford gates are Toffoli, $T$ and the rotation gates $R_x$, $R_y$ and $R_z$ (which do arbitrary rotations around the axes). One set of universal gates is $\{H,\, T,\, CNOT\}$.
 
 \section{Entanglement}
 Two qubits are entangled if and only if the state of those two qubits can \emph{not be expressed as two individual states} (non-separable). Let's first take a look at a separable, or non-entangled state:
@@ -531,7 +536,8 @@ It has a non-zero concurrence, so we can say it's entangled. How about our non-e
 \[
   C\left(\dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})\right) = 2\left|\dfrac{1}{2}\left(\dfrac{1}{2}\right) - \dfrac{1}{2}\left(\dfrac{1}{2}\right)\right| = 0
 \]
-A concurrence of 0, so it is indeed not entangled.
+A concurrence of 0, so it is not entangled.
+
 \section{The Bell States}
 The \emph{Bell states} are four maximally entangled quantum states of two qubits:
 \begin{align*}
@@ -557,9 +563,9 @@ We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Had
 The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
   \Large
-  \Qcircuit @C=0.5em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & & & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \qw & \ctrl{1} & \meter & \cw  \\
-    \push{\rule{0em}{1em}} & & & & & & \lstick{q_{1}: \ket{0}} & \qw & \qw &\targ & \meter & \cw \\
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1em}} & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \ctrl{1} & \meter & \cw  \\
+    \push{\rule{0em}{1em}} & & & & \lstick{q_{1}: \ket{0}} & \qw & \targ & \meter & \cw \\
   }
 \]
 You will find that the measurement results are correlated:
@@ -584,10 +590,10 @@ GHZ states are used for example in cryptography for secret sharing.
 \begin{figure}[ht]
 \[
   \Large
-  \Qcircuit @C=0.5em @R=0.5em @!R {
-  	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw  \\
-	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \qw & \qw & \targ & \qw & \qw \\
-	\push{\rule{0em}{1em}} & & & \lstick{\ket{0}} & \qw & \qw & \qw &  \targ & \qw \\
+  \Qcircuit @C=1em @R=0.5em @!R {
+  	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \ctrl{2} & \qw  \\
+	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \targ & \qw & \qw \\
+	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \qw &  \targ & \qw \\
   }
 \]
 \caption{Circuit creating a three-qubit GHZ state.}
@@ -599,17 +605,16 @@ Parity checking is one of the simplest forms of error detecting code. It tells u
 \begin{figure}[ht]
   \[
   \Large
-  \Qcircuit @C=0.7em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \qw \\
-    \push{\rule{0em}{1em}} & & & & \lstick{q_{1}: \ket{0}} & \gate{H} & \qw & \qw & \ctrl{1} & \qw & \qw \\
-    \push{\rule{0em}{1em}} & & & & \lstick{q_{2}: \ket{0}} & \qw & \qw & \targ &  \targ & \meter & \cw \\
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1em}} & & & \lstick{q_{0}: \ket{0}} & \gate{H} & \ctrl{2} & \qw & \qw & \qw \\
+    \push{\rule{0em}{1em}} & & & \lstick{q_{1}: \ket{0}} & \gate{H} & \qw & \ctrl{1} & \qw & \qw \\
+    \push{\rule{0em}{1em}} & & & \lstick{q_{2}: \ket{0}} & \qw & \targ &  \targ & \meter & \cw \\
   }
   \]
   \caption{Circuit for calculating parity: $\textsc{CNOT}_{1,2}\textsc{CNOT}_{0,2}H_1H_0\ket{000}$.}
   \label{fig:parity_circuit}
 \end{figure}
 
-\noindent
 We start with putting \ket{q_0} and \ket{q_1} in an arbitrary superposition. In this case we apply a Hadamard gate to both qubits, giving us the state
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{100} + \ket{110})
@@ -648,9 +653,11 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
 	& \hspace{3.3em} \ket{\psi_{0}} & \hspace{9.8em} \ket{\psi_{1}} & \hspace{10em} \ket{\psi_{2}} & \hspace{10.6em} \ket{\psi_{3}} & \hspace{13em} \ket{\psi_{4}} & \hspace{18.2em} \ket{\psi_{5}}
   }
 \]
+  \vspace{3mm}
   \caption{Quantum circuit teleporting a quantum state \ket{\phi}.}
   \label{fig:teleportation}
 \end{figure}
+\noindent
 The quantum circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
 \ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
 \[
@@ -678,4 +685,230 @@ This expression breaks down in four terms. The first term has Alice's qubits in 
 
 Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state \ket{\phi}, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state \ket{\phi}, so it never allows for cloning.
 
+\chapter{Simple Quantum Algorithms}
+Quantum computers promise to solve problems intractable by classical computers. One application is quantum simulation. For example: simulating chemical processes, which are actually quantum processes. As Richard Feynman said: \say{\emph{Nature isn't classical, dammit, and if you want to make a simulation of nature, you'd better make it quantum mechanical.}} Other possible applications include optimization, cryptography and machine learning. There are a lot of efforts in trying to apply quantum computing, but many remain skeptic. We should assume no guarantees in the applications of quantum computers, but continue exploring the possibilities.
+
+When a quantum computer can calculate something efficiently that a classical computer cannot calculate efficiently, we will have reached \emph{quantum supremacy}. The boundary of reaching this is around 50 qubits, when it becomes impossible to simulate a quantum computer. We have not yet reached quantum supremacy, but we are getting close to it. There have been found quantum algorithms which provide a speedup over classical algorithms, like Shor's algorithm for factoring integers and the Deutch-Jozsa algorithm for determining if a boolean function is balanced or unbalanced.
+
+\section{Quantum Arithmetic}
+Any classical circuit can be simulated by a quantum circuit. We can show this by creating quantum versions of classical arithmetic functions. One problem with simulating classical gates as quantum gates is that most of them are non-reversible. In quantum computing, it is required for gates to be reversible. This is often solved by adding an output qubit for every input qubit and an extra result qubit (Figure~\ref{fig:add_output_qubit}).
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \multigate{1}{U_f} & \qw & \ket{x} \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \ghost{U_f} & \qw & & \hspace*{5.7mm} \ket{y \otimes f(x)}
+    }
+  \]
+  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. $y$ is often assumed to be initialized to 0.}
+  \label{fig:add_output_qubit}
+\end{figure}
+We can create a quantum half adder by creating sum and carry circuits, just like in classical computers. The truth table of the sum function $f_s(x)$ can be found in Figure \ref{fig:sum_truth_table}. We can implement this as a quantum circuit using \textsc{cnot} gates as seen in Figure \ref{fig:sum_quantum_circuit}.
+
+\begin{figure}[ht]
+  \begin{minipage}{.45\textwidth}
+    \centering
+    \begin{tabular}{c|c}
+      $x_0$$x_1$ & $f_s(x)$ \\ \hline
+      00 & 0 \\
+      01 & 1 \\
+      10 & 1 \\
+      11 & 0 \\
+    \end{tabular}
+    \caption{Bit sum truth table.}
+    \label{fig:sum_truth_table}
+  \end{minipage}%
+  \hspace*{.05\textwidth}
+  \begin{minipage}{.45\textwidth}
+    \[
+      \Large
+      \Qcircuit @C=1em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{0}}} & \qw & \ctrl{2} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{1}}} & \qw & \qw & \ctrl{1} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \qw & \targ &  \targ & \qw \\
+      }
+    \]
+    \caption{Quantum circuit for summing two bits using two \textsc{cnot} gates.}
+    \label{fig:sum_quantum_circuit}
+    \end{minipage}
+\end{figure}
+\noindent
+To fully add two bits we need to account for the carry. The carry function $f_c(x)$ is 1 if and only if both inputs are 1 (Figure~\ref{fig:carry_truth_table}). This truth table corresponds directly to the Toffoli gate (Figure~\ref{fig:carry_quantum_circuit}).
+
+\begin{figure}[ht]
+  \begin{minipage}{.45\textwidth}
+    \centering
+    \begin{tabular}{c|c}
+      $x_0$$x_1$ & $f_c(x)$ \\ \hline
+      00 & 0 \\
+      01 & 0 \\
+      10 & 0 \\
+      11 & 1 \\
+    \end{tabular}
+    \caption{Bit carry truth table.}
+    \label{fig:carry_truth_table}
+  \end{minipage}%
+  \hspace*{.05\textwidth}
+  \begin{minipage}{.45\textwidth}
+    \[
+      \Large
+      \Qcircuit @C=1em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{0}}} & \ctrl{2} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{1}}} & \ctrl{1} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \targ & \qw \\
+      }
+    \]
+    \caption{Quantum circuit for taking the carry of two bits implemented using a Toffoli gate.}
+    \label{fig:carry_quantum_circuit}
+  \end{minipage}
+\end{figure}
+\noindent
+We can combine our sum and carry circuit into one, creating a quantum half adder.
+
+\begin{figure}[ht]
+  \[
+  \Large
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1em}} & \lstick{\ket{x_0}} & \ctrl{3} & \ctrl{2} & \qw & \qw & \hspace*{2.5mm} \ket{x_0} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{x_1}} & \ctrl{2} & \qw &  \ctrl{1} & \qw & \hspace*{2.5mm} \ket{x_1} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw & \targ & \targ & \qw & \ket{s} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \qw & \qw & \ket{c} \\
+  }
+  \]
+  \caption{Quantum half adder. The sum ends up in \ket{s} and the carry in \ket{c}.}
+  \label{fig:quantum_full_adder}
+\end{figure}
+\noindent
+Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(s) = 0$ and $M(c) = 1$, giving us what we expected and thus having done a quantum half sum of two qubits.
+
+\section{Deutch-Jozsa Algorithm}
+We have shown that we can simulate classical circuits on a quantum computer. This in itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set. 
+
+\begin{figure}[ht]
+  \centering
+  \begin{multicols}{4}
+    \captionof*{table}{\textbf{Identity}\\$f_i(x) = x$}
+    \begin{tabular}{c|c}
+    $x$ & $f_i(x)$ \\ \hline
+    0 & 0 \\
+    1 & 1 \\
+    \end{tabular}
+
+    \captionof*{table}{\textbf{NOT}\\$f_n(x) = \neg x$}
+    \begin{tabular}{c|c}
+    $x$ & $f_n(x)$ \\ \hline
+    0 & 1 \\
+    1 & 0 \\
+    \end{tabular}
+
+    \captionof*{table}{\textbf{Reset}\\$f_r(x) = 0$}
+    \begin{tabular}{c|c}
+    $x$ & $f_r(x)$ \\ \hline
+    0 & 0 \\
+    1 & 0 \\
+    \end{tabular}
+
+    \captionof*{table}{\textbf{Set}\\$f_s(x) = 1$}
+    \begin{tabular}{c|c}
+    $x$ & $f_s(x)$ \\ \hline
+    0 & 1 \\
+    1 & 1 \\
+   \end{tabular}
+  \end{multicols}
+
+  \vspace{4mm}
+  \caption{Truth tables for the four single-bit operations.}
+  \label{fig:single_bit_operations}
+\end{figure}
+\noindent
+Say we are faced with the following problem: we have a ``black box" with one of the four one-bit functions, but we're not told which one. Determine if the function is \emph{balanced} or \emph{unbalanced}. A balanced function is a function which returns the same amount of 0 and 1s it received as input, like identity and \textsc{not}. Unbalanced functions are functions which return a constant value, like reset and set. This is known as \emph{Deutch's problem} and is one of the first examples of a problem where there exists a quantum algorithm that is exponentially faster than any deterministic classical algorithm.
+
+On a classical computer, to determine if the black box is balanced or unbalanced, we need to do two function calls. On a quantum computer, using the \emph{Deutch-Jozsa} algorithm, we can figure it out using one call to the black box. To use this algorithm for Deutch's problem we need to translate the four single-bit operations to the quantum world. The quantum circuits corresponding to each single-bit operation can be found in Figure~\ref{fig:single_bit_quantum_circuits}.
+\vspace{-8mm}
+\begin{figure}[ht]
+  \centering
+  \begin{multicols}{4}
+    \[
+      \Qcircuit @C=0.7em @R=0.8em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \ctrl{1} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \targ & \qw
+      }
+    \]
+    \caption*{\textbf{Identity}\\$f_i(x) = x$}
+
+    \[
+      \Qcircuit @C=0.7em @R=0.5em @!R {
+          \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \gate{X} & \ctrl{1} & \gate{X} & \qw \\
+          \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \qw & \targ & \qw & \qw
+      }
+    \]
+    \caption*{\textbf{NOT}\\$f_n(x) = \neg x$}
+
+    \[
+      \Qcircuit @C=0.7em @R=0.8em @!R {
+        \push{\rule{0em}{1em}} & & & & & \lstick{\ket{x}} & \qw & \qw & \ghost{X} \\
+        \push{\rule{0em}{1em}} & & & & & \lstick{\ket{y}} & \qw & \qw & \ghost{X}
+      }
+    \]
+    \caption*{\textbf{Reset}\\$f_r(x) = 0$}
+    
+    \[
+      \Qcircuit @C=0.7em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \gate{X} & \qw
+      }
+    \]
+    \caption*{\textbf{Set}\\$f_s(x) = 1$}
+  \end{multicols}
+
+  \vspace{3mm}
+  \caption{Quantum circuit representation of the four single-bit operations.}
+  \label{fig:single_bit_quantum_circuits}
+\end{figure}
+
+\noindent
+With these definitions we can start using the Deutch-Jozsa algorithm to efficiently determine what kind of function our black box is. The circuit to do so is described in Figure~\ref{fig:deutch_jozsa_circuit}. In this circuit, $U_f$ refers to our black box function, or as it is sometimes also called, \emph{oracle}.
+
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=1em @!R {
+      \push{\rule{0em}{1em}} & & & \lstick{x: \ket{0}} & \gate{H} & \multigate{1}{U_f} & \gate{H} & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & \lstick{y: \ket{1}} & \gate{H} & \ghost{U_f} &  \qw & \qw & \qw
+    }
+  \]
+  \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm.}
+  \label{fig:deutch_jozsa_circuit}
+\end{figure}
+\noindent
+We can try it out by trying to determine if the identity function $f_i(x) = x$ is balanced or unbalanced. We start with putting \ket{x} and \ket{y} through a Hadamard gate:
+\[
+  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{10} - \ket{11})
+\]
+We evaluate our identity function using $U_f: \ket{x, y \otimes f_i(x)}$:
+\[
+\ket{\psi} = \dfrac{1}{2}\left(\ket{0, 0 \otimes f_i(0)} - \ket{0, 1 \otimes f_i(0)} + \ket{1, 0 \otimes f_i(1)} - \ket{1, 1 \otimes f_i(1)}\right)
+\]
+This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the following state:
+\[
+  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{11} - \ket{10})
+\]
+And we apply another Hadmard gate on \ket{x}:
+\begin{align*}
+  \ket{\psi} = \dfrac{1}{2\sqrt2}(&\ket{00} + \ket{10} - \ket{01} - \ket{11} \\
+  + \, &\ket{01} - \ket{11} - \ket{00} + \ket{10})
+\end{align*}
+\vspace*{-10mm}
+\begin{align*}
+  \phantom{\ket{\psi}} &= \dfrac{1}{2\sqrt2}(\ket{10} + \ket{10} - \ket{11} - \ket{11}) \\
+  &= \dfrac{1}{\sqrt2}(\ket{10} - \ket{11})
+\end{align*}
+We end up with the final state $\dfrac{1}{\sqrt2}(\ket{10} - \ket{11})$ before measurement. We can see from this state that $M(x) = 1$. Curiously, the following measurement outcomes apply:
+\begin{align*}
+\ket{0_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) = f(1) \\
+\ket{1_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) \not= f(1)
+\end{align*}
+That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced function. Likewise, we get $M(x) = 0$ if $f(0) = f(1)$, which means $f$ is an unbalanced function. Since we got a measurement of 1 for $f_i$, and given the fact that the identity operation is balanced, we can say that we effectively determined that $f_i$ is a balanced function with one call to the black box.
+
+% divincenzo criteria
 \end{document}
