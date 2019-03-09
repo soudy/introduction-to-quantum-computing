@@ -8,7 +8,7 @@
 \usepackage{chngpage}
 \usepackage{fancyhdr}
 \usepackage[braket, qm]{qcircuit}
-\usepackage[font=small,labelfont=bf, skip=3pt]{caption}
+\usepackage[font={small, it}, labelfont=bf, skip=3pt]{caption}
 \usepackage[hidelinks]{hyperref}
 \usepackage{subcaption}
 \usepackage[normalem]{ulem}
@@ -102,8 +102,7 @@
 \large Lectures by Leon Riesebos}}
 \author{Steven Oud \\ \emph{soud@pm.me}}
 \begin{document}
-
-\vfill
+     
 \maketitle
 
 \toccontents
@@ -146,19 +145,25 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \par
 \newpage
 
-\section{Single-Qubit Quantum Operations}
-Single-qubit quantum gates can be seen as rotations on the Bloch sphere. Quantum gates can be represented by matrices, which we will look at in Section~\ref{sec:matrix_notation}. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. Below are some notable single-qubit gates described and visualized.
+\section{Single-Qubit Quantum Gates}
+Single-qubit quantum gates can be seen as counter-clockwise rotations on the Bloch sphere. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary matrix is a valid gate which acts on $n$ qubits. We will often use circuit notation to describe state transformations:
+\[
+  \Large{
+  \Qcircuit @C=1em @R=0em {
+    & \lstick{\ket{\psi}} & \gate{U} & \qw & \ket{\psi'}
+  }
+}
+\]
+Below are some notable single-qubit gates described and visualized.
 
 \subsection{Pauli Gates}\label{pauli_gates}
  The most simple quantum gates are the \emph{Pauli gates} $I$, $X$, $Y$ and $Z$. $I$ is the identity gate, which does nothing. The other gates rotate $\pi$ radians (180 degrees) around the X, Y or Z-axis. These gates are self-inverse, meaning $U^2 = I$.
 
 \begin{figure}[ht]
-  \begin{adjustwidth}{-2.5cm}{-2.5cm}
   \centering
-  \includegraphics[scale=0.2]{images/pauli_gates.eps}
+  \includegraphics[scale=0.175]{images/pauli_gates.eps}
   \vspace{2mm}
-  \caption{Pauli gates $X$, $Y$ and $Z$ visualized on the Bloch sphere.}
-  \end{adjustwidth}
+  \caption{Pauli gates $X$, $Y$ and $Z$ visualized on the Bloch sphere. The green vector is the starting position and the orange vector the final position.}
 \end{figure}
 
 \subsection{Hadamard Gate}
@@ -179,21 +184,22 @@ Rotation gates that rotate around the Z axis are considered \emph{phase gates}. 
 R_z(\theta) \ket{0} &= \ket{0} \\
 R_z(\theta) \ket{1} &= e^{i\theta}\ket{1}
 \end{align*}
-The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \dfrac{\pi}{2}$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \dfrac{\pi}{4}$ (half an $S$ gate).
+The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \pi/2$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \pi/4$ (half an $S$ gate).
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.23]{images/s_gate.eps}
+  \includegraphics[scale=0.22]{images/s_gate.eps}
   \vspace{2mm}
   \caption{S gate rotation visualized on the Bloch sphere.}
   \label{fig:s_bloch}
 \end{figure}
 
 \section{Measurement}
-Measuring a qubit collapses its state. The probabilistic result of a qubit measurement can be calculated based on the probability amplitudes:
-\[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
-\[P(\ket{0}) = \left|\alpha\right|^2\]
-\[P(\ket{1}) = \left|\beta\right|^2\]
+Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a classical state \ket{j} (which in the computational basis is \ket{0} or \ket{1}). The state \ket{\psi} has ``disappeared" and all that is left is the classical state \ket{j}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
+\begin{gather*}
+  P(\ket{0}) = \left|\alpha\right|^2 \\
+  P(\ket{1}) = \left|\beta\right|^2
+\end{gather*}
 Consider the following simple single-qubit circuit:
 
 \begin{figure}[ht]
@@ -207,32 +213,44 @@ Consider the following simple single-qubit circuit:
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
-We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = \ket{-}$. Finally we measure. We can calculate the probabilities:
-\[\ket{-} = \dfrac{1}{\sqrt2} (\ket{0} - \ket{1})\]
-\[P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 = \dfrac{1}{2}\]
-\[P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 = \dfrac{1}{2}\]
+We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt2$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
+\begin{gather*}
+  P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 = \dfrac{1}{2} \\
+  P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 = \dfrac{1}{2}
+\end{gather*}
 Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.37]{images/simple_circuit.eps}
+  \includegraphics[scale=0.335]{images/simple_circuit.eps}
   \vspace{2mm}
-  \caption{States of our qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H\ket{0}$ $\rightarrow$ $ZH\ket{0}.$}
+  \caption{States of our qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H$\ket{0} $\rightarrow$ $ZH$\ket{0}.}
   \label{fig:gate_rotations}
 \end{figure}
 
 \section{Vector Notation} \label{sec:matrix_notation}
-Earlier we showed that we can represent a quantum state using the following formula:
+Earlier we showed that we can represent a quantum state as following:
 \[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
-The quantum states $\ket{\psi}$, $\ket{0}$ and $\ket{1}$ in the formula above are vectors. We define $\ket{0}$ and $\ket{1}$ as following:
-\[\ket{0} = \qstatezero{}\]
-\[\ket{1} = \qstateone{}\]
-A quantum state has to be a normalized vector. In general, a qubit's state is a unit vector in a two-dimensional complex vector space. A state can be written out as a linear combination:
+The quantum states \ket{\psi}, \ket{0} and \ket{1} in the formula above are vectors. We define \ket{0} and \ket{1}, the computational basis states, as following:
+\setlength\multicolsep{0pt}
+\begin{multicols}{4}
+  \hfill
+  \[\]
+  \break
+  \[\ket{0} = \qstatezero{}\]
+  \break
+  \[\ket{1} = \qstateone{}\]
+  \break
+  \[\]
+  \hfill
+\end{multicols}
+\noindent
+A quantum state has to be a normalized vector. In general, a qubit's state is a unit vector in a two-dimensional complex vector space. A $n$ qubit state has a $2^n$ dimensional \emph{Hilbert space}. We can consider a quantum state state to be a linear combination of the computational basis states:
 \[
-  \ket{\psi} = \alpha\qstatezero{} + \beta\qstateone{} =
-\begin{pmatrix}\alpha \\ \beta\end{pmatrix}
+  \ket{\psi} = \alpha\qstatezero{} + \beta\qstateone{} = \begin{pmatrix}\alpha \\ \beta\end{pmatrix}
 \]
 Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
+\vspace*{-4mm}
 \setlength\multicolsep{0pt}
 \begin{multicols}{3}
   \[
@@ -256,7 +274,7 @@ Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
   \[
     S = \sgate{}
   \]
-    \vfill
+  \vfill
   \[
     H = \hgate{}
   \]
@@ -281,11 +299,20 @@ The result is the identity gate, showing that the inverse of $H$ is indeed itsel
 \newpage
 
 \chapter{Fundamentals: A Multi-Qubit World}
-We can represent multiple qubits using the \emph{Kronecker product} to combine single qubit states:
+We can represent multiple qubit states using the \emph{Kronecker product}. Let $A$ be a $m \times n$ matrix and $B$ a $p \times q$ matrix, then
+\[
+A \otimes B =
+  \begin{pmatrix}
+  a_{11}B & \dots & a_{1n}B \\
+  \phantom{a_{11}B} & \ddots & \phantom{a_{1n}B} \\
+  a_{m1}B & \dots & a_{mn}B \\
+  \end{pmatrix}
+\]
+Resulting in a $mp \times nq$ matrix. For a two qubit state, we can write it as following in Dirac notation:
 \[
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
 \]
-More generally, we say that any linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. To represent \ket{00} for example:
+More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. To represent \ket{00} for example:
 \[
   \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} =
   \begin{pmatrix}
@@ -304,11 +331,11 @@ Note that the state vector of two qubits is twice as big as the state vector for
 
 For multi-qubit states the rule remains that the state vector has to be normalized. For two qubits for example: $\alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11} = 1$. Or, more general, for a $n$ qubit state:
 \[
-\sum_{i = 1}^{2^n} |\alpha_i|^2 = 1
+\sum_{i = 0}^{2^n-1} |\alpha_i|^2 = 1
 \]
 
 \section{Quantum State Evolution}
-Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1\ket{0_0 0_1}$. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronecker product of the identity matrix and our single-qubit matrix (in this case $H$):
+Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1$\ket{0_0 0_1}. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronecker product of the identity matrix and our single-qubit matrix (in this case $H$):
 \[
   H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}
 \]
@@ -582,7 +609,7 @@ A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. 
 \[
 \ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2}
 \]
-Where $\ket{i}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
+Where $\ket{j}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
 \[
 \ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}
 \]
@@ -601,7 +628,7 @@ GHZ states are used for example in cryptography for secret sharing.
 \end{figure}
 
 \section{Calculating Parity}
-Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0q_1} with \ket{q_2}.
+Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0}\ket{q_1} with \ket{q_2}.
 \begin{figure}[ht]
   \[
   \Large
@@ -627,7 +654,7 @@ And a $\textsc{cnot}_{1,2}$, giving us the final state
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110})
 \]
-If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0q_1}. We have essentially calculated the parities of all possible states of \ket{q_0q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
+If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
 \[
 \ket{\psi} = 
 \begin{cases}
@@ -657,9 +684,8 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
   \caption{Quantum circuit teleporting a quantum state \ket{\phi}.}
   \label{fig:teleportation}
 \end{figure}
-\noindent
-The quantum circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
-\ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
+The circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
+\ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1}\ket{q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
 \[
   \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
 \]
@@ -672,7 +698,7 @@ Alice then sends her qubits through a $\textsc{cnot}_{0, 1}$ gate, obtaining
 \[
   \ket{\psi_2} = \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{10} + \ket{01})\Big)
 \]
-She then sends $q_0$ through a Hadamard gate, giving
+She then sends \ket{q_0} through a Hadamard gate, giving
 \[
   \ket{\psi_3} = \dfrac{1}{2}\Big(\alpha(\ket{0} + \ket{1})(\ket{00} + \ket{11}) + \beta(\ket{0} - \ket{1})(\ket{10} + \ket{01})\Big)
 \]
@@ -700,7 +726,7 @@ Any classical circuit can be simulated by a quantum circuit. We can show this by
       \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \ghost{U_f} & \qw & & \hspace*{5.7mm} \ket{y \otimes f(x)}
     }
   \]
-  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. $y$ is often assumed to be initialized to 0.}
+  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. This transformation can be described as $U_f\ket{x}\ket{y} = \ket{x}\ket{y \otimes f(x)}$. The $\otimes$ symbol in this context means the binary sum (\textsc{xor}).}
   \label{fig:add_output_qubit}
 \end{figure}
 We can create a quantum half adder by creating sum and carry circuits, just like in classical computers. The truth table of the sum function $f_s(x)$ can be found in Figure \ref{fig:sum_truth_table}. We can implement this as a quantum circuit using \textsc{cnot} gates as seen in Figure \ref{fig:sum_quantum_circuit}.
@@ -723,16 +749,16 @@ We can create a quantum half adder by creating sum and carry circuits, just like
     \[
       \Large
       \Qcircuit @C=1em @R=0.5em @!R {
-        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{0}}} & \qw & \ctrl{2} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{1}}} & \qw & \qw & \ctrl{1} & \qw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \qw & \targ &  \targ & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{0}}} & \ctrl{2} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{1}}} & \qw & \ctrl{1} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \targ &  \targ & \qw \\
       }
     \]
     \caption{Quantum circuit for summing two bits using two \textsc{cnot} gates.}
     \label{fig:sum_quantum_circuit}
     \end{minipage}
 \end{figure}
-\noindent
+
 To fully add two bits we need to account for the carry. The carry function $f_c(x)$ is 1 if and only if both inputs are 1 (Figure~\ref{fig:carry_truth_table}). This truth table corresponds directly to the Toffoli gate (Figure~\ref{fig:carry_quantum_circuit}).
 
 \begin{figure}[ht]
@@ -769,17 +795,17 @@ We can combine our sum and carry circuit into one, creating a quantum half adder
   \[
   \Large
   \Qcircuit @C=1em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & \lstick{\ket{x_0}} & \ctrl{3} & \ctrl{2} & \qw & \qw & \hspace*{2.5mm} \ket{x_0} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{x_1}} & \ctrl{2} & \qw &  \ctrl{1} & \qw & \hspace*{2.5mm} \ket{x_1} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw & \targ & \targ & \qw & \ket{s} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \qw & \qw & \ket{c} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{x_0}} & \ctrl{3} & \ctrl{2} & \qw & \qw & \ket{x_0} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{x_1}} & \ctrl{2} & \qw &  \ctrl{1} & \qw & \ket{x_1} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw & \targ & \targ & \qw & \ket{y_s} \\
+    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \qw & \qw & \ket{y_c} \\
   }
   \]
-  \caption{Quantum half adder. The sum ends up in \ket{s} and the carry in \ket{c}.}
+  \caption{Quantum half adder. The sum ends up in \ket{y_s} and the carry in \ket{y_c}.}
   \label{fig:quantum_full_adder}
 \end{figure}
 \noindent
-Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(s) = 0$ and $M(c) = 1$, giving us what we expected and thus having done a quantum half sum of two qubits.
+Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(y_s) = 0$ and $M(y_c) = 1$, giving us what we expected and thus having done a quantum half addition of two qubits.
 
 \section{Deutch-Jozsa Algorithm}
 We have shown that we can simulate classical circuits on a quantum computer. This in itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set. 
@@ -838,8 +864,8 @@ On a classical computer, to determine if the black box is balanced or unbalanced
 
     \[
       \Qcircuit @C=0.7em @R=0.5em @!R {
-          \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \gate{X} & \ctrl{1} & \gate{X} & \qw \\
-          \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \qw & \targ & \qw & \qw
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \gate{X} & \ctrl{1} & \gate{X} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \qw & \targ & \qw & \qw
       }
     \]
     \caption*{\textbf{NOT}\\$f_n(x) = \neg x$}
@@ -877,17 +903,16 @@ With these definitions we can start using the Deutch-Jozsa algorithm to efficien
       \push{\rule{0em}{1em}} & & & \lstick{y: \ket{1}} & \gate{H} & \ghost{U_f} &  \qw & \qw & \qw
     }
   \]
-  \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm.}
+  \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm. $U_f$ is the quantum circuit which transforms \ket{x}\ket{y} to \ket{x}\ket{y \otimes f(x)}.}
   \label{fig:deutch_jozsa_circuit}
 \end{figure}
-\noindent
 We can try it out by trying to determine if the identity function $f_i(x) = x$ is balanced or unbalanced. We start with putting \ket{x} and \ket{y} through a Hadamard gate:
 \[
   \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{10} - \ket{11})
 \]
-We evaluate our identity function using $U_f: \ket{x, y \otimes f_i(x)}$:
+We evaluate our identity function using by applying $U_f$:
 \[
-\ket{\psi} = \dfrac{1}{2}\left(\ket{0, 0 \otimes f_i(0)} - \ket{0, 1 \otimes f_i(0)} + \ket{1, 0 \otimes f_i(1)} - \ket{1, 1 \otimes f_i(1)}\right)
+\ket{\psi} = \dfrac{1}{2}\left(\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} + \ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\right)
 \]
 This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the following state:
 \[
@@ -910,5 +935,18 @@ We end up with the final state $\dfrac{1}{\sqrt2}(\ket{10} - \ket{11})$ before m
 \end{align*}
 That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced function. Likewise, we get $M(x) = 0$ if $f(0) = f(1)$, which means $f$ is an unbalanced function. Since we got a measurement of 1 for $f_i$, and given the fact that the identity operation is balanced, we can say that we effectively determined that $f_i$ is a balanced function with one call to the black box.
 
-% divincenzo criteria
+%\section{Anatomy of a Simple Quantum Algorithm}
+%\begin{figure}[ht]
+%  \[
+%    \Large
+%    \Qcircuit @C=1em @R=0.5em @!R {
+%      \push{\rule{0em}{1em}} & & & \lstick{\ket{q_0}} & \multigate{3}{\,U_s\,} & \multigate{3}{\;U_f\:} & \multigate{3}{U_p} & \multigate{3}{M} \\
+%      \push{\rule{0em}{1em}} & & & \lstick{\ket{q_1}} & \ghost{\,U_s\,} &  \ghost{U_f} & \ghost{U_p} & \qw \\
+%      & \hspace*{7mm} \vdots \\
+%      \push{\rule{0em}{1em}} & & & \lstick{\ket{q_n}} & \ghost{\,U_s\,} &  \ghost{U_f} & \ghost{U_p} & \qw
+%    }
+%  \]
+%  \caption{todo}
+%  \label{fig:todo}
+%\end{figure}
 \end{document}
