@@ -709,7 +709,7 @@ This expression breaks down in four terms. The first term has Alice's qubits in 
 
 Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state \ket{\phi}, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state \ket{\phi}, so it never allows for cloning.
 
-\chapter{Simple Quantum Algorithms}
+\chapter{Quantum Algorithms}
 Quantum computers promise to solve problems intractable by classical computers. One application is quantum simulation. For example: simulating chemical processes, which are actually quantum processes. As Richard Feynman said: \say{\emph{Nature isn't classical, dammit, and if you want to make a simulation of nature, you'd better make it quantum mechanical.}} Other possible applications include optimization, cryptography and machine learning. There are a lot of efforts in trying to apply quantum computing, but many remain skeptic. We should assume no guarantees in the applications of quantum computers, but continue exploring the possibilities.
 
 When a quantum computer can calculate something efficiently that a classical computer cannot calculate efficiently, we will have reached \emph{quantum supremacy}. The boundary of reaching this is around 50 qubits, when it becomes impossible to simulate a quantum computer. We have not yet reached quantum supremacy, but we are getting close to it. There have been found quantum algorithms which provide a speedup over classical algorithms, like Shor's algorithm for factoring integers and the Deutch-Jozsa algorithm for determining if a boolean function is balanced or unbalanced.
@@ -947,6 +947,21 @@ That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced f
 %  \caption{todo}
 %  \label{fig:todo}
 %\end{figure}
-\newpage
+\section{Phase Estimation Algorithm}
+The quantum phase estimation algorithm is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{\psi} of a unitary operator $U$, where $U\ket{\psi} = e^{i2\pi \theta}\ket{\psi}$. We want to find the eigenvalue $e^{i2\pi \theta}$ of \ket{\psi}.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=0.9em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \dots & & \ctrl{4} & \qw & \multigate{3}{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+        \rstick{\vdots} & & & \vdots & & & & & & & & & & & \vdots \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \qw {/} & \gate{U} & \gate{U^2} & \qw & \qw & \dots & & \gate{U^{2^{n-1}}} & \qw & \qw & \qw & \qw & \qw \\
+    }
+  \]
+  \caption{Quantum phase estimation circuit, where $F^\dagger_n$ represent the inverse quantum Fourier transform on $n$ qubits.}
+  \label{fig:phase_estimation_circ}
+\end{figure}
 
 \end{document}
