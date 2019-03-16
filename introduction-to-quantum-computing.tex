@@ -115,13 +115,17 @@
 \epigraph{It is tempting to say that a quantum computer is one whose operation is governed by the laws of quantum mechanics. But since the laws of quantum mechanics govern the behavior of all physical phenomena, this temptation must be resisted. Your laptop operates under the laws of quantum mechanics, but it is not a quantum computer.}{--- N. David Mermin}
 
 \section{The Qubit}
-A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. In classical bits this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (denoted in \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, often called \emph{superpositions}. The state of a qubit can be denoted as following:
-\[\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\]
+A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. In classical bits this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (denoted in \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, called \emph{superpositions}. The state of a qubit can be denoted as following:
+\[
+  \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
+\]
 where $\alpha$ and $\beta$ are complex numbers. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us we can only acquire much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The sum of all probabilities is always equal to 1:
-\[|\alpha|^2 + |\beta|^2 = 1\]
+\[
+  |\alpha|^2 + |\beta|^2 = 1
+\]
 For example, a qubit in the state
 \[
-\dfrac{1}{\sqrt2}\ket{0}+\dfrac{1}{\sqrt2}\ket{1}
+  \dfrac{1}{\sqrt2}\ket{0}+\dfrac{1}{\sqrt2}\ket{1}
 \]
 gives 0 fifty percent of the time ($|1/\sqrt2|^2$), and 1 fifty percent of the time. This state is often denoted by \ket{+}.
 
@@ -132,7 +136,7 @@ The Bloch sphere is a geometrical representation of a qubit's state. It's a sphe
 \]
 where $\delta, \theta$ and $\phi$ are real numbers. Factor $e^{i\delta}$ is the global phase of the state. This factor does not influence measurement probabilities, since $\left|e^{i\delta}\right| = 1$. Therefore we can often omit it, allowing us to write
 \[
-  \ket{\psi} = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}
+  \ket{\psi} = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}.
 \]
 The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (Figure~\ref{fig:bloch}). The Bloch sphere visualization can be very useful for describing single qubit operations. It is however limited in that there is no simple generalization of the Bloch sphere known for multiple qubits.
 \begin{figure}[ht]
@@ -306,27 +310,28 @@ A \otimes B =
   a_{11}B & \dots & a_{1n}B \\
   \phantom{a_{11}B} & \ddots & \phantom{a_{1n}B} \\
   a_{m1}B & \dots & a_{mn}B \\
-  \end{pmatrix}
+  \end{pmatrix},
 \]
-Resulting in a $mp \times nq$ matrix. For a two qubit state, we can write it as following in Dirac notation:
-\[
-  \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
-\]
-More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. To represent \ket{00} for example:
+resulting in a $mp \times nq$ matrix. We can then represent the two qubit state \ket{00} as following:
 \[
   \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} =
   \begin{pmatrix}
-  1\qstatezero{} \\[13pt]
-  0\qstatezero{}
+    1\qstatezero{} \\[13pt]
+    0\qstatezero{}
   \end{pmatrix}
   =
   \begin{pmatrix}
-  1 \\
-  0 \\
-  0 \\
-  0
+    1 \\
+    0 \\
+    0 \\
+    0
   \end{pmatrix}
 \]
+We can write a two qubit state as following in Dirac notation:
+\[
+  \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+\]
+More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. 
 Note that the state vector of two qubits is twice as big as the state vector for one qubit. This is where some of the potential power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states - the state space grows exponentially with the number of qubits, unlike classical bits. For multi-qubit states the rule remains that the state vector has to be normalized. For a $n$ qubit state:
 \[
 \sum_{i = 0}^{2^n-1} |\alpha_i|^2 = 1
@@ -413,7 +418,7 @@ We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1}
 
 \section{Common Two-Qubit Gates}
 \subsection{CNOT Gate}
-The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit $q_0$ represents the control qubit and $q_1$ represents the target qubit. It's essentially a Pauli X gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
+The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit \ket{q_0} represents the control qubit and \ket{q_1} represents the target qubit. It's essentially a Pauli X gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
 
 \begin{figure}[ht]
 \centering
@@ -486,7 +491,7 @@ Controlled gates act on two or more qubits, where one or more qubits act as cont
   \begin{pmatrix}
   u_{00} & u_{01} \\
   u_{10} & u_{11} \\
-  \end{pmatrix}
+  \end{pmatrix},
 \]
 then the controlled-$U$ gate is a gate that operates on two qubits where the first qubit serves as control. The general matrix representation of the controlled-$U$ then, if qubit 0 is the control and qubit 1 is the target, looks as following:
 \[
@@ -605,9 +610,9 @@ If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa. Note that in 
 \section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
 \[
-\ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2}
+\ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2},
 \]
-Where $\ket{j}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
+where $\ket{j}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
 \[
 \ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}
 \]
@@ -642,15 +647,15 @@ Parity checking is one of the simplest forms of error detecting code. It tells u
 
 We start with putting \ket{q_0} and \ket{q_1} in an arbitrary superposition. In this case we apply a Hadamard gate to both qubits, giving us the state
 \[
-  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{100} + \ket{110})
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{100} + \ket{110}).
 \]
-Then we apply a $\textsc{cnot}_{0,2}$ operation
+Then we apply a $\textsc{cnot}_{0,2}$ operation, giving
 \[
-  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{101} + \ket{111})
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{101} + \ket{111}),
 \]
-And a $\textsc{cnot}_{1,2}$, giving us the final state
+and a $\textsc{cnot}_{1,2}$, giving us the final state
 \[
-  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110})
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110}).
 \]
 If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
 \[
@@ -685,25 +690,25 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
 The circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
 \ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1}\ket{q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
 \[
-  \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})
+  \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11}),
 \]
-Which we can rewrite as following
+which we can rewrite as following
 \begin{align*}
 \ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-&= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big)
+&= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big).
 \end{align*}
 Alice then sends her qubits through a $\textsc{cnot}_{0, 1}$ gate, obtaining
 \[
-  \ket{\psi_2} = \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{10} + \ket{01})\Big)
+  \ket{\psi_2} = \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{10} + \ket{01})\Big).
 \]
 She then sends \ket{q_0} through a Hadamard gate, giving
 \[
-  \ket{\psi_3} = \dfrac{1}{2}\Big(\alpha(\ket{0} + \ket{1})(\ket{00} + \ket{11}) + \beta(\ket{0} - \ket{1})(\ket{10} + \ket{01})\Big)
+  \ket{\psi_3} = \dfrac{1}{2}\Big(\alpha(\ket{0} + \ket{1})(\ket{00} + \ket{11}) + \beta(\ket{0} - \ket{1})(\ket{10} + \ket{01})\Big).
 \]
 This state can be rewritten in the following way:
 \begin{align*}
   \ket{\psi_3} = \dfrac{1}{2}\Big(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) \, + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \\
-  + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big)
+  + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big).
 \end{align*}
 This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = 00$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
 
@@ -906,17 +911,17 @@ With these definitions we can start using the Deutch-Jozsa algorithm to efficien
 \end{figure}
 We can try it out by trying to determine if the identity function $f_i(x) = x$ is balanced or unbalanced. We start with putting \ket{x} and \ket{y} through a Hadamard gate:
 \[
-  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{10} - \ket{11})
+  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{10} - \ket{11}).
 \]
 We evaluate our identity function using by applying $U_f$:
 \[
-\ket{\psi} = \dfrac{1}{2}\left(\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} + \ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\right)
+\ket{\psi} = \dfrac{1}{2}\left(\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} + \ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\right).
 \]
-This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the following state:
+This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the state
 \[
-  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{11} - \ket{10})
+  \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{11} - \ket{10}).
 \]
-And we apply another Hadmard gate on \ket{x}:
+Finally we apply another Hadmard gate on \ket{x}:
 \begin{align*}
   \ket{\psi} = \dfrac{1}{2\sqrt2}(&\ket{00} + \ket{10} - \ket{01} - \ket{11} \\
   + \, &\ket{01} - \ket{11} - \ket{00} + \ket{10})
@@ -924,7 +929,7 @@ And we apply another Hadmard gate on \ket{x}:
 \vspace*{-10mm}
 \begin{align*}
   \phantom{\ket{\psi}} &= \dfrac{1}{2\sqrt2}(\ket{10} + \ket{10} - \ket{11} - \ket{11}) \\
-  &= \dfrac{1}{\sqrt2}(\ket{10} - \ket{11})
+  &= \dfrac{1}{\sqrt2}(\ket{10} - \ket{11}).
 \end{align*}
 We end up with the final state $\dfrac{1}{\sqrt2}(\ket{10} - \ket{11})$ before measurement. We can see from this state that $M(x) = 1$. Curiously, the following measurement outcomes apply:
 \begin{align*}
@@ -947,21 +952,86 @@ That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced f
 %  \caption{todo}
 %  \label{fig:todo}
 %\end{figure}
-\section{Phase Estimation Algorithm}
-The quantum phase estimation algorithm is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{\psi} of a unitary operator $U$, where $U\ket{\psi} = e^{i2\pi \theta}\ket{\psi}$. We want to find the eigenvalue $e^{i2\pi \theta}$ of \ket{\psi}.
+\section{Quantum Fourier Transform}
+An important operation in classical computing and quantum computing as we will see is the \emph{discrete Fourier transform}. A discrete Fourier transform can be described by a unitary matrix. This means we can map a $N$-dimensional state vector to another $N$-dimensional state vector by a $N \times N$ matrix $F_N$. For a $n$ qubit state $N$ is equal to $2^n$. The quantum Fourier transform (QFT) provides an exponential speedup over the classical fast Fourier transform (FFT) algorithm.
+
+We have already seen and used the QFT on a single qubit. The unitary matrix of the QFT on one qubit is the Hadamard gate:
+\[
+  F_2 = H = \hgate.
+\]
+To describe the circuit for the $n$-qubit QFT we need the Hadamard and controlled phase gate, which we will write as $R_k$ where
+\[
+  R_k = \begin{pmatrix}
+    1 & 0 \\
+    0 & e^{2\pi i/2^k}
+  \end{pmatrix}.
+\]
+The circuit for a QFT on 3 qubits can be seen in Figure~\ref{fig:quantum_fourier_circ}. Note that $S = R_2$ and $T = R_3$. The crossed gate at the end is the swap gate, which swaps two qubits. The order of qubits has to be reversed at the end of a QFT to get the correct order as result. Note that by inverting the circuit by reversing the order of the gates and taking the inverse $U^\dagger$ of each gate $U$, we get an equally efficient circuit for the inverse Fourier transform $F_N^\dagger$.
+
+% TODO: show 3 qubit QFT calculation?
 \begin{figure}[ht]
   \[
     \Large
-    \Qcircuit @C=0.9em @R=0.5em @!R {
-        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \dots & & \ctrl{4} & \qw & \multigate{3}{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-        \rstick{\vdots} & & & \vdots & & & & & & & & & & & \vdots \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \qw {/} & \gate{U} & \gate{U^2} & \qw & \qw & \dots & & \gate{U^{2^{n-1}}} & \qw & \qw & \qw & \qw & \qw \\
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{x_0}} & \gate{H} & \gate{S} & \gate{T} & \qw & \qw & \qw & \qswap & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{x_1}} & \qw & \ctrl{-1} & \qw & \gate{H} & \gate{S} & \qw & \qw \qwx & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{x_2}} & \qw & \qw & \ctrl{-2} & \qw & \ctrl{-1} & \gate{H} & \qswap \qwx & \qw \\
     }
   \]
-  \caption{Quantum phase estimation circuit, where $F^\dagger_n$ represent the inverse quantum Fourier transform on $n$ qubits.}
+  \caption{Quantum Fourier transform on 3 qubits.}
+  \label{fig:quantum_3_qubit_fourier_circ}
+\end{figure}
+\noindent
+The matrix of the QFT on 3 qubits can be written out using $\omega = e^{2\pi i/8}$:
+\[
+  F_8 = \dfrac{1}{\sqrt8}
+  \begin{pmatrix}
+    1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    1 & \omega & \omega^2 & \omega^3 & \omega^4 & \omega^5 & \omega^6 & \omega^7 \\
+    1 & \omega^2 & \omega^4 & \omega^6 & 1 & \omega^2 & \omega^4 & \omega^6 \\
+    1 & \omega^3 & \omega^6 & \omega^1 & \omega^4 & \omega^7 & \omega^2 & \omega^5 \\
+    1 & \omega^4 & 1 & \omega^4 & 1 & \omega^4 & 1 & \omega^4 \\
+    1 & \omega^5 & \omega^2 & \omega^7 & \omega^4 & \omega^1 & \omega^6 & \omega^3 \\
+    1 & \omega^6 & \omega^4 & \omega^2 & 1 & \omega^6 & \omega^4 & \omega^2 \\
+    1 & \omega^7 & \omega^6 & \omega^5 & \omega^4 & \omega^3 & \omega^2 & \omega^1 \\
+  \end{pmatrix}.
+\]
+A more general circuit of the QFT for a $n$ qubit state is described below.
+
+\begin{figure}[ht]
+  \begin{adjustwidth}{-2.5cm}{-2.5cm}
+    \[
+      \Qcircuit @C=0.8em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_0}} & \gate{H} & \gate{R_2} & \qw & \dots & & \gate{R_{n-1}} & \gate{R_n} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_1}} & \qw & \ctrl{-1} & \qw & \dots & & \qw & \qw & \gate{H} & \qw & \dots & & \gate{R_{n-2}} & \gate{R_{n-1}} & \qw & \dots & & \qw & \qw & \qw & \qw \\
+        \rstick{\vdots} & & & & \vdots & & & & & & & & & & & \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_{n - 1}}} & \qw & \qw & \qw & \qw & \qw & \ctrl{-3} & \qw & \qw & \qw & \qw & \qw & \ctrl{-2} & \qw & \qw & \dots & & \gate{H} & \gate{R_2} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{x_n}} & \qw  & \qw & \qw & \qw & \qw & \qw & \ctrl{-4} & \qw & \qw & \qw & \qw & \qw & \ctrl{-3} & \qw & \dots & & \qw & \ctrl{-1} & \gate{H} & \qw \\
+      }
+    \]
+  \end{adjustwidth}
+  \caption{Quantum Fourier transform on $n$ qubits. Swap gates at the end are omitted.}
+  \label{fig:quantum_fourier_circ}
+\end{figure}
+The result of the Fourier transformation of the original state is stored in the amplitudes. Remember however that these amplitudes cannot be extracted. Thus there is no way of determining the Fourier transform of the original state using the QFT. Even though we can't extract the transformed values after a QFT, the QFT has its use in quantum algorithms like the quantum phase estimation algorithm.
+
+\section{Quantum Phase Estimation Algorithm}
+The quantum phase estimation (QPE) algorithm is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{\psi} of a unitary operator $U$, where $U\ket{\psi} = e^{2\pi i \varphi}\ket{\psi}$ and the value of $\varphi$ is unknown. We want to estimate the value of $\varphi$. The circuit for the QPE algorithm found in Figure~\ref{fig:phase_estimation_circ} consists of two registers. The upper $n$ qubits comprise the first register which will be used to calculate the estimate of $\varphi$. The lower $m$ qubits are the second register which will be prepared with the eigenstate \ket{\psi} whose phase we want to estimate.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=0.8em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \dots & & \ctrl{4} & \qw & \multigate{3}{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \rstick{\vdots} & & & \vdots & & & & & & & & & & & \vdots \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \qw {/^m} & \gate{U^{2^0}} & \gate{U^{2^1}} & \qw & \qw & \dots & & \gate{U^{2^{n-1}}} & \qw & \qw & \qw & \qw & \qw \\
+    }
+  \]
+  \caption{Quantum phase estimation circuit, where $F^\dagger_n$ represent the inverse quantum Fourier transform on $n$ qubits. The '/' denotes a bundle of wires.}
   \label{fig:phase_estimation_circ}
 \end{figure}
+
+The initial state of the system is $\ket{0}^{\otimes n}\ket{\psi}$, where \ket{\psi} is the eigenstate whose phase we want to estimate.
 
 \end{document}
