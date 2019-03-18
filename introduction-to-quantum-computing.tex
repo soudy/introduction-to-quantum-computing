@@ -1050,5 +1050,46 @@ After applying the operators $U^{2^j}$ as seen in Figure~\ref{fig:phase_estimati
   \left(\ket{0} + e^{2\pi i 2^0 \varphi}\ket{1}\right) \\
   = &\dfrac{1}{2^{n/2}}\sum_{2^n-1}^{k=0} e^{2\pi i \varphi k}\ket{k}.
 \end{align*}
-The second register stays in the state \ket{\psi} throughout this computation.
+The second register stays in the state \ket{\psi} throughout this computation. The next step in the quantum phase estimation algorithm is to apply the \emph{inverse} QFT on the first register. This circuit can be obtained by reversing the QFT circuit in Figure~\ref{fig:quantum_fourier_circ}. Finally, when we measure the first register, we end up with our estimation for $\varphi$. The measurement will be a state \ket{j} of $n$ qubits. To make sense of our calculation, it is useful to look at the result on a unit circle.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=2.5,cap=round,>=latex]
+  % draw the coordinates
+  \draw (1.5cm,0cm) node[right,fill=white] {$\dfrac{\pi}{2}$};
+  \draw (0cm,1.5cm) node[above,fill=white] {$0$};
+  \draw (0cm,-1.5cm) node[below,fill=white] {$\pi$};
+  \draw (-1.5cm,0cm) node[left,fill=white] {$\dfrac{3\pi}{2}$};
+
+    % draw the unit circle
+    \draw[thick] (0cm,0cm) circle(1cm);
+
+    \foreach \x [count=\i from -1] in {0,22.5,...,360} {
+      \draw[black] (0cm,0cm) -- (\x:1cm);
+    }
+
+    \foreach \x/\xtext in {
+      22.5/0011,
+      45/0010,
+      67.5/0001,
+      90/0000,
+      112.5/1111,
+      135/1110,
+      157.5/1101,
+      180/1100,
+      202.5/1011,
+      225/1010,
+      247.5/1001,
+      270/1000,
+      292.5/0111,
+      315/0110,
+      337.5/0101,
+      360/0100}
+    \draw (\x:1.25cm) node[] {$\xtext$};
+  \end{tikzpicture}
+  \caption{Unit circle mapping a binary value to a fraction.}
+  \label{fig:qpe_unit_circle}
+\end{figure}
+\noindent
+Let's take $n = 4$ qubits for a phase estimation of $\varphi$. The phase that we're trying to predict is a radiant, so somewhere between 0 and $2\pi$. Given $n = 4$ qubits we can estimate $2^4 = 16$ possible values between 0 and $2\pi$. This is visualized on a unit circle in Figure~\ref{fig:qpe_unit_circle}, where we map binary values to fractions. Say we're trying to estimate the phase of $\varphi$ and we measure the result $1100$. We can see from the unit circle that this measurement results corresponds to an estimate of $\varphi \approx 3\pi/2$.
 \end{document}
