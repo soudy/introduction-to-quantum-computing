@@ -1016,22 +1016,39 @@ A more general circuit of the QFT for a $n$ qubit state is described below.
 The result of the Fourier transformation of the original state is stored in the amplitudes. Remember however that these amplitudes cannot be extracted. Thus there is no way of determining the Fourier transform of the original state using the QFT. Even though we can't extract the transformed values after a QFT, the QFT has its use in quantum algorithms like the quantum phase estimation algorithm.
 
 \section{Quantum Phase Estimation Algorithm}
-The quantum phase estimation (QPE) algorithm is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{\psi} of a unitary operator $U$, where $U\ket{\psi} = e^{2\pi i \varphi}\ket{\psi}$ and the value of $\varphi$ is unknown. We want to estimate the value of $\varphi$. The circuit for the QPE algorithm found in Figure~\ref{fig:phase_estimation_circ} consists of two registers. The upper $n$ qubits comprise the first register which will be used to calculate the estimate of $\varphi$. The lower $m$ qubits are the second register which will be prepared with the eigenstate \ket{\psi} whose phase we want to estimate.
+The quantum phase estimation (QPE) algorithm is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{\psi} of a unitary operator $U$, where $U\ket{\psi} = e^{2\pi i \varphi}\ket{\psi}$ and the value of $\varphi$ is unknown. We want to estimate the value of $\varphi$. The circuit for the QPE algorithm found in Figure~\ref{fig:phase_estimation_circ} consists of two registers. The upper $n$ qubits comprise the first register which will be used to calculate the estimate of $\varphi$. The size of the first register can be chosen based on two factors: accuracy and success probability. More qubits will give you better accuracy and a higher success probability. The lower $m$ qubits are the second register which will be prepared with the eigenstate \ket{\psi} whose phase we want to estimate.
 \begin{figure}[ht]
   \[
     \Large
-    \Qcircuit @C=0.8em @R=0.5em @!R {
-      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \dots & & \ctrl{4} & \qw & \multigate{3}{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-      \rstick{\vdots} & & & \vdots & & & & & & & & & & & \vdots \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw & \qw & \dots & & \qw & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \qw {/^m} & \gate{U^{2^0}} & \gate{U^{2^1}} & \qw & \qw & \dots & & \gate{U^{2^{n-1}}} & \qw & \qw & \qw & \qw & \qw \\
+    \Qcircuit @C=0.9em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \qw & \qw & \dots & & \ctrl{4} & \multigate{3}{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \rstick{\vdots} & & & \vdots & & & & & & & & & \vdots \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \qw & \ctrl{2} & \qw & \dots & & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw & \dots & & \qw & \ghost{\,F^\dagger_n\,} & \qw & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \qw {/^m} & \gate{U^{2^0}} & \gate{U^{2^1}} & \qw & \dots & & \gate{U^{2^{n-1}}} & \qw & \qw & \qw & \qw \\
     }
   \]
   \caption{Quantum phase estimation circuit, where $F^\dagger_n$ represent the inverse quantum Fourier transform on $n$ qubits. The '/' denotes a bundle of wires.}
   \label{fig:phase_estimation_circ}
 \end{figure}
 
-The initial state of the system is $\ket{0}^{\otimes n}\ket{\psi}$, where \ket{\psi} is the eigenstate whose phase we want to estimate.
-
+We start with the system in the state $\ket{0}^{\otimes n}\ket{\psi}$. After applying $n$ Hadamard operations $H^{\otimes n}$ on the first register we end up with the state
+\[
+  \dfrac{1}{2^{n/2}}(\ket{0} + \ket{1})^{\otimes n} \ket{\psi}.
+\]
+We continue by applying the controlled unitary operator $U$. Remember that   $U\ket{\psi} = e^{2\pi i \varphi}\ket{\psi}$, then
+\begin{align*}
+  U^{2^j}\ket{\psi} &= U^{2^j-1}U\ket{\psi} \\
+  &= U^{2^j-1}e^{2\pi i \varphi}\ket{\psi} \\
+  &= e^{2\pi i 2^j \varphi}\ket{\psi}.
+\end{align*}
+After applying the operators $U^{2^j}$ as seen in Figure~\ref{fig:phase_estimation_circ}, the state of the \emph{first} register is
+\begin{align*}
+  \dfrac{1}{2^{n/2}}\left(\ket{0} + e^{2\pi i 2^{n-1} \varphi}\ket{1}\right)
+  \dotsb
+  \left(\ket{0} + e^{2\pi i 2^1 \varphi}\ket{1}\right)&
+  \left(\ket{0} + e^{2\pi i 2^0 \varphi}\ket{1}\right) \\
+  = &\dfrac{1}{2^{n/2}}\sum_{2^n-1}^{k=0} e^{2\pi i \varphi k}\ket{k}.
+\end{align*}
+The second register stays in the state \ket{\psi} throughout this computation.
 \end{document}
