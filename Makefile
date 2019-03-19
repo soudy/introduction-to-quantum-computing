@@ -6,7 +6,7 @@ OUT_FILE=introduction-to-quantum-computing.pdf
 all: $(OUT_FILE)
 
 $(OUT_FILE): $(IN_FILE)
-	latexmk -pdfps -use-make $^
+	latexmk -pdf -use-make $^
 
 clean:
 	latexmk -CA
