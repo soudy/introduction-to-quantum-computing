@@ -133,11 +133,11 @@ gives 0 fifty percent of the time ($|1/\sqrt2|^2$), and 1 fifty percent of the t
 \section{The Bloch Sphere}
 The Bloch sphere is a geometrical representation of a qubit's state. It's a spherical coordinate system in which a quantum state can be described as
 \begin{equation}
-  \ket{\psi} = e^{i\delta} \left(cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}\right),
+  \ket{\psi} = e^{i\delta} \left(\cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}\sin\dfrac{\theta}{2}\ket{1}\right),
 \end{equation}
 where $\delta, \theta$ and $\phi$ are real numbers. Factor $e^{i\delta}$ is the global phase of the state. This factor does not influence measurement probabilities, since $\left|e^{i\delta}\right| = 1$. Therefore we can often omit it, allowing us to write
 \begin{equation}
-  \ket{\psi} = cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}sin\dfrac{\theta}{2}\ket{1}.
+  \ket{\psi} = \cos\dfrac{\theta}{2}\ket{0} + e^{i\phi}\sin\dfrac{\theta}{2}\ket{1}.
 \end{equation}
 The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (Figure~\ref{fig:bloch}). The Bloch sphere visualization can be very useful for describing single qubit operations. It is however limited in that there is no simple generalization of the Bloch sphere known for multiple qubits.
 \begin{figure}[ht]
@@ -172,14 +172,17 @@ Below are some notable single-qubit gates described and visualized.
 \end{figure}
 
 \subsection{Hadamard Gate}
-The \emph{Hadamard} ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight. It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis.
-
-This gate is sometimes described as a ``square root of \textsc{not}" gate, because it turns \ket{0} into $(\ket{0} + \ket{1})/\sqrt2$ (also written as \ket{+}), halfway between \ket{0} and \ket{1}. The Hadamard gate belongs to the Clifford gates.
+The \emph{Hadamard} ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight:
+\begin{align}
+H\ket{0} = \ket{+} &= \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) \\
+H\ket{1} = \ket{-} &= \dfrac{1}{\sqrt2}(\ket{0} - \ket{1}).
+\end{align}
+It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis. This gate is sometimes described as a ``square root of \textsc{not}" gate. The Hadamard gate belongs to the Clifford gates.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.18]{images/hadamard_gate.eps}
-    \vspace{2mm}
+    \includegraphics[scale=0.165]{images/hadamard_gate.eps}
+    \vspace{1mm}
     \caption{Hadamard gate visualized on the Bloch sphere.}
 \end{figure}
 
@@ -191,12 +194,12 @@ R_z(\theta) \ket{0} &= \ket{0} \\
 R_z(\theta) \ket{1} &= e^{i\theta}\ket{1}.
 \end{aligned}
 \end{equation}
-The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \pi/2$ (visualized in Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \pi/4$ (half an $S$ gate).
+The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \pi/2$ (Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \pi/4$ (half an $S$ gate).
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.22]{images/s_gate.eps}
-  \vspace{2mm}
+  \includegraphics[scale=0.21]{images/s_gate.eps}
+  \vspace{1mm}
   \caption{S gate rotation visualized on the Bloch sphere.}
   \label{fig:s_bloch}
 \end{figure}
@@ -204,10 +207,10 @@ The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gat
 \section{Measurement}
 Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a classical state \ket{j} (which in the computational basis is \ket{0} or \ket{1}). The state \ket{\psi} has ``disappeared" and all that is left is the classical state \ket{j}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
 \begin{equation}
-\begin{gathered}
-  P(\ket{0}) = \left|\alpha\right|^2 \\
-  P(\ket{1}) = \left|\beta\right|^2
-\end{gathered}
+\begin{aligned}
+  P(\ket{0}) &= \left|\alpha\right|^2 \\
+  P(\ket{1}) &= \left|\beta\right|^2.
+\end{aligned}
 \end{equation}
 Consider the following simple single-qubit circuit:
 
@@ -222,12 +225,12 @@ Consider the following simple single-qubit circuit:
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
-We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt2$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
+We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = \frac{1}{\sqrt2}(\ket{0} - \ket{1})$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
 \begin{equation}
-\begin{gathered}
-  P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 = \dfrac{1}{2} \\
-  P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 = \dfrac{1}{2}
-\end{gathered}
+\begin{aligned}
+  P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 &= \dfrac{1}{2} \\
+  P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 &= \dfrac{1}{2}.
+\end{aligned}
 \end{equation}
 Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 
@@ -327,11 +330,13 @@ resulting in a $mp \times nq$ matrix. We can then represent the two qubit state 
     0
   \end{pmatrix}.
 \end{equation}
+Throughout this document we will use different kinds of notation for multiple qubits depending on context, all of which are equivalent: $\ket{00} = \ket{0}\!\ket{0} = \ket{0} \otimes \ket{0}$.
 We can write a two qubit state as following in Dirac notation:
 \begin{equation}
   \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}.
 \end{equation}
-More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}. 
+More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}.
+
 Note that the state vector of two qubits is twice as big as the state vector for one qubit. This is where some of the potential power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states - the state space grows exponentially with the number of qubits, unlike classical bits. For multi-qubit states the rule remains that the state vector has to be normalized. For a $n$ qubit state:
 \begin{equation}
   \sum_{i = 0}^{2^n-1} |\alpha_i|^2 = 1.
@@ -554,7 +559,7 @@ However, consider the state
 \begin{equation} \label{eq:entangled_state}
   \ket{\psi} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}).
 \end{equation}
-This is an entangled state. It cannot be expressed as two individual states. We say two qubits are entangled if they have \emph{nonzero concurrence}. The concurrence of a state can be calculated using the following formula:
+This is an entangled state, it cannot be expressed as two individual states. We say two qubits are entangled if they have \emph{nonzero concurrence}. The concurrence of a state can be calculated as following:
 \begin{equation}
   C(\ket{\psi}) = 2|\alpha_{00}\alpha_{11} - \alpha_{01}\alpha_{10}|.
 \end{equation}
@@ -568,14 +573,14 @@ It has a non-zero concurrence, so we can say it's entangled. How about the non-e
 \end{equation}
 A concurrence of 0, so it is not entangled.
 
-\section{The Bell States}
+\section{The Bell States} \label{sec:bell_states}
 The \emph{Bell states} are four maximally entangled quantum states of two qubits:
-\begin{gather}
-\ket{\Phi^+} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-\ket{\Phi^-} = \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
-\ket{\Psi^+} = \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
-\ket{\Psi^-} = \dfrac{1}{\sqrt2}(\ket{01} - \ket{10})
-\end{gather}
+\begin{align}
+\ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+\ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+\ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
+\ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
+\end{align}
 We can create a Bell state with the following circuit:
 \[
   \Large
@@ -588,9 +593,9 @@ We can create a Bell state with the following circuit:
 \vspace*{2mm}
 
 \noindent
-We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $(\ket{00} + \ket{10})/\sqrt2$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\ket{\Phi^+} = (\ket{00} + \ket{11})/\sqrt2$ at \ket{\psi_2}.
+We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $\frac{1}{\sqrt2}(\ket{00} + \ket{10})$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\ket{\Phi^+} = \frac{1}{\sqrt2}(\ket{00} + \ket{11})$ at \ket{\psi_2}.
 
-The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $(\ket{00} + \ket{11})/\sqrt2$ and measure both qubits.
+The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\frac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
 \[
   \Large
   \Qcircuit @C=1em @R=0.5em @!R {
@@ -605,7 +610,7 @@ M(q_1) = 0 \text{ if } M(q_0) = 0 \\
 M(q_1) = 1 \text{ if } M(q_0) = 1
 \end{gathered}
 \end{equation}
-If you measure $q_0$ to be 0, $q_1$ will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring $q_0$ as 0 means $q_1$ will be 1).
+If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $\frac{1}{\sqrt2}(\ket{01} + \ket{10})$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
 
 \section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
@@ -641,7 +646,7 @@ Parity checking is one of the simplest forms of error detecting code. It tells u
     \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ &  \targ & \meter & \cw \\
   }
   \]
-  \caption{Circuit for calculating parity: $\textsc{CNOT}_{1,2}\textsc{CNOT}_{0,2}H_1H_0\ket{000}$.}
+  \caption{Circuit for calculating parity: $\textsc{cnot}_{1,2}\textsc{cnot}_{0,2}H_1H_0\ket{000}$.}
   \label{fig:parity_circuit}
 \end{figure}
 
@@ -731,7 +736,7 @@ Any classical circuit can be simulated by a quantum circuit. We can show this by
       \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \ghost{U_f} & \qw & & \hspace*{5.7mm} \ket{y \otimes f(x)}
     }
   \]
-  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. This transformation can be described as $U_f\ket{x}\ket{y} = \ket{x}\ket{y \otimes f(x)}$. The $\otimes$ symbol in this context means the binary sum (\textsc{xor}).}
+  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. This transformation can be described as $U_f\ket{x}\!\ket{y} = \ket{x}\!\ket{y \otimes f(x)}$. The $\otimes$ symbol in this context means the binary sum (\textsc{xor}).}
   \label{fig:add_output_qubit}
 \end{figure}
 We can create a quantum half adder by creating sum and carry circuits, just like in classical computers. The truth table of the sum function $f_s(x)$ can be found in Figure \ref{fig:sum_truth_table}. We can implement this as a quantum circuit using \textsc{cnot} gates as seen in Figure \ref{fig:sum_quantum_circuit}.
@@ -918,8 +923,8 @@ We can try it out by trying to determine if the identity function $f_i(x) = x$ i
 We evaluate our identity function using by applying $U_f$:
 \begin{equation}
 \begin{aligned}
-\ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} \\
-+\, &\ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\big).
+\ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\!\ket{0 \otimes f_i(0)} - \ket{0}\!\ket{1 \otimes f_i(0)} \\
++\, &\ket{1}\!\ket{0 \otimes f_i(1)} - \ket{1}\!\ket{1 \otimes f_i(1)}\big).
 \end{aligned}
 \end{equation}
 This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the state
@@ -967,7 +972,7 @@ An important operation in classical computing and quantum computing as we will s
             , $\pi$, , $2\pi$},
         xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
       ]
-         \addplot[red, domain=-2*pi:2*pi, samples = 1000]{ cos(deg(x)) };
+         \addplot[red, domain=-2*pi:2*pi, samples=1000]{ cos(deg(x)) };
        \end{axis}
      \end{tikzpicture}
      \caption{Time domain plot of $\cos(t)$.}
@@ -1013,10 +1018,10 @@ The Fourier transform is a very useful tool in computer science, used for exampl
       xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
     ]
       \addplot[ycomb, red, domain=-2*pi:2*pi, samples=25, mark=*, thick]{ cos(deg(x)) };
-      \addplot[red, domain=-2*pi:2*pi, samples=1000, draw opacity=0.35]{ cos(deg(x)) };
+      \addplot[red, domain=-2*pi:2*pi, samples=1000, draw]{ cos(deg(x)) };
     \end{axis}
   \end{tikzpicture}
-  \caption{Discretized counterpart of the continuous function $cos(t)$. Each dot represents a sample of the signal. The time interval between the samples is called the sampling interval.}
+  \caption{Discretized counterpart of the continuous function $\cos(t)$. Each dot represents a sample of the signal. The time interval between the samples is called the sampling interval.}
   \label{fig:cos_discrete_time_graph}
 \end{figure}  
 
@@ -1034,14 +1039,14 @@ We have already seen and used the QFT on a single qubit. The unitary matrix of t
 \begin{equation}
   F_2 = H = \hgate.
 \end{equation}
-For a multi-qubit system it becomes a bit more involved. To describe the circuit for the $n$-qubit QFT we need the Hadamard and controlled phase gate, which we will write as $R_m$ where
+For a multi-qubit system it becomes a bit more involved. To describe the circuit for the $n$-qubit QFT we need the Hadamard and controlled phase gate, which we will write as $R_k$ where
 \begin{equation}
   R_k = \begin{pmatrix}
     1 & 0 \\
     0 & e^{2\pi i/2^k}
   \end{pmatrix}.
 \end{equation}
-The circuit for a QFT on 3 qubits can be seen in Figure~\ref{fig:quantum_fourier_circ}. Note that $S = R_2$ and $T = R_3$. The crossed gate at the end is the swap gate, which swaps two qubits. The order of qubits has to be reversed at the end of a QFT to get the correct order as result. Note that inverting the circuit by reversing the order of the gates and taking the inverse $U^\dagger$ of each gate $U$ gives an equally efficient circuit for the inverse quantum Fourier transform $F_N^\dagger$.
+The circuit for a QFT on 3 qubits can be seen in Figure~\ref{fig:quantum_3_qubit_fourier_circ}. Note that $S = R_2$ and $T = R_3$. The crossed gate at the end is the swap gate, which swaps two qubits. The order of qubits has to be reversed at the end of a QFT to get the correct order as result. Note that inverting the circuit by reversing the order of the gates and taking the inverse $U^\dagger$ of each gate $U$ gives an equally efficient circuit for the inverse quantum Fourier transform $F_N^\dagger$.
 
 \begin{figure}[ht]
   \[
@@ -1092,7 +1097,7 @@ The result of the Fourier transform of the original state is stored in the ampli
 \newpage
 
 \section{Quantum Phase Estimation Algorithm}
-The quantum phase estimation algorithm (QPE) is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{u} of a unitary operator $U$, where $U\ket{u} = e^{2\pi i \varphi}\ket{u}$ and the value of $\varphi$ is unknown ($0 \le \varphi \le 1$). The goal is to estimate the value of $\varphi$ when we don't necessarily know $U$ or $\ket{u}$, but have available black boxes capable of preparing \ket{u} and applying controlled-$U$ operations.
+The quantum phase estimation algorithm (QPE) is a quantum algorithm to estimate the phase of an eigenvector of a unitary operation. Say we prepare an eigenstate \ket{u} of a unitary operator $U$, where $U\!\ket{u} = e^{2\pi i \varphi}\ket{u}$ and the value of $\varphi$ is unknown ($0 \le \varphi \le 1$). The goal is to estimate the value of $\varphi$ when we don't necessarily know $U$ or \ket{u}, but have available black boxes capable of preparing \ket{u} and applying controlled-$U$ operations.
 
 \begin{figure}[ht]
   \[
@@ -1115,7 +1120,7 @@ We start with the system in the state $\ket{0}^{\otimes n}\ket{u}$. After applyi
 \begin{equation}
   \dfrac{1}{\sqrt{2^n}}(\ket{0} + \ket{1})^{\otimes n} \ket{u}.
 \end{equation}
-We continue by applying the controlled unitary operators $U$. Remembering that $U\ket{u} = e^{2\pi i \varphi}\ket{u}$, then $U^{2^j}\ket{u} = e^{2\pi i 2^j \varphi}\ket{u}$.
+We continue by applying the controlled unitary operators $U$. Remembering that $U$$\ket{u} = e^{2\pi i \varphi}\ket{u}$, then $U^{2^j}$$\ket{u} = e^{2\pi i 2^j \varphi}\ket{u}$.
 A controlled-$U^{2^j}$ operator then transforms a state as following:
 
 \begin{figure}[ht]
@@ -1132,14 +1137,14 @@ A controlled-$U^{2^j}$ operator then transforms a state as following:
 \noindent
 Note that the phase ends up in \ket{k} while \ket{u} stays the same. This is a phenomenon called \emph{quantum phase kickback} and can be explained by examining the state throughout the transformation. The system in Figure~\ref{fig:phase_kickback_circ} after the Hadamard gate is in the state
 \begin{equation}
-  \dfrac{1}{\sqrt2}(\ket{0} + \ket{1})\ket{u}
-  = \dfrac{1}{\sqrt2}(\ket{0}\ket{u} + \ket{1}\ket{u}).
+  \dfrac{1}{\sqrt2}(\ket{0} + \ket{1})\!\ket{u}
+  = \dfrac{1}{\sqrt2}(\ket{0}\!\ket{u} + \ket{1}\!\ket{u}).
 \end{equation}
 Then a controlled-$U^{2^j}$ is applied, meaning that $U^{2^j}$ is only applied when the control qubit (\ket{k}) is \ket{1}. We then end up with the state
 \begin{align}
-  &\dfrac{1}{\sqrt2}\left(\ket{0}\ket{u} + \ket{1}U^{2^j}\ket{u}\right) \\
-  = \, &\dfrac{1}{\sqrt2}\left(\ket{0}\ket{u} + \ket{1}e^{2\pi i2^j \varphi}\ket{u}\right) \\
-  = \, &\dfrac{1}{\sqrt2}\left(\ket{0} + e^{2\pi i2^j \varphi}\ket{1}\right)\ket{u}.
+  &\dfrac{1}{\sqrt2}\left(\ket{0}\!\ket{u} + \ket{1}U^{2^j}\!\ket{u}\right) \\
+  = \, &\dfrac{1}{\sqrt2}\left(\ket{0}\!\ket{u} + \ket{1}e^{2\pi i2^j \varphi}\ket{u}\right) \\
+  = \, &\dfrac{1}{\sqrt2}\left(\ket{0} + e^{2\pi i2^j \varphi}\ket{1}\right)\!\ket{u}.
 \end{align}
 
 So, after applying the controlled-$U$ operators in the QPE circuit as seen in Figure~\ref{fig:phase_estimation_circ}, the state of the first register becomes
@@ -1151,10 +1156,14 @@ So, after applying the controlled-$U$ operators in the QPE circuit as seen in Fi
   = \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}.
 \end{gather}
 The second register stays in the state \ket{u} throughout this computation. The total circuit is in the following state after the controlled-$U$ operations:
-\begin{equation}
-  \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}\ket{u}.
+\begin{equation} \label{eq:controlled-u-state}
+  \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}\!\ket{u}.
 \end{equation}
-%To make sense of the result of the estimation, it is useful adopt a notation for binary fractions:
+Note that this state is similar to the result of a QFT (\ref{eq:qft}). By performing the \emph{inverse} QFT on the state of the first register (\ref{eq:controlled-u-state}) we get
+\begin{equation}
+  \dfrac{1}{2^n}\sum_{k=0}^{2^n-1}\sum_{j=0}^{2^n-1} e^{-2\pi ijk/2^n} e^{2\pi i\varphi k}\ket{j}\!\ket{u}.
+\end{equation}
+%It is useful adopt a notation for binary fractions:
 %\begin{equation}
 %  0.x_lx_{l+1}\dots x_n = \dfrac{x_l}{2} + \dfrac{x_{l+1}}{4} + \dotsb + \dfrac{x_n}{2^{n-l+1}}.
 %\end{equation}
@@ -1165,14 +1174,71 @@ The second register stays in the state \ket{u} throughout this computation. The 
 %  \dotsb
 %  \left(\ket{0} + e^{2\pi i 0.\varphi_1\varphi_2\dots \varphi_n}\ket{1}\right).
 %\end{equation}
-Note that this state is similar to the result of a QFT (\ref{eq:qft}). By performing the \emph{inverse} QFT on the first register we get
-\begin{align}
-  &\dfrac{1}{2^n}\sum_{j=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-2\pi ikj/2^n} e^{2\pi i\varphi k}\ket{k}\ket{u} \\
-  =\; &\dfrac{1}{2^n}\sum_{j=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-2\pi ikj/2^n + 2\pi i\varphi k}\ket{k}\ket{u}.
-\end{align}
-If $\varphi$ has a $n$ bit binary fraction representation $\varphi = j/2^n$, measuring the first register in the computational basis will give us exactly $\varphi$. Note that $\varphi$ doesn't always have a $n$ bit binary fraction. In this case, we will get probabilistic measurement results. The probability $P(j)$ is large for values of $j$ where $\varphi \approx j/2^n$, so in this case we can only get an approximation of $\varphi$. An important idea in this algorithm is the ability of the inverse quantum Fourier transform to perform the transformation
+If $\varphi$ has a $n$ bit binary fraction representation $\varphi = j/2^n$, measuring the first register in the computational basis will give us exactly $\varphi$. Note that $\varphi$ doesn't always have a $n$ bit binary fraction. In this case, we will get probabilistic measurement results. The probability $P(j)$ is large for values of $j$ where $\varphi \approx j/2^n$, so in this case we can only get an approximation of $\varphi$.
+
+An important idea in this algorithm is the ability of the inverse quantum Fourier transform to perform the transformation
 \begin{equation}
-  \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}\ket{u} \longrightarrow \ket{\tilde{\varphi}}\ket{u},
+  \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}\!\ket{u} \longrightarrow \ket{\tilde{\varphi}}\!\ket{u},
 \end{equation}
 essentially ``extracting" an estimation \ket{\tilde{\varphi}} of $\varphi$.
+
+\section{Superdense Coding}
+Suppose Alice and Bob want to share some information. They are allowed to meet up and share information of any size beforehand. After that they get separated, after which they are only allowed to communicate one classical bit of information. In classical computing, they can only communicate two possible values (one bit): $0$ or $1$. This seems pretty straightforward and obvious, but consider what happens when we allow them to communicate one \emph{qubit} instead of one bit. How many possible values can they communicate with one qubit?
+
+As it turns out, you can communicate two classical bits of information using one qubit. This is referred to as \emph{superdense coding}. Recall the Bell states from Section~\ref{sec:bell_states}:
+\begin{align}
+\ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+\ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+\ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
+\ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
+\end{align}
+These maximally entangled two-qubit states have variations in parity and phase. If we were somehow able to ``decode" the parity and phase of these states by mapping them to separate computational basis states, we could extract two classical bits of data from one qubit. It turns out this can be done by applying the circuit in Figure~\ref{fig:decode_bell_circ} on a Bell state. Note that this is the reverse of the circuit for creating the Bell state \ket{\Phi^+}. You can interpret the decode circuit as following: the \textsc{cnot} gate decodes the parity of \ket{q_0}\ket{q_1} to \ket{q_1}, and the Hadamard gate decodes the phase to \ket{q_0}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{minipage}{.4\textwidth}
+    \[
+      \Large
+      \Qcircuit @C=0.9em @R=0.3em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \gate{H} & \meter & \cw  \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \meter & \cw \\
+      }
+    \]
+    \caption{Circuit to decode the Bell states to separate computational basis states.}
+    \label{fig:decode_bell_circ}
+  \end{minipage}%
+  \hspace*{.03\textwidth}
+  \begin{minipage}{.55\textwidth}
+    {\renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{c|c|c}
+      Input & $\textsc{cnot}_{0,1}$ & $H_0$ \\ \hline
+      $\frac{1}{\sqrt2}(\ket{00} + \ket{11})$ & $\frac{1}{\sqrt2}(\ket{00} + \ket{10})$ & \ket{00} \\
+      $\frac{1}{\sqrt2}(\ket{00} - \ket{11})$ & $\frac{1}{\sqrt2}(\ket{00} - \ket{10})$ & \ket{10} \\
+      $\frac{1}{\sqrt2}(\ket{01} + \ket{10})$ & $\frac{1}{\sqrt2}(\ket{01} + \ket{11})$ & \ket{01} \\
+      $\frac{1}{\sqrt2}(\ket{01} - \ket{10})$ & $\frac{1}{\sqrt2}(\ket{01} - \ket{11})$ & \ket{11}
+    \end{tabular}
+    }
+    \caption{Output of applying the decoding circuit in Figure \ref{fig:decode_bell_circ} on every Bell state.}
+    \label{fig:decode_bell_table}
+  \end{minipage}
+\end{figure}
+A Bell state can be transformed to any other Bell state by manipulating a single qubit. For example, to go from $\frac{1}{\sqrt2}(\ket{00} + \ket{11})$ to $\frac{1}{\sqrt2}(\ket{00} - \ket{11})$, we simply apply a $Z$ gate on \ket{q_0}. Given this information, we can think of a circuit allowing Alice and Bob to communicate two classical bits of information by communicating one qubit. Such circuit can be seen in Figure~\ref{fig:superdense_coding_circ}. Alice and Bob start with preparing and distributing a Bell state. Alice, our sender, gets qubit \ket{q_0} and Bob, our receiver gets qubit \ket{q_1}. At \ket{\psi_0} they get separated and are allowed to only communicate one qubit. Alice encodes the two classical bits of information $c_0c_1$ in the Bell state by applying the appropriate gates. Applying no gates will leave the state in \ket{\Phi^+}. Applying an $X$ gate transforms the state to \ket{\Psi^+}. Applying a $Z$ gate transforms it to \ket{\Psi^-}, and applying both transforms it to \ket{\Phi^-}. So if Alice wants to send the bits $11$, she applies both the $X$ and $Z$ gate. At \ket{\psi_1} the state is in one of the four Bell states, depending on the gates she applied. Alice sends her qubit \ket{q_0} to Bob (this is the one qubit of communication), who can then use the decode circuit from Figure~\ref{fig:decode_bell_table} to extract the two bits of classical information.
+
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+      \push{\rule{0em}{1em}} & & & & \lstick{c_0} & \cw & \cw & \cw & \control \cw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{c_1} & \cw & \cw & \control \cw & \cwx \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{1} \ar@{.}[]+<0.8em,0.5em>;[d]+<0.8em,-1em> & \gate{X} \cwx & \gate{Z} \ar@{.}[]+<1.3em,0.5em>;[d]+<1.3em,-1em> \cwx & \ctrl{1} & \gate{H} & \meter & \cw & c_0  \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \targ & \qw & \qw & \targ & \qw & \meter & \cw & c_1 \\
+      & \hspace{15.8em} \ket{\psi_0} &  \hspace{23.7em} \ket{\psi_1}
+    }
+  \]
+  \vspace{3mm}
+  \caption{Superdense coding circuit. 2 bits of classical information $c_0c_1$ can be encoded in \ket{q_0} by pre-sharing a Bell state and applying conditional single-qubit gates.}
+  \label{fig:superdense_coding_circ}
+\end{figure}
+
+We can send two bits of classical information with a single qubit using superdense encoding, assuming both parties are allowed to share information beforehand. Superdense coding is also the basis for secure quantum secret coding. It's impossible to eavesdrop when the Bell state was shared in a secure way. There is one qubit which is being sent, if an eavesdropper intercepts this qubit there's no way of decoding it without having the second qubit.
 \end{document}
