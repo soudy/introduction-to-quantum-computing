@@ -18,6 +18,7 @@
 \usepackage{titlesec}
 \usepackage{dirtytalk}
 \usepackage{times}
+\usepackage{pgfplots}
 
 \titleformat{\chapter}[display]   
 {\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\huge}   
@@ -916,13 +917,16 @@ We can try it out by trying to determine if the identity function $f_i(x) = x$ i
 \end{equation}
 We evaluate our identity function using by applying $U_f$:
 \begin{equation}
-\ket{\psi} = \dfrac{1}{2}\left(\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} + \ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\right).
+\begin{aligned}
+\ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\ket{0 \otimes f_i(0)} - \ket{0}\ket{1 \otimes f_i(0)} \\
++\, &\ket{1}\ket{0 \otimes f_i(1)} - \ket{1}\ket{1 \otimes f_i(1)}\big).
+\end{aligned}
 \end{equation}
 This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the state
 \begin{equation}
   \ket{\psi} = \dfrac{1}{2}(\ket{00} - \ket{01} + \ket{11} - \ket{10}).
 \end{equation}
-Finally we apply another Hadmard gate on \ket{x}:
+Finally we apply another Hadamard gate on \ket{x}:
 \begin{equation}
 \begin{aligned}
   \ket{\psi} = \dfrac{1}{2\sqrt2}(&\ket{00} + \ket{10} - \ket{01} - \ket{11} \\
@@ -944,7 +948,79 @@ We end up with the final state $\frac{1}{\sqrt2}(\ket{10} - \ket{11})$ before me
 That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced function. Likewise, we get $M(x) = 0$ if $f(0) = f(1)$, which means $f$ is an unbalanced function. Since we got a measurement of 1 for $f_i$, and given the fact that the identity operation is balanced, we can say that we effectively determined that $f_i$ is a balanced function with one call to the black box.
 
 \section{Quantum Fourier Transform}
-An important operation in classical computing and quantum computing as we will see is the \emph{discrete Fourier transform}. A discrete Fourier transform can be described by a unitary matrix. This means we can map a $N$-dimensional state vector to another $N$-dimensional state vector by a $N \times N$ matrix $F_N$. For a $n$ qubit state $N$ is equal to $2^n$. Such transformation may be written as
+An important operation in classical computing and quantum computing as we will see is the \emph{Fourier transform}. The Fourier transform transforms a function $f(t)$ in the time domain to another function $F(x)$ in the frequency domain. The opposite (transforming a function in the frequency domain to a function in the time domain) can be achieved by applying the \emph{inverse} Fourier transform. Consider the sinusoidal function $f(t) = \cos(t)$. Figure~\ref{fig:cos_time_graph} graphs this function in the time domain, with time on the $x$ axis and amplitude on the $y$ axis. Applying the Fourier transform on this function gives us a function of the frequency domain, as seen in Figure~\ref{fig:cos_freq_graph}.
+\begin{figure}[ht]
+  \centering
+  \begin{multicols}{2}
+    \begin{tikzpicture}
+      \begin{axis}[
+        title={$\cos(t)$},
+        xlabel={$t$},
+        axis lines = middle,
+        xmax=2*pi,
+        xmin=-2*pi,
+        height=5cm,
+        width=7cm,
+        ymin=-1,
+        ymax=1,
+        xticklabels={$-2\pi$, , $-\pi$, , 
+            , $\pi$, , $2\pi$},
+        xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
+      ]
+         \addplot[red, domain=-2*pi:2*pi, samples = 1000]{ cos(deg(x)) };
+       \end{axis}
+     \end{tikzpicture}
+     \caption{Time domain plot of $\cos(t)$.}
+     \label{fig:cos_time_graph}
+     
+     \begin{tikzpicture}
+       \begin{axis}[
+         title={$F(\cos(t))$},
+         xlabel={$x$},
+         axis lines=middle,
+         height=5cm,
+         width=6cm,
+         xmax=2,
+         xmin=-2,
+         ymin=0,
+         ymax=2
+       ]
+         \addplot[ycomb, blue, mark=, thick, mark=*] coordinates {
+           (1, 1) (-1, 1)
+         };
+       \end{axis}
+     \end{tikzpicture}
+     \caption{Frequency domain plot of $F(\cos(t))$.}
+     \label{fig:cos_freq_graph}
+   \end{multicols}
+\end{figure}
+
+The Fourier transform is a very useful tool in computer science, used for example in signal processing. The signal shown in Figure~\ref{fig:cos_time_graph} is a continuous signal, meaning it is assumed to extend to infinity. Computers however can only deal with finite, non-continuous signals. This means we have to discretize the continuous function into discrete counterparts as seen in Figure~\ref{fig:cos_discrete_time_graph}. We can then transform the discrete signal using the \emph{discrete Fourier transform}.
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      title={$\cos(t)$},
+      xlabel={$t$},
+      axis lines = middle,
+      xmax=2*pi,
+      xmin=-2*pi,
+      height=5cm,
+      width=8cm,
+      ymin=-1,
+      ymax=1,
+      xticklabels={$-2\pi$, , $-\pi$, , , $\pi$, , $2\pi$},
+      xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
+    ]
+      \addplot[ycomb, red, domain=-2*pi:2*pi, samples=25, mark=*, thick]{ cos(deg(x)) };
+      \addplot[red, domain=-2*pi:2*pi, samples=1000, draw opacity=0.35]{ cos(deg(x)) };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Discretized counterpart of the continuous function $cos(t)$. Each dot represents a sample of the signal. The time interval between the samples is called the sampling interval.}
+  \label{fig:cos_discrete_time_graph}
+\end{figure}  
+
+The discrete Fourier transform can be thought of as a linear operation. This means we can map a $N$-dimensional state vector to another $N$-dimensional state vector by a $N \times N$ matrix $F_N$. For a $n$ qubit state $N$ is equal to $2^n$. Such transformation may be written as
 \begin{equation}
   \ket{x} = \sum_{j=0}^{N-1}x_j\ket{j} \longrightarrow \sum_{k=0}^{N-1}y_k\ket{k},
 \end{equation} 
@@ -980,9 +1056,9 @@ The circuit for a QFT on 3 qubits can be seen in Figure~\ref{fig:quantum_fourier
   \label{fig:quantum_3_qubit_fourier_circ}
 \end{figure}
 \noindent
-The matrix of the QFT on 3 qubits can be written out using $\omega = e^{2\pi i/8}$:
+The matrix of a QFT can be written out using $\omega = e^{2\pi i/N}$. For 3 qubits, where $N = 8$:
 \begin{equation}
-  F_8 = \dfrac{1}{\sqrt8}
+  F_N = \dfrac{1}{\sqrt N}
   \begin{pmatrix}
     1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
     1 & \omega^1 & \omega^2 & \omega^3 & \omega^4 & \omega^5 & \omega^6 & \omega^7 \\
@@ -1069,8 +1145,8 @@ Then a controlled-$U^{2^j}$ is applied, meaning that $U^{2^j}$ is only applied w
 So, after applying the controlled-$U$ operators in the QPE circuit as seen in Figure~\ref{fig:phase_estimation_circ}, the state of the first register becomes
 \begin{gather}
   \dfrac{1}{\sqrt{2^n}}\left(\ket{0} + e^{2\pi i 2^{n-1} \varphi}\ket{1}\right)
-  \left(\ket{0} + e^{2\pi i 2^{n-2} \varphi}\ket{1}\right)
-    \dotsb
+  \dotsb
+  \left(\ket{0} + e^{2\pi i 2^1 \varphi}\ket{1}\right)
   \left(\ket{0} + e^{2\pi i 2^0 \varphi}\ket{1}\right) \\
   = \dfrac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1} e^{2\pi i\varphi k}\ket{k}.
 \end{gather}
