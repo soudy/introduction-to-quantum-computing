@@ -58,7 +58,7 @@
   1 & -1
   \end{pmatrix}
 }
-\newcommand{\sgate}{
+\renewcommand{\sgate}{
   \begin{pmatrix}
   1 & 0 \\
   0 & i
@@ -1223,7 +1223,7 @@ These maximally entangled two-qubit states have variations in parity and phase. 
     \label{fig:decode_bell_table}
   \end{minipage}
 \end{figure}
-A Bell state can be transformed to any other Bell state by manipulating a single qubit. For example, to go from \ket{\Phi^+} to \ket{\Phi^-}, we simply apply a $Z$ gate on \ket{q_0}. Given this information, we can think of a circuit allowing Alice and Bob to communicate two classical bits of information by communicating one qubit. Such circuit can be seen in Figure~\ref{fig:superdense_coding_circ}. Alice and Bob start with preparing and distributing a Bell state \ket{\Phi^+}. Alice, our sender, gets qubit \ket{q_0} and Bob, our receiver gets qubit \ket{q_1}. At \ket{\psi_0} they get separated and are only allowed to communicate one qubit. Alice encodes the two classical bits of information $c_0c_1$ in the entangled state by applying the appropriate gates on \ket{q_0}. Applying no gates will leave the state in \ket{\Phi^+}. Applying an $X$ gate transforms the state to \ket{\Psi^+}. Applying a $Z$ gate transforms it to \ket{\Phi^-}, and applying both transforms it to \ket{\Psi^-}. So if Alice wants to send the bits $11$, she applies both the $X$ and $Z$ gate, giving the state \ket{\Psi^-}. At \ket{\psi_1} the state is in one of the four Bell states, depending on the gates she applied. Alice sends her qubit \ket{q_0} to Bob (this is the one qubit of communication), who can then use the decode circuit from Figure~\ref{fig:decode_bell_circ} to extract the two bits of classical information. If Alice applied both gates, so the state is \ket{\Psi^-}, Bob will decode 11 as seen in Figure~\ref{fig:decode_bell_table}.
+A Bell state can be transformed to any other Bell state by manipulating a single qubit. For example, to go from \ket{\Phi^+} to \ket{\Phi^-}, we simply apply a $Z$ gate on \ket{q_0}. Given this information, we can think of a circuit allowing Alice and Bob to communicate two classical bits of information by communicating one qubit. Such circuit can be seen in Figure~\ref{fig:superdense_coding_circ}. Alice and Bob start with preparing and distributing a Bell state \ket{\Phi^+}. Alice, our sender, gets qubit \ket{q_0} and Bob, our receiver gets qubit \ket{q_1}. Then they get separated, and from there on out are only allowed to communicate one qubit. Alice encodes the two classical bits of information $c_0c_1$ in the entangled state by applying the appropriate gates on \ket{q_0}. Applying no gates will leave the state in \ket{\Phi^+}. Applying an $X$ gate transforms the state to \ket{\Psi^+}. Applying a $Z$ gate transforms it to \ket{\Phi^-}, and applying both transforms it to \ket{\Psi^-}. So if Alice wants to send the bits $11$, she applies both the $X$ and $Z$ gate, giving the state \ket{\Psi^-}. After the second box the state is in one of the four Bell states, depending on the gates she applied. Alice then sends her qubit \ket{q_0} to Bob (this is the one qubit of communication), who can then use the decode circuit from Figure~\ref{fig:decode_bell_circ} to extract the two bits of classical information. If Alice applied both gates, so the state is \ket{\Psi^-}, Bob will decode 11 as seen in Figure~\ref{fig:decode_bell_table}.
 
 \begin{figure}[ht]
   \[
@@ -1231,9 +1231,8 @@ A Bell state can be transformed to any other Bell state by manipulating a single
     \Qcircuit @C=1em @R=0.7em @!R {
       \push{\rule{0em}{1em}} & & & & \lstick{c_0} & \cw & \cw & \cw & \control \cw \\
       \push{\rule{0em}{1em}} & & & & \lstick{c_1} & \cw & \cw & \control \cw & \cwx \\
-      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{1} \ar@{.}[]+<0.8em,0.5em>;[d]+<0.8em,-1em> & \gate{X} \cwx & \gate{Z} \ar@{.}[]+<1.3em,0.5em>;[d]+<1.3em,-1em> \cwx & \ctrl{1} & \gate{H} & \meter & \cw & c_0  \\
-      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \targ & \qw & \qw & \targ & \qw & \meter & \cw & c_1 \\
-      & \hspace{15.8em} \ket{\psi_0} &  \hspace{23.7em} \ket{\psi_1}
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{1} & \gate{X} \cwx & \gate{Z} \cwx \gategroup{1}{8}{3}{9}{0.7em}{--} & \ctrl{1} & \gate{H} & \meter \gategroup{3}{10}{4}{12}{0.7em}{--} & \cw & c_0  \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \targ \gategroup{3}{7}{4}{6}{0.7em}{--} & \qw & \qw & \targ & \qw & \meter & \cw & c_1
     }
   \]
   \vspace{3mm}
@@ -1242,4 +1241,8 @@ A Bell state can be transformed to any other Bell state by manipulating a single
 \end{figure}
 
 We can send two bits of classical information with a single qubit using superdense encoding, assuming both parties are allowed to share information beforehand. Superdense coding is also the basis for secure quantum secret coding. It's impossible to eavesdrop when the Bell state was shared in a secure way. There is one qubit which is being sent, and even if an eavesdropper intercepts that qubit, there's no way of decoding it without the second qubit.
+
+\chapter{Quantum Error Correction}
+
+
 \end{document}
