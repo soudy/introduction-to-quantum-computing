@@ -635,7 +635,7 @@ GHZ states are used for example in cryptography for secret sharing.
 \label{fig:ghz_3}
 \end{figure}
 
-\section{Calculating Parity}
+\section{Calculating Parity} \label{sec:parity}
 Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0}\ket{q_1} with \ket{q_2}.
 \begin{figure}[ht]
   \[
@@ -818,7 +818,7 @@ We can combine our sum and carry circuit into one, creating a quantum half adder
 Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(y_s) = 0$ and $M(y_c) = 1$, giving us what we expected and thus having done a quantum half addition of two qubits.
 
 \section{Deutch-Jozsa Algorithm}
-We have shown that we can simulate classical circuits on a quantum computer. This in itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set. 
+We have shown that we can simulate classical circuits on a quantum computer. This itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set. 
 
 \begin{figure}[ht]
   \centering
@@ -909,8 +909,8 @@ With these definitions we can start using the Deutch-Jozsa algorithm to efficien
   \[
     \Large
     \Qcircuit @C=1em @R=1em @!R {
-      \push{\rule{0em}{1em}} & & & \lstick{x: \ket{0}} & \gate{H} & \multigate{1}{U_f} & \gate{H} & \meter & \cw \\
-      \push{\rule{0em}{1em}} & & & \lstick{y: \ket{1}} & \gate{H} & \ghost{U_f} &  \qw & \qw & \qw
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{x} = \ket{0}} & \gate{H} & \multigate{1}{U_f} & \gate{H} & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{y} = \ket{1}} & \gate{H} & \ghost{U_f} &  \qw & \qw & \qw
     }
   \]
   \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm. $U_f$ is the quantum circuit which transforms \ket{x}\ket{y} to \ket{x}\ket{y \otimes f(x)}.}
@@ -1243,6 +1243,174 @@ A Bell state can be transformed to any other Bell state by manipulating a single
 We can send two bits of classical information with a single qubit using superdense encoding, assuming both parties are allowed to share information beforehand. Superdense coding is also the basis for secure quantum secret coding. It's impossible to eavesdrop when the Bell state was shared in a secure way. There is one qubit which is being sent, and even if an eavesdropper intercepts that qubit, there's no way of decoding it without the second qubit.
 
 \chapter{Quantum Error Correction}
+Quantum computers, like classical computers, suffer from \emph{noise}. That is, unwanted interactions from the outside world which causes errors in our data. For example, qubits lose their state in a very short period of time (called \emph{decoherence}). To protect against noise, there exist quantum algorithms called \emph{quantum error-correcting codes}. These algorithms encode a quantum state to make it resilient to noise. When the original state wishes to be recovered, the state can be decoded again. Applying such a code costs time and space, but gives us longer coherence times and lower error rates. To explain quantum error correction schemes, it's useful to first take a look at classical error correction.
 
+\section{Classical Error Correction}
+If you want to counter noise, you need to understand where the noise comes from. To identify a source of noise, we define a \emph{noise channel}. The most simplistic classical noise channel is the \emph{binary symmetric channel} (Figure~\ref{fig:binary_symmetric_channel}). This model assumes we have independent single-bit errors. On the left is the state of our bit. Then some time passes, after which there is a probability of $p$ that the bit has flipped due to noise, and a probability of $1 - p$ that our bit stayed in its correct state. 
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node (a) [circle] at (0,0) {1};
+    \node (b) [circle] at (0,2) {0};
+    \node (c) [circle] at (3,0) {1};
+    \node (d) [circle] at (3,2) {0};
+    \draw[->] (a) -- (c) node[pos=.5,below] {$1-p$};
+    \draw[->] (a) -- (d) node[pos=.1,above] {$p$};
+    \draw[->] (b) -- (c) node[pos=.1,below] {$p$};
+    \draw[->] (b) -- (d) node[pos=.5,above] {$1-p$};
+  \end{tikzpicture}
+  \caption{Binary symmetric channel.}
+  \label{fig:binary_symmetric_channel}
+\end{figure}
 
+A simple way to mitigate these errors is by using a repetition code, meaning we encode the message by repeating it a number of times:
+\begin{align}
+  0 &\rightarrow 000 \\
+  1 &\rightarrow 111.
+\end{align}
+The bit strings $000$ and $111$ are referred to as \emph{logical} 0 and \emph{logical} 1, since they represent 0 and 1. The method of decoding is called \emph{majority voting}, which outputs the bit that appears most in the actual output. Say we want to send a bit with state $1$. We encode it with three copies as $111$. If an error occurs over the channel, for example the channel outputs $101$, majority voting gives us the correct output: $1$. When two errors occur, for example the channel outputs $001$, majority voting gives the wrong output: $0$. Majority voting with three bits fails when two errors occur, but succeeds otherwise. This code makes communication more reliable whenever $p < 1/2$.
+
+\section{Quantum Error Correction}
+We would like to develop a quantum error-correction code based on similar ideas from the classical error-correction code. However, when trying to apply these ideas to the quantum world we are faced with some difficulties:
+\begin{enumerate}
+  \item \emph{Measurement is destructive:} Attempting to observe the value of a quantum state by measuring it destroys the quantum state.
+  \item \emph{No cloning:} Cloning a quantum state is impossible.
+  \item \emph{Errors are continuous:} In the classical world, errors are discrete: a bit flip either happens or doesn't happen. With quantum states, a continuum of different errors can occur.
+\end{enumerate}
+As it turns out, none of these problems is fatal and quantum error-correction is possible.
+
+We start off with looking at the noise channels: where do errors come from and how can we mitigate them. A simplistic quantum noise channel is the \emph{bit flip channel}, which is equivalent to the classical bit flip:
+\begin{equation}
+  \ket{\psi}\!\ket{e} \rightarrow X\ket{\psi}\!\ket{\hat{e}}.
+\end{equation}
+That is, the state \ket{\psi} is taken to state $X$\ket{\psi} with probability $p$, and is left in state \ket{\psi} with probability $1 - p$. Here \ket{e} is the environment and \ket{\hat{e}} the evolved environment, representing the evolution of a state and its environment. A similar noise channel is the \emph{phase flip channel}, where a state \ket{\psi} is taken to state $Z$\ket{\psi} with probability $p$, and left in state \ket{\psi} with probability $1 - p$:
+\begin{equation}
+  \ket{\psi}\!\ket{e} \rightarrow Z\ket{\psi}\!\ket{\hat{e}}.
+\end{equation}
+
+\subsection{Quantum Bit Flip Code}
+The idea of quantum error-correction is to encode a quantum state redundantly into a larger Hilbert space. For example, we encode a single qubit $\alpha\ket{0} + \beta\ket{1}$ as $\alpha\ket{000} + \beta\ket{111}$. For convenience we write these encoded states as following:
+\begin{align}
+\ket{0_L} &= \ket{000} \\
+\ket{1_L} &= \ket{111}.
+\end{align}
+We refer to \ket{0_L} and \ket{1_L} as the \emph{logical} \ket{0} and \emph{logical} \ket{1} states. This encoding is achieved by the circuit in Figure~\ref{fig:logical_encode_circ}.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \ctrl{1} & \ctrl{2} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \qw \\
+    }
+  \]
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} with 3 qubits for the bit flip code.}
+  \label{fig:logical_encode_circ}
+\end{figure}
+
+Suppose we encoded our state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ and a bit flip error occurs on one or fewer qubits which we would like to correct. The first step in correcting a bit flip error is detecting if such error happened. Error detection or \emph{syndrome diagnosis} can be achieved through \emph{stabilizer measurements}. Stabilizers allow us to learn information about a state without fully collapsing it. We have already seen and used a stabilizer in Section~\ref{sec:parity} to calculate the parity of a state. By calculating and measuring the parity of a state, we extracted partial information about the state without fully collapsing it. Stabilizers force discrete errors. It also turns out that all errors from all channels can be decomposed in $X$ and $Z$ errors, meaning that if we can make an error-correction code that detects both $X$ and $Z$ errors, we can detect \emph{all} errors.
+
+In the case of a bit flip error, we can use $ZZ$ stabilizer measurements to detect what error, if any, occurred on a quantum state. The measurement result is called the \emph{error syndrome}. An example of a $ZZ$ stabilizer can be seen in Figure~\ref{fig:zz_stabilizer}. A $Z_0Z_1$ stabilizer measures the parity of the qubits \ket{d_0}\ket{d_1} using an \emph{ancilla} (helper) qubit \ket{a_0}.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{d_0}} & \ctrl{2} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{d_1}} & \qw & \ctrl{1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{a_0} = \ket{0}} & \targ &  \targ & \meter & \cw \\
+    }
+  \]
+  \caption{Quantum circuit of a $Z_0Z_1$ stabilizer measurement on qubits \ket{d_0}\ket{d_1}.}
+  \label{fig:zz_stabilizer}
+\end{figure}
+
+We can extract the error syndrome of an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ by using the two measurement stabilizers $Z_0Z_1$ and $Z_1Z_2$ (Figure~\ref{fig:extract_error_syndrome_zz}).
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \ctrl{3} & \qw & \qw & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \ctrl{2} & \ctrl{3} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \qw & \ctrl{2} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \targ & \targ & \qw & \qw & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \qw &  \qw & \targ & \targ & \meter & \cw \\
+    }
+  \]
+  \caption{Measuring error syndrome with stabilizers $Z_0Z_1$ and $Z_1Z_2$.}
+  \label{fig:extract_error_syndrome_zz}
+\end{figure}
+
+\noindent
+Suppose a bit flip occurred on our encoded state \ket{\psi_L} and we're left with $\ket{\psi_L'} = \alpha\ket{001} + \beta\ket{110}$. The ancilla bits \ket{a_0} and \ket{a_1} correspond to the parity measurement of two qubits of the state:
+\begin{align}
+  \ket{a_0} &= Z_0Z_1 \\
+  \ket{a_1} &= Z_1Z_2.
+\end{align}
+For an encoded state $\alpha\ket{000} + \beta\ket{111}$ the measurement results are both zero: $M(a_0) = M(a_1) = 0$. When this is not the case, we know we are in an erroneous state. With the state \ket{\psi_L'} we can see that
+\begin{align}
+  M(a_0) &= 0 \\
+  M(a_1) &= 1.
+\end{align}
+These measurements tell us an error has occurred, and where it occurred. Assuming single bit flip errors only, an encoded state can be in one of the following states:
+\begin{align}
+  &\alpha\ket{000} + \beta\ket{111} \; \text{no error} \\
+  X_{d_0} \rightarrow \  &\alpha\ket{100} + \beta\ket{011} \; \text{bit flip on qubit zero} \\
+  X_{d_1} \rightarrow \  &\alpha\ket{010} + \beta\ket{101} \; \text{bit flip on qubit one} \\
+  X_{d_2} \rightarrow \  &\alpha\ket{001} + \beta\ket{110} \; \text{bit flip on qubit two}.
+\end{align}
+We can find out where the error occurred by the result of the error syndrome measurement. The error syndrome measurement results corresponding to the qubit at which the error occurred can be seen in Figure~\ref{fig:zz_stabilizer_measurement_results}. To correct the state, we can simply apply an $X$ operation on the flipped qubit, flipping it back to the correct state.
+\begin{figure}[ht]
+  \centering
+  \begin{tabular}{c|c|c}
+    Error & $M(a_0)$ & $M(a_1)$ \\ \hline
+    None & 0 & 0 \\
+    $X_{d_0}$ & 1 & 0 \\
+    $X_{d_1}$ & 1 & 1 \\
+    $X_{d_2}$ & 0 & 1
+  \end{tabular}
+  \caption{Error syndrome measurement results corresponding to where the bit flip occurred.}
+  \label{fig:zz_stabilizer_measurement_results}
+\end{figure}
+
+This code can detect two errors, but only correct one. For example, consider the following erroneous states for an encoded state $\alpha\ket{000} + \beta\ket{111}$:
+\begin{align}
+  X_{d_0} &\rightarrow \alpha\ket{100} + \beta\ket{011} \label{eq:single_bit_flip} \\
+  X_{d_1}X_{d_2} &\rightarrow \alpha\ket{011} + \beta\ket{100}. \label{eq:double_bit_flip}
+\end{align}
+We can detect that both states are erroneous, since for both states the error syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. So the state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability of $X_{d_0}$ happening than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
+
+After correction we are left with an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$. To get the original state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ back, we need to decode the state. This can be achieved by simply reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ} (since \textsc{cnot} gates are Hermitian, the reverse of the encoding circuit is itself). Note that if you just want to do measurement, you can measure any of the qubits in $\ket{\psi_L}$ instead of decoding it.
+
+\subsection{Quantum Phase Flip Code}
+The bit flip code only catches $X$ errors. If the phase of a state \ket{\psi} erroneously flipped to $Z$\ket{\psi} and we want to correct it, we need a phase flip code. The quantum phase flip code is based on the same principles as the bit flip code. The difference with the bit flip code is that we change the basis of the state. We do this by encoding the qubits in the same way as the bit flip code, but we apply a Hadamard gate to each qubit (Figure~\ref{fig:logical_encode_circ_hadamard_basis}).
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw \\
+    }
+  \]
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} with 3 qubits for the phase flip code.}
+  \label{fig:logical_encode_circ_hadamard_basis}
+\end{figure}
+Now if we encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$, our encoded state will be $\ket{\psi_L} = \alpha\ket{+\!+\!+} + \beta\ket{-\!-\!-}$. Now when a phase flip occurs, for example $\ket{\psi_L'} = \alpha\ket{-\!+\!+} + \beta\ket{+\!-\!-}$, we can extract the error syndrome in a similar way to a bit flip error. Syndrome measurement can be performed with $XX$ stabilizers as seen in Figure~\ref{fig:extract_error_syndrome_xx}.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \targ & \qw & \qw & \qw & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \qw & \targ & \targ & \qw & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-3} & \ctrl{-2} & \qw & \qw & \gate{H} & \meter & \cw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw &  \qw & \ctrl{-3} & \ctrl{-2} & \gate{H} & \meter & \cw \\
+    }
+  \]
+  \caption{Measuring error syndrome with stabilizers $X_0X_1$ and $X_1X_2$.}
+  \label{fig:extract_error_syndrome_xx}
+\end{figure}
+
+\noindent
+In the case of \ket{\psi_L'}, syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$ and we can do the same correction we did in the bit flip code but with a $Z$ gate. Decoding the original state is done by reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ_hadamard_basis}.
 \end{document}
