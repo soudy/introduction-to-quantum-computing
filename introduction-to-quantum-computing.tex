@@ -225,13 +225,11 @@ Consider the following simple single-qubit circuit:
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
-We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = \frac{1}{\sqrt2}(\ket{0} - \ket{1})$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
-\begin{equation}
-\begin{aligned}
+We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt 2$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
+\begin{align}
   P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 &= \dfrac{1}{2} \\
   P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 &= \dfrac{1}{2}.
-\end{aligned}
-\end{equation}
+\end{align}
 Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 
 \begin{figure}[ht]
@@ -393,7 +391,7 @@ Then we can put our \ket{00} state through it:
   0
   \end{pmatrix},
 \end{equation}
-which can also be written in Dirac notation as $\dfrac{1}{\sqrt2}(\ket{00} + \ket{01})$.
+which can also be written in Dirac notation as $(\ket{00} + \ket{01})/\sqrt2$.
 
 \section{Partial Measurement}
 Say we measure the qubit \ket{q_0} in the following circuit:
@@ -441,7 +439,7 @@ The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called contro
 \hspace*{.05\textwidth}
 \begin{minipage}{.45\textwidth}
   \[
-    U_{CN} = \cnotgate{}
+    U_{CX} = \cnotgate{}
   \]
   \caption{Matrix representation of \textsc{cnot}.}
 \end{minipage}
@@ -593,9 +591,9 @@ We can create a Bell state with the following circuit:
 \vspace*{2mm}
 
 \noindent
-We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $\frac{1}{\sqrt2}(\ket{00} + \ket{10})$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\ket{\Phi^+} = \frac{1}{\sqrt2}(\ket{00} + \ket{11})$ at \ket{\psi_2}.
+We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $(\ket{00} + \ket{10})/\sqrt2$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\ket{\Phi^+} = (\ket{00} + \ket{11})/\sqrt2$ at \ket{\psi_2}.
 
-The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $\frac{1}{\sqrt2}(\ket{00} + \ket{11})$ and measure both qubits.
+The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $(\ket{00} + \ket{11})/\sqrt2$ and measure both qubits.
 \[
   \Large
   \Qcircuit @C=1em @R=0.5em @!R {
@@ -610,7 +608,7 @@ M(q_1) = 0 \text{ if } M(q_0) = 0 \\
 M(q_1) = 1 \text{ if } M(q_0) = 1
 \end{gathered}
 \end{equation}
-If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $\frac{1}{\sqrt2}(\ket{01} + \ket{10})$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
+If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
 
 \section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
@@ -943,7 +941,7 @@ Finally we apply another Hadamard gate on \ket{x}:
   \phantom{\ket{\psi}} &= \dfrac{1}{2\sqrt2}(\ket{10} + \ket{10} - \ket{11} - \ket{11}) \\
   &= \dfrac{1}{\sqrt2}(\ket{10} - \ket{11}).
 \end{align}
-We end up with the final state $\frac{1}{\sqrt2}(\ket{10} - \ket{11})$ before measurement. We can see from this state that $M(x) = 1$. Curiously, the following measurement outcomes apply:
+We end up with the final state $(\ket{10} - \ket{11})/\sqrt2$ before measurement. We can see from this state that $M(x) = 1$. Curiously, the following measurement outcomes apply:
 \begin{equation}
 \begin{aligned}
 \ket{0_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) = f(1) \\
@@ -1199,7 +1197,7 @@ These maximally entangled two-qubit states have variations in parity and phase. 
   \begin{minipage}{.4\textwidth}
     \[
       \Large
-      \Qcircuit @C=0.9em @R=0.3em @!R {
+      \Qcircuit @C=0.9em @R=0.7em @!R {
         \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \gate{H} & \meter & \cw  \\
         \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \meter & \cw \\
       }
@@ -1236,7 +1234,7 @@ A Bell state can be transformed to any other Bell state by manipulating a single
     }
   \]
   \vspace{3mm}
-  \caption{Superdense coding circuit. 2 bits of classical information $c_0c_1$ can be encoded in \ket{q_0} by pre-sharing a Bell state and applying conditional single-qubit gates.}
+  \caption{Superdense coding circuit. Two bits of classical information $c_0c_1$ can be encoded in \ket{q_0} by pre-sharing a Bell state and applying conditional single-qubit gates.}
   \label{fig:superdense_coding_circ}
 \end{figure}
 
@@ -1304,7 +1302,7 @@ We refer to \ket{0_L} and \ket{1_L} as the \emph{logical} \ket{0} and \emph{logi
       \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \qw \\
     }
   \]
-  \caption{Quantum circuit for encoding a qubit \ket{\psi} with 3 qubits for the bit flip code.}
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} with three qubits for the bit flip code.}
   \label{fig:logical_encode_circ}
 \end{figure}
 
@@ -1377,9 +1375,9 @@ This code can detect two errors, but only correct one. For example, consider the
   X_{d_0} &\rightarrow \alpha\ket{100} + \beta\ket{011} \label{eq:single_bit_flip} \\
   X_{d_1}X_{d_2} &\rightarrow \alpha\ket{011} + \beta\ket{100}. \label{eq:double_bit_flip}
 \end{align}
-We can detect that both states are erroneous, since for both states the error syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. So the state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability of $X_{d_0}$ happening than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
+We can detect that both states are erroneous, since for both states the error syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. The state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability of $X_{d_0}$ happening than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
 
-After correction we are left with an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$. To get the original state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ back, we need to decode the state. This can be achieved by simply reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ} (since \textsc{cnot} gates are Hermitian, the reverse of the encoding circuit is itself). Note that if you just want to do measurement, you can measure any of the qubits in $\ket{\psi_L}$ instead of decoding it.
+After correction we are left with an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$. To get the original state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ back, we need to decode the state. This can be achieved by simply reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ} (since \textsc{cnot} is Hermitian, the reverse of the encoding circuit is itself). Note that if you just want to do measurement, you can measure any of the qubits in $\ket{\psi_L}$ instead of decoding it.
 
 \subsection{Quantum Phase Flip Code}
 The bit flip code only catches $X$ errors. If the phase of a state \ket{\psi} erroneously flipped to $Z$\ket{\psi} and we want to correct it, we need a phase flip code. The quantum phase flip code is based on the same principles as the bit flip code. The difference with the bit flip code is that we change the basis of the state. We do this by encoding the qubits in the same way as the bit flip code, but we apply a Hadamard gate to each qubit (Figure~\ref{fig:logical_encode_circ_hadamard_basis}).
@@ -1395,7 +1393,7 @@ The bit flip code only catches $X$ errors. If the phase of a state \ket{\psi} er
   \caption{Quantum circuit for encoding a qubit \ket{\psi} with 3 qubits for the phase flip code.}
   \label{fig:logical_encode_circ_hadamard_basis}
 \end{figure}
-Now if we encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$, our encoded state will be $\ket{\psi_L} = \alpha\ket{+\!+\!+} + \beta\ket{-\!-\!-}$. Now when a phase flip occurs, for example $\ket{\psi_L'} = \alpha\ket{-\!+\!+} + \beta\ket{+\!-\!-}$, we can extract the error syndrome in a similar way to a bit flip error. Syndrome measurement can be performed with $XX$ stabilizers as seen in Figure~\ref{fig:extract_error_syndrome_xx}.
+This will encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{+\!+\!+} + \beta\ket{-\!-\!-}$. Now when a phase flip occurs, for example $\ket{\psi_L'} = \alpha\ket{-\!+\!+} + \beta\ket{+\!-\!-}$, we can extract the error syndrome in a similar way to a bit flip error. Syndrome measurement can be performed with $XX$ stabilizers as seen in Figure~\ref{fig:extract_error_syndrome_xx}.
 \begin{figure}[ht]
   \[
     \Large
@@ -1413,4 +1411,41 @@ Now if we encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$, our encode
 
 \noindent
 In the case of \ket{\psi_L'}, syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$ and we can do the same correction we did in the bit flip code but with a $Z$ gate. Decoding the original state is done by reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ_hadamard_basis}.
+
+\subsection{Shor Code}
+We have seen a code which corrects bit flip and phase errors. How about a code which corrects \emph{both} errors? It turns out that this can be achieved through a \emph{concatenated} code. The \emph{Shor code} is a combination of the three qubit bit flip and phase flip code. The encoding circuit for this code can be seen in Figure~\ref{fig:encode_shor_circ}. The Shor code can correct arbitrary single-qubit errors.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.7em @!R {
+        \push{\rule{0em}{1em}} & \lstick{\ket{\psi}} & \ctrl{3} & \ctrl{6} & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
+        \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
+        \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw
+    }
+  \]
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} with nine qubits for the Shor code.}
+  \label{fig:encode_shor_circ}
+\end{figure}
+
+We first apply the encode step of the phase flip code, giving
+\begin{align}
+  \ket{0} &\rightarrow \ket{+\!+\!+} \\
+  \ket{1} &\rightarrow \ket{-\!-\!-}.
+\end{align}
+Then on every encoded qubit we apply the bit flip code, meaning
+\begin{align}
+  \ket{+} &\rightarrow \dfrac{1}{\sqrt 2}(\ket{000} + \ket{111}) \\
+  \ket{-} &\rightarrow \dfrac{1}{\sqrt 2}(\ket{000} - \ket{111}).
+\end{align}
+This results in a nine qubit code
+\begin{align}
+  \ket{0_L} &= \dfrac{1}{2\sqrt 2}(\ket{000} + \ket{111})(\ket{000} + \ket{111})(\ket{000} + \ket{111}) \\
+  \ket{1_L} &= \dfrac{1}{2\sqrt 2}(\ket{000} - \ket{111})(\ket{000} - \ket{111})(\ket{000} - \ket{111}).
+\end{align}
 \end{document}
