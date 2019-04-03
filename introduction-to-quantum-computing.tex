@@ -1015,7 +1015,7 @@ The Fourier transform is a very useful tool in computer science, used for exampl
       xticklabels={$-2\pi$, , $-\pi$, , , $\pi$, , $2\pi$},
       xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
     ]
-      \addplot[ycomb, red, domain=-2*pi:2*pi, samples=25, mark=*, thick]{ cos(deg(x)) };
+      \addplot[ycomb, red, domain=-2*pi:2*pi, samples=25, mark=*, thick, mark size=1.25pt]{ cos(deg(x)) };
       \addplot[red, domain=-2*pi:2*pi, samples=1000, draw]{ cos(deg(x)) };
     \end{axis}
   \end{tikzpicture}
