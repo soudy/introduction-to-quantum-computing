@@ -430,10 +430,10 @@ The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called contro
     \Large
     \Qcircuit @C=1em @R=0.5em @!R {
 	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
-	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw    \\
+	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw \\
 	}
   \]
-  \caption{Two different circuit representations of \textsc{cnot}. We will use the left representation.}
+  \caption{Two different circuit representations of \textsc{cnot}.}
   \label{fig:cnot_circuit}
 \end{minipage}%
 \hspace*{.05\textwidth}
@@ -1287,6 +1287,8 @@ That is, the state \ket{\psi} is taken to state $X$\ket{\psi} with probability $
   \ket{\psi}\!\ket{e} \rightarrow Z\ket{\psi}\!\ket{\hat{e}}.
 \end{equation}
 
+For simplicity sake we will only look at the bit and phase flip channels. However, these kind of errors are not very realistic. A more realistic noise channel is the \emph{amplitude dampening} or \emph{relaxation} channel. In the hardware implementation of qubits we speak of a two-state system with an excited state \ket{e} and a ground state \ket{g}, which correspond to the computational basis states \ket{1} and \ket{0}. One of these states is more energetic than the other, like in the DRAM of your computer: you charge the capacitor to represent a 1, and uncharge it to represent 0. The uncharged state 0 is very stable, it remains uncharged. The 1 state however slowly loses its charge, slowly turning into 0 state. The same goes for a two-level quantum system: the ground state \ket{g} is very stable, while the excited state \ket{e} slowly turns into the lower energetic state \ket{g}.
+
 \subsection{Quantum Bit Flip Code}
 The idea of quantum error-correction is to encode a quantum state redundantly into a larger Hilbert space. For example, we encode a single qubit $\alpha\ket{0} + \beta\ket{1}$ as $\alpha\ket{000} + \beta\ket{111}$. For convenience we write these encoded states as following:
 \begin{align}
@@ -1303,27 +1305,27 @@ We refer to \ket{0_L} and \ket{1_L} as the \emph{logical} \ket{0} and \emph{logi
       \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \qw \\
     }
   \]
-  \caption{Quantum circuit for encoding a qubit \ket{\psi} with three qubits for the bit flip code.}
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} for the three qubit bit flip code.}
   \label{fig:logical_encode_circ}
 \end{figure}
 
-Suppose we encoded our state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ and a bit flip error occurs on one qubit which we would like to correct. The first step in correcting a bit flip error is detecting if such error happened. Error detection or \emph{syndrome diagnosis} can be achieved through \emph{stabilizer measurements}. Stabilizers allow us to learn information about a state without fully collapsing it. We have already seen and used a stabilizer in Section~\ref{sec:parity} to calculate the parity of a state. By calculating and measuring the parity of a state, we extracted partial information about the state without fully collapsing it. Stabilizers force discrete errors. It also turns out that all errors from all channels can be decomposed in $X$ and $Z$ errors, meaning that if we can make an error-correction code that corrects both $X$ and $Z$ errors, we can correct \emph{all} errors.
+Suppose we encoded our state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ and a bit flip error occurs on one qubit which we would like to correct. The first step in correcting a bit flip error is detecting if such error happened. Error detection, or \emph{syndrome diagnosis}, can be achieved through \emph{stabilizer measurements}. It is useful to make ourselves familiar with the \emph{stabilizer formalism} to understand stabilizer measurements. Consider the Bell state $\ket{\psi} = (\ket{00} + \ket{11})/\sqrt2$. This state is \emph{stabilized} by the operators $X_1X_2$ and $Z_1Z_2$, meaning $X_1X_2\ket{\psi} = \ket{\psi}$ and $Z_1Z_2\ket{\psi} = \ket{\psi}$. The basic principle behind the stabilizer formalism is that we can (often more easily) describe a state by what operators stabilize them. Stabilizers also force discrete errors, meanings all errors from all channels can be decomposed in $X$ and $Z$ errors. If we can then make an error-correction code that corrects both $X$ and $Z$ errors, we can correct \emph{any} error. Stabilizer measurements allow us to learn information about a state without fully collapsing it. We have already seen a stabilizer measurement in Section~\ref{sec:parity} to calculate the parity of a state. By calculating and measuring the parity of a state, we extracted partial information about the state without fully collapsing it.
 
-In the case of a bit flip error, we can use $ZZ$ stabilizer measurements to detect what error, if any, occurred on a quantum state. The measurement result is called the \emph{error syndrome}. An example of a $ZZ$ stabilizer can be seen in Figure~\ref{fig:zz_stabilizer}. A $Z_0Z_1$ stabilizer measures the parity of the qubits \ket{d_0}\ket{d_1} using an \emph{ancilla} (helper) qubit \ket{a_0}.
+Consider a two-qubit state $\ket{\psi} = \alpha\ket{00} + \beta\ket{11}$. We can detect what, if any, bit flip error occurred with a $Z_1Z_2$ stabilizer measurement (Figure~\ref{fig:zz_stabilizer}). The measurement result is called the \emph{error syndrome}. A $Z_1Z_2$ stabilizer measurement essentially measures the parity of the qubits \ket{d_0}\ket{d_1} using an \emph{ancilla} (helper) qubit \ket{a_0}.
 \begin{figure}[ht]
   \[
     \Large
     \Qcircuit @C=1em @R=0.5em @!R {
-      \push{\rule{0em}{1em}} & & \lstick{\ket{d_0}} & \ctrl{2} & \qw & \qw & \qw \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{d_1}} & \qw & \ctrl{1} & \qw & \qw \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{a_0} = \ket{0}} & \targ &  \targ & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{d_0}} & \ctrl{2} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{d_1}} & \qw & \ctrl{1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{a_0} = \ket{0}} & \targ &  \targ & \meter & \cw \\
     }
   \]
-  \caption{Quantum circuit of a $Z_0Z_1$ stabilizer measurement on qubits \ket{d_0}\ket{d_1}.}
+  \caption{Quantum circuit of a $Z_1Z_2$ stabilizer measurement.}
   \label{fig:zz_stabilizer}
 \end{figure}
 
-We can extract the error syndrome of an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ by using the two measurement stabilizers $Z_0Z_1$ and $Z_1Z_2$ (Figure~\ref{fig:extract_error_syndrome_zz}).
+We can extract the error syndrome of an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$ by using the two stabilizers $Z_1Z_2$ and $Z_2Z_3$ (Figure~\ref{fig:extract_error_syndrome_zz}).
 \begin{figure}[ht]
   \[
     \Large
@@ -1335,17 +1337,17 @@ We can extract the error syndrome of an encoded state $\ket{\psi_L} = \alpha\ket
       \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \qw &  \qw & \targ & \targ & \meter & \cw \\
     }
   \]
-  \caption{Measuring error syndrome with stabilizers $Z_0Z_1$ and $Z_1Z_2$.}
+  \caption{Measuring error syndrome with stabilizer measurements $Z_1Z_2$ and $Z_2Z_3$.}
   \label{fig:extract_error_syndrome_zz}
 \end{figure}
 
 \noindent
-Suppose a bit flip occurred on our encoded state \ket{\psi_L} and we're left with $\ket{\psi_L'} = \alpha\ket{001} + \beta\ket{110}$. The ancilla qubits \ket{a_0} and \ket{a_1} correspond to the parity measurement of two qubits of the state:
+Suppose a bit flip occurred on our encoded state \ket{\psi_L} and we're left with $\ket{\psi_L'} = \alpha\ket{001} + \beta\ket{110}$. The ancilla qubits \ket{a_0} and \ket{a_1} correspond to the stabilizer measurement of two qubits of the state:
 \begin{align}
-  \ket{a_0} &= Z_0Z_1 \\
-  \ket{a_1} &= Z_1Z_2.
+  \ket{a_0} &= Z_1Z_2\ket{\psi_L'} \\
+  \ket{a_1} &= Z_2Z_3\ket{\psi_L'}.
 \end{align}
-For an encoded state $\alpha\ket{000} + \beta\ket{111}$ the measurement results are both zero: $M(a_0) = M(a_1) = 0$. When this is not the case, we know we are in an erroneous state. With the state \ket{\psi_L'} we can see that
+For an encoded state $\alpha\ket{000} + \beta\ket{111}$ the error syndrome measurement results are both zero: $M(a_0) = M(a_1) = 0$. When this is not the case, we know we are in an erroneous state. For the state \ket{\psi_L'} we can see that
 \begin{align}
   M(a_0) &= 0 \\
   M(a_1) &= 1.
@@ -1376,7 +1378,7 @@ This code can detect two errors, but only correct one. For example, consider the
   X_{d_0} &\rightarrow \alpha\ket{100} + \beta\ket{011} \label{eq:single_bit_flip} \\
   X_{d_1}X_{d_2} &\rightarrow \alpha\ket{011} + \beta\ket{100}. \label{eq:double_bit_flip}
 \end{align}
-We can detect that both states are erroneous, since for both states the error syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. The state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability that $X_{d_0}$ happened than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
+We can detect that both states are erroneous, since for both states the error syndrome measurement results are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. The state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability that $X_{d_0}$ happened than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
 
 After correction we are left with an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$. To get the original state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ back, we need to decode the state. This can be achieved by simply reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ} (since \textsc{cnot} is Hermitian, the reverse of the encoding circuit is itself). Note that if you just want to do measurement, you can measure any of the qubits in $\ket{\psi_L}$ instead of decoding it.
 
@@ -1391,10 +1393,10 @@ The bit flip code only catches $X$ errors. If the phase of a state \ket{\psi} fl
         \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw \\
     }
   \]
-  \caption{Quantum circuit for encoding a qubit \ket{\psi} with 3 qubits for the phase flip code.}
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} for the three qubit phase flip code.}
   \label{fig:logical_encode_circ_hadamard_basis}
 \end{figure}
-This will encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{+\!+\!+} + \beta\ket{-\!-\!-}$. Now when a phase flip occurs, for example $\ket{\psi_L'} = \alpha\ket{-\!+\!+} + \beta\ket{+\!-\!-}$, we can extract the error syndrome in a similar way to a bit flip error. Syndrome measurement can be performed with $XX$ stabilizers as seen in Figure~\ref{fig:extract_error_syndrome_xx}.
+This will encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\psi_L} = \alpha\ket{+\!+\!+} + \beta\ket{-\!-\!-}$. Now when a phase flip occurs, for example $\ket{\psi_L'} = \alpha\ket{+\!-\!+} + \beta\ket{-\!+\!-}$, we can extract the error syndrome in a similar way to the bit flip code. Error syndrome measurement can be done with the stabilizers $X_1X_2$ and $X_2X_3$ as seen in Figure~\ref{fig:extract_error_syndrome_xx}. In the case of \ket{\psi_L'}, syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 1$, telling us the error is in qubit \ket{d_1}. We can then correct the state by applying a $Z$ gate on \ket{d_1}. Decoding the original state is done by reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ_hadamard_basis}.
 \begin{figure}[ht]
   \[
     \Large
@@ -1406,15 +1408,14 @@ This will encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\p
         \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw &  \qw & \ctrl{-3} & \ctrl{-2} & \gate{H} & \meter & \cw \\
     }
   \]
-  \caption{Measuring error syndrome with stabilizers $X_0X_1$ and $X_1X_2$.}
+  \caption{Measuring error syndrome with stabilizer measurements $X_1X_2$ and $X_2X_3$.}
   \label{fig:extract_error_syndrome_xx}
 \end{figure}
 
-\noindent
-In the case of \ket{\psi_L'}, syndrome measurements are $M(a_0) = 1$ and $M(a_1) = 0$ and we can do the same correction we did in the bit flip code but with a $Z$ gate. Decoding the original state is done by reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ_hadamard_basis}.
+\newpage
 
 \subsection{Shor Code}
-We have seen a code which corrects bit flip and phase errors. How about a code which corrects \emph{both} errors? It turns out that this can be achieved through a \emph{concatenated} code. The \emph{Shor code} is a combination of the three qubit bit flip and phase flip code. The encoding circuit for this code can be seen in Figure~\ref{fig:encode_shor_circ}. The Shor code can correct arbitrary single-qubit errors.
+We have seen a code which corrects bit flip and phase errors. How about a code which corrects \emph{both} errors? It turns out that this can be achieved through a \emph{concatenated} code. The \emph{Shor code} is a combination of the three qubit bit flip and phase flip code and can correct arbitrary single-qubit errors. The encoding circuit for this code can be seen in Figure~\ref{fig:encode_shor_circ}.
 \begin{figure}[ht]
   \[
     \Large
@@ -1430,10 +1431,9 @@ We have seen a code which corrects bit flip and phase errors. How about a code w
         \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw
     }
   \]
-  \caption{Quantum circuit for encoding a qubit \ket{\psi} with nine qubits for the Shor code.}
+  \caption{Quantum circuit for encoding a qubit \ket{\psi} for the nine qubit Shor code.}
   \label{fig:encode_shor_circ}
 \end{figure}
-
 We first apply the encode step of the phase flip code, giving
 \begin{align}
   \ket{0} &\rightarrow \ket{+\!+\!+} \\
@@ -1449,4 +1449,71 @@ This results in a nine qubit code
   \ket{0_L} &= \dfrac{1}{2\sqrt 2}(\ket{000} + \ket{111})(\ket{000} + \ket{111})(\ket{000} + \ket{111}) \\
   \ket{1_L} &= \dfrac{1}{2\sqrt 2}(\ket{000} - \ket{111})(\ket{000} - \ket{111})(\ket{000} - \ket{111}).
 \end{align}
+
+Error syndrome measurement for the Shor code gets a bit more hairy. The stabilizers are described in Figure~\ref{fig:shor_code_stabilizers}. Suppose a bit flip happens on the first qubit of a state $\ket{\psi_L} = \ket{0_L}$:
+\begin{equation}
+\ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{100} + \ket{011})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
+\end{equation}
+The stabilizer measurement $Z_1Z_2\ket{\psi_L'}$ gives us 1, so we know a bit flip occurred on the first or second qubit. Next, the stabilizer measurement $Z_2Z_3\ket{\psi_L'}$ gives us 0, so we can conclude a bit flip happened on the first qubit and we can correct it by flipping it back.
+\begin{figure}[ht]
+  \centering
+  \begin{tabular}{c|c}
+    $Z$ stabilizers & $X$ stabilizers \\ \hline
+    $Z_1Z_2$ & $X_1X_2X_3X_4X_5X_6$ \\
+    $Z_2Z_3$ & $X_4X_5X_6X_7X_8X_9$ \\
+    $Z_4Z_5$ &  \\
+    $Z_5Z_6$ &  \\
+    $Z_7Z_8$ &  \\
+    $Z_8Z_9$ &  \\
+  \end{tabular}
+  \caption{Shor code stabilizers.}
+  \label{fig:shor_code_stabilizers}
+\end{figure}
+
+What about a phase flip? Suppose a phase flip happens on the first qubit of a state $\ket{\psi_L} = \ket{0_L}$. This phase flip flips the sign of the first block of qubits:
+\begin{equation}
+\ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{000} - \ket{111})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
+\end{equation}
+A phase flip on \emph{any} of the first three qubits has this effect, and we can correct any of these errors with the same procedure. Error syndrome measurement for a phase flip begins with comparing the phase of the first two blocks of three qubits with the stabilizer measurement $X_1X_2X_3X_4X_5X_6\ket{\psi_L'}$. The first two blocks $(\ket{000} - \ket{111})(\ket{000} + \ket{111})$ have different signs, and the stabilizer measurement will measure 1. The second two blocks $(\ket{000} + \ket{111})(\ket{000} + \ket{111})$ have equal signs, and the stabilizer measurement $X_4X_5X_6X_7X_8X_9\ket{\psi_L'}$ measures 0. We can conclude that the phase flipped in the first block of three qubits and we can correct it by flipping the sign of the first block of three qubits. These methods to correct errors on the first qubit will work for any of the nine qubits.
+
+To describe the error syndrome measurement circuit of the Shor code, it's useful to adopt a shorthand notation:
+\[
+  \Large
+  \Qcircuit @C=1em @R=0.7em @!R {
+    & & \ctrl{1} & \qw & & & \ctrl{1} & \ctrl{2} & \qw \\
+    & & \gate{U} & \qw & = & & \gate{U} & \qw & \qw \\
+    & & \gate{U} \qwx{-1} & \qw & & & \qw & \gate{U} & \qw
+  }
+\]
+We can then describe the error syndrome measurement circuit as seen in Figure~\ref{fig:shor_esm_circ}.
+
+\begin{figure}[ht]
+  \[
+    \large
+    \Qcircuit @C=0.9em @R=0.7em @!R {
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw & \gate{X} & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_3}} & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_4}} & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_5}} & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_6}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_7}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_8}} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_2} = \ket{0}} & \gate{H} & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_3} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_4} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_5} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_6} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-10} & \qw & \gate{H} & \qw \\
+        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_7} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-8} & \gate{H} & \qw \\
+    }
+  \]
+  \caption{Error syndrome measurement circuit for the nine qubit Shor code.}
+  \label{fig:shor_esm_circ}
+\end{figure}
+
+%\subsection{Steane Code}
+%The Shor code was the first complete quantum error-correction code presented, but it is not the most efficient.
 \end{document}
