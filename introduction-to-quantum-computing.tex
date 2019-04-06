@@ -20,8 +20,8 @@
 \usepackage{times}
 \usepackage{pgfplots}
 
-\titleformat{\chapter}[display]   
-{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\huge}   
+\titleformat{\chapter}[display]
+{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\huge}
 \titlespacing*{\chapter}{0pt}{-50pt}{15pt}
 
 \usepgflibrary{arrows}
@@ -29,62 +29,62 @@
 %% Gate matrices and quantum state vectors
 \newcommand{\igate}{
   \begin{pmatrix}
-  1 & 0 \\
-  0 & 1
+    1 & 0 \\
+    0 & 1
   \end{pmatrix}
 }
 \newcommand{\xgate}{
   \begin{pmatrix}
-  0 & 1 \\
-  1 & 0
+    0 & 1 \\
+    1 & 0
   \end{pmatrix}
 }
 \newcommand{\ygate}{
   \begin{pmatrix}
-  0 & -i \\
-  i & \phantom{-}0
+    0 & -i \\
+    i & \phantom{-}0
   \end{pmatrix}
 }
 \newcommand{\zgate}{
   \begin{pmatrix}
-  1 & \phantom{-}0 \\
-  0 & -1
+    1 & \phantom{-}0 \\
+    0 & -1
   \end{pmatrix}
 }
 \newcommand{\hgate}{
   \dfrac{1}{\sqrt2}
   \begin{pmatrix}
-  1 & \phantom{-}1 \\
-  1 & -1
+    1 & \phantom{-}1 \\
+    1 & -1
   \end{pmatrix}
 }
 \renewcommand{\sgate}{
   \begin{pmatrix}
-  1 & 0 \\
-  0 & i
+    1 & 0 \\
+    0 & i
   \end{pmatrix}
 }
 \newcommand{\phasegate}{
   \begin{pmatrix}
-  1 & \phantom{e}0 \\
-  0 & e^{i\theta}
+    1 & \phantom{e}0 \\
+    0 & e^{i\theta}
   \end{pmatrix}
 }
 \newcommand{\cnotgate}{
   \begin{pmatrix}
-  1 & 0 & 0 & 0 \\
-  0 & 1 & 0 & 0 \\
-  0 & 0 & 0 & 1 \\
-  0 & 0 & 1 & 0 \\
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \\
   \end{pmatrix}
 }
 
 \newcommand{\qstatezero}{
   \begin{pmatrix}1 \\ 0\end{pmatrix}
-}
+  }
 \newcommand{\qstateone}{
   \begin{pmatrix}0 \\ 1\end{pmatrix}
-}
+  }
 
 \setlength\epigraphwidth{10cm}
 \setlength\epigraphrule{0pt}
@@ -103,7 +103,7 @@
 \large Lectures by Leon Riesebos}}
 \author{Steven Oud \\ \emph{soud@pm.me}}
 \begin{document}
-     
+
 \maketitle
 
 \toccontents
@@ -153,11 +153,10 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \section{Single-Qubit Quantum Gates}
 Single-qubit quantum gates can be seen as counter-clockwise rotations on the Bloch sphere. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary operation is a valid gate which acts on $n$ qubits. We will often use circuit notation to describe the transformation of state \ket{\psi} to \ket{\psi'} by a unitary operation $U$ as following:
 \[
-  \Large{
+  \Large
   \Qcircuit @C=1em @R=0em {
     & \lstick{\ket{\psi}} & \gate{U} & \qw & \ket{\psi'}
   }
-}
 \]
 Below are some notable single-qubit gates described and visualized.
 
@@ -174,25 +173,25 @@ Below are some notable single-qubit gates described and visualized.
 \subsection{Hadamard Gate}
 The \emph{Hadamard} ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight:
 \begin{align}
-H\ket{0} = \ket{+} &= \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) \\
-H\ket{1} = \ket{-} &= \dfrac{1}{\sqrt2}(\ket{0} - \ket{1}).
+  H\ket{0} = \ket{+} &= \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) \\
+  H\ket{1} = \ket{-} &= \dfrac{1}{\sqrt2}(\ket{0} - \ket{1}).
 \end{align}
 It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis. This gate is sometimes described as a ``square root of \textsc{not}" gate. The Hadamard gate belongs to the Clifford gates.
 
 \begin{figure}[ht]
-    \centering
-    \includegraphics[scale=0.165]{images/hadamard_gate.eps}
-    \vspace{1mm}
-    \caption{Hadamard gate visualized on the Bloch sphere.}
+  \centering
+  \includegraphics[scale=0.165]{images/hadamard_gate.eps}
+  \vspace{1mm}
+  \caption{Hadamard gate visualized on the Bloch sphere.}
 \end{figure}
 
 \subsection{Phase Gates}
 Rotation gates that rotate around the Z axis are considered \emph{phase gates}. They rotate the phase of the \ket{1} state by an angle $\theta$ and leave the \ket{0} state unchanged:
 \begin{equation}
-\begin{aligned}
-R_z(\theta) \ket{0} &= \ket{0} \\
-R_z(\theta) \ket{1} &= e^{i\theta}\ket{1}.
-\end{aligned}
+  \begin{aligned}
+    R_z(\theta) \ket{0} &= \ket{0} \\
+    R_z(\theta) \ket{1} &= e^{i\theta}\ket{1}.
+  \end{aligned}
 \end{equation}
 The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gate, however it modifies the phase of the quantum state. A common phase gate is the \emph{S gate}, where $\theta = \pi/2$ (Figure \ref{fig:s_bloch}). The Pauli Z gate can be thought of as a phase gate where $\theta = \pi$, because $e^{i\pi} = -1$. Thus you could also think of the $S$ gate as half a Pauli Z gate. Another common phase gate is the \emph{T gate}, where $\theta = \pi/4$ (half an $S$ gate).
 
@@ -206,22 +205,19 @@ The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gat
 
 \section{Measurement}
 Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a classical state \ket{j} (which in the computational basis is \ket{0} or \ket{1}). The state \ket{\psi} has ``disappeared" and all that is left is the classical state \ket{j}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
-\begin{equation}
-\begin{aligned}
+\begin{align}
   P(\ket{0}) &= \left|\alpha\right|^2 \\
   P(\ket{1}) &= \left|\beta\right|^2.
-\end{aligned}
-\end{equation}
+\end{align}
 Consider the following simple single-qubit circuit:
 
 \begin{figure}[ht]
-\[
-  \Large{
+  \[
+    \Large
     \Qcircuit @C=1em @R=0em {
-    \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \gate{Z} & \meter & \cw
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \gate{Z} & \meter & \cw
     }
-  }
-\]
+  \]
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
@@ -248,7 +244,7 @@ Earlier we showed that we can represent a quantum state as
 The quantum states \ket{\psi}, \ket{0} and \ket{1} in the formula above are vectors. We define \ket{0} and \ket{1}, the computational basis states, as following:
 \setlength\multicolsep{0pt}
 \begin{equation}
-\ket{0} = \qstatezero{}; \quad \ket{1} = \qstateone{}.
+  \ket{0} = \qstatezero{}; \quad \ket{1} = \qstateone{}.
 \end{equation}
 \noindent
 A quantum state has to be a normalized vector. In general, a qubit's state is a unit vector in a two-dimensional complex vector space. A $n$ qubit state has a $2^n$ dimensional \emph{Hilbert space}. We can consider a quantum state to be a linear combination of the computational basis states:
@@ -262,11 +258,11 @@ Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
   \[
     I = \igate{}
   \]
-  \vfill
+\vfill
   \[
     X = \xgate{}
   \]
-  \vfill
+\vfill
   \[
     Y = \ygate{}
   \]
@@ -275,11 +271,11 @@ Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
   \[
     Z = \zgate{}
   \]
-  \vfill
+\vfill
   \[
     S = \sgate{}
   \]
-  \vfill
+\vfill
   \[
     H = \hgate{}
   \]
@@ -288,7 +284,7 @@ Single-qubit gates can then be represented by $2 \times 2$ unitary matrices:
 \noindent
 Then a computation like $X$\ket{0} can be calculated by matrix vector multiplication:
 \begin{equation}
-X\ket{0} = \xgate{} \qstatezero{} = \qstateone{}.
+  X\ket{0} = \xgate{} \qstatezero{} = \qstateone{}.
 \end{equation}
 And we find that $X\ket{0} = \ket{1}$. Or, more general:
 \begin{equation}
@@ -352,43 +348,43 @@ Writing it out:
   &=
   \dfrac{1}{\sqrt2}
   \left[
-  \igate{}
-  \otimes
-  \begin{pmatrix}
-  1 & \phantom{-}1 \\
-  1 & -1
-  \end{pmatrix}
+    \igate{}
+    \otimes
+    \begin{pmatrix}
+      1 & \phantom{-}1 \\
+      1 & -1
+    \end{pmatrix}
   \right] \\
-  &= \dfrac{1}{\sqrt2}
+&= \dfrac{1}{\sqrt2}
   \begin{pmatrix}
-  1 & \phantom{-}1 & 0 & \phantom{-}0 \\
-  1 & -1 & 0 & \phantom{-}0 \\
-  0 & \phantom{-}0 & 1 & \phantom{-}1 \\
-  0 & \phantom{-}0 & 1 & -1 \\
+    1 & \phantom{-}1 & 0 & \phantom{-}0 \\
+    1 & -1 & 0 & \phantom{-}0 \\
+    0 & \phantom{-}0 & 1 & \phantom{-}1 \\
+    0 & \phantom{-}0 & 1 & -1 \\
   \end{pmatrix}.
 \end{align}
 Then we can put our \ket{00} state through it:
 \begin{equation}
   \dfrac{1}{\sqrt2}
   \begin{pmatrix}
-  1 & \phantom{-}1 & 0 & \phantom{-}0 \\
-  1 & -1 & 0 & \phantom{-}0 \\
-  0 & \phantom{-}0 & 1 & \phantom{-}1 \\
-  0 & \phantom{-}0 & 1 & -1 \\
+    1 & \phantom{-}1 & 0 & \phantom{-}0 \\
+    1 & -1 & 0 & \phantom{-}0 \\
+    0 & \phantom{-}0 & 1 & \phantom{-}1 \\
+    0 & \phantom{-}0 & 1 & -1 \\
   \end{pmatrix}
   \begin{pmatrix}
-  1 \\
-  0 \\
-  0 \\
-  0
+    1 \\
+    0 \\
+    0 \\
+    0
   \end{pmatrix}
   =
   \dfrac{1}{\sqrt2}
   \begin{pmatrix}
-  1 \\
-  1 \\
-  0 \\
-  0
+    1 \\
+    1 \\
+    0 \\
+    0
   \end{pmatrix},
 \end{equation}
 which can also be written in Dirac notation as $(\ket{00} + \ket{01})/\sqrt2$.
@@ -409,12 +405,12 @@ First, we put both qubits in our state \ket{00} through a Hadamard gate. This pu
 \end{equation}
 When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. Measuring \ket{q_0} collapses the state to one of the following states:
 \begin{equation}
-  \ket{\psi} = 
+  \ket{\psi} =
   \begin{cases}
-  \begin{aligned}
-    \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = 0 \\
-    \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = 1
-  \end{aligned}
+    \begin{aligned}
+      \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = 0 \\
+      \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = 1
+    \end{aligned}
   \end{cases}
 \end{equation}
 We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
@@ -424,25 +420,25 @@ We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1}
 The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit \ket{q_0} represents the control qubit and \ket{q_1} represents the target qubit. It's essentially a Pauli X gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
 
 \begin{figure}[ht]
-\centering
-\begin{minipage}{.45\textwidth}
-  \[
-    \Large
-    \Qcircuit @C=1em @R=0.5em @!R {
-	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
-	  \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw \\
-	}
-  \]
-  \caption{Two different circuit representations of \textsc{cnot}.}
-  \label{fig:cnot_circuit}
-\end{minipage}%
-\hspace*{.05\textwidth}
-\begin{minipage}{.45\textwidth}
-  \[
-    U_{CX} = \cnotgate{}
-  \]
+  \centering
+  \begin{minipage}{.45\textwidth}
+    \[
+      \Large
+      \Qcircuit @C=1em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw \\
+      }
+    \]
+    \caption{Two different circuit representations of \textsc{cnot}.}
+    \label{fig:cnot_circuit}
+  \end{minipage}%
+  \hspace*{.05\textwidth}
+  \begin{minipage}{.45\textwidth}
+    \[
+      U_{CX} = \cnotgate{}
+    \]
   \caption{Matrix representation of \textsc{cnot}.}
-\end{minipage}
+  \end{minipage}
 \end{figure}
 \noindent
 Let's look at an example of a \textsc{cnot} gate. Consider the following circuit:
@@ -457,17 +453,17 @@ First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $
 \begin{equation}
   \textsc{CNOT}\ket{10} = \cnotgate{}
   \begin{pmatrix}
-  0 \\
-  0 \\
-  1 \\
-  0
+    0 \\
+    0 \\
+    1 \\
+    0
   \end{pmatrix}
   =
   \begin{pmatrix}
-  0 \\
-  0 \\
-  0 \\
-  1
+    0 \\
+    0 \\
+    0 \\
+    1
   \end{pmatrix}
   =
   \ket{11}.
@@ -477,13 +473,13 @@ The target qubit was flipped because the control qubit was set to \ket{1}, givin
 \subsection{CZ Gate}
 \textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is \ket{1}, otherwise do nothing. In \textsc{cz} the operation is the Pauli Z gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
 \begin{figure}[ht]
-\[
-  \Large
-  \Qcircuit @C=1em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
-    \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
-  }
-\]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
+    }
+  \]
 \caption{Two different circuit representations of \textsc{CZ}.}
 \end{figure}
 
@@ -492,18 +488,18 @@ Controlled gates act on two or more qubits, where one or more qubits act as cont
 \begin{equation}
   U =
   \begin{pmatrix}
-  u_{00} & u_{01} \\
-  u_{10} & u_{11} \\
+    u_{00} & u_{01} \\
+    u_{10} & u_{11} \\
   \end{pmatrix},
 \end{equation}
 then the controlled-$U$ gate is a gate that operates on two qubits where the first qubit serves as control. The general matrix representation of the controlled-$U$ then, if qubit 0 is the control and qubit 1 is the target, looks as following:
 \begin{equation}
   C_U =
   \begin{pmatrix}
-  1 & 0 & 0 & 0 \\
-  0 & 1 & 0 & 0 \\
-  0 & 0 & u_{00} & u_{01} \\
-  0 & 0 & u_{10} & u_{11} \\
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & u_{00} & u_{01} \\
+    0 & 0 & u_{10} & u_{11} \\
   \end{pmatrix}.
 \end{equation}
 \section{Toffoli Gate}
@@ -526,14 +522,14 @@ The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented b
 \begin{equation}
   U_{CCX} =
   \begin{pmatrix}
-  1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
-  0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
-  0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
-  0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
-  0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
-  0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
   \end{pmatrix}.
 \end{equation}
 
@@ -574,10 +570,10 @@ A concurrence of 0, so it is not entangled.
 \section{The Bell States} \label{sec:bell_states}
 The \emph{Bell states} are four maximally entangled quantum states of two qubits:
 \begin{align}
-\ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-\ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
-\ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
-\ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
+  \ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+  \ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+  \ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
+  \ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
 \end{align}
 We can create a Bell state with the following circuit:
 \[
@@ -602,47 +598,45 @@ The significance of Bell states becomes apparent when we start measuring qubits 
   }
 \]
 You will find that the measurement results are correlated:
-\begin{equation}
-\begin{gathered}
-M(q_1) = 0 \text{ if } M(q_0) = 0 \\
-M(q_1) = 1 \text{ if } M(q_0) = 1
-\end{gathered}
-\end{equation}
+\begin{align}
+  M(q_1) = 0 \text{ if } M(q_0) = 0 \\
+  M(q_1) = 1 \text{ if } M(q_0) = 1
+\end{align}
 If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
 
 \section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
 \begin{equation}
-\ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2},
+  \ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2},
 \end{equation}
 where $\ket{j}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
 \begin{equation}
-\ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}.
+  \ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}.
 \end{equation}
 GHZ states are used for example in cryptography for secret sharing.
 \begin{figure}[ht]
-\[
-  \Large
-  \Qcircuit @C=1em @R=0.5em @!R {
-  	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \ctrl{2} & \qw  \\
-	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \targ & \qw & \qw \\
-	\push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \qw &  \targ & \qw \\
-  }
-\]
-\caption{Circuit creating a three-qubit GHZ state.}
-\label{fig:ghz_3}
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \ctrl{2} & \qw  \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \qw &  \targ & \qw \\
+    }
+  \]
+  \caption{Circuit creating a three-qubit GHZ state.}
+  \label{fig:ghz_3}
 \end{figure}
 
 \section{Calculating Parity} \label{sec:parity}
 Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0}\ket{q_1} with \ket{q_2}.
 \begin{figure}[ht]
   \[
-  \Large
-  \Qcircuit @C=1em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{2} & \qw & \qw & \qw \\
-    \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \qw & \ctrl{1} & \qw & \qw \\
-    \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ &  \targ & \meter & \cw \\
-  }
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{2} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \qw & \ctrl{1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ &  \targ & \meter & \cw \\
+    }
   \]
   \caption{Circuit for calculating parity: $\textsc{cnot}_{1,2}\textsc{cnot}_{0,2}H_1H_0\ket{000}$.}
   \label{fig:parity_circuit}
@@ -662,13 +656,13 @@ and a $\textsc{cnot}_{1,2}$:
 \end{equation}
 If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
 \begin{equation}
-\ket{\psi} = 
-\begin{cases}
-\begin{aligned}
-\dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \otimes \ket{0} & \text{ if } M(q_2) = 0 \\
-\dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \otimes \ket{1} & \text{ if } M(q_2) = 1
-\end{aligned}
-\end{cases}
+  \ket{\psi} =
+  \begin{cases}
+    \begin{aligned}
+      \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \otimes \ket{0} & \text{ if } M(q_2) = 0 \\
+      \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \otimes \ket{1} & \text{ if } M(q_2) = 1
+    \end{aligned}
+  \end{cases}
 \end{equation}
 Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{01} and \ket{10} have odd parity ($q_2 = 1$).
 
@@ -677,14 +671,14 @@ Quantum teleportation it a technique for moving arbitrary quantum states around.
 
 \begin{figure}[ht]
   \[
-  \Large
-  \Qcircuit @C=1em @R=0.5em @!R {
-	\push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{\phi}} \ar@{.}[]+<0.55em,0.5em>;[d]+<0.55em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw 
-	\ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> \\
-	\push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
-	\push{\rule{0em}{1em}} & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
-	& \hspace{7.3em} \ket{\psi_{0}} & \hspace{13.8em} \ket{\psi_{1}} & \hspace{15.6em} \ket{\psi_{2}} & \hspace{18.5em} \ket{\psi_{3}} & \hspace{20.9em} \ket{\psi_{4}} & \hspace{26.1em} \ket{\psi_{5}}
-  }
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{\phi}} \ar@{.}[]+<0.55em,0.5em>;[d]+<0.55em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw
+      \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
+      & \hspace{7.3em} \ket{\psi_{0}} & \hspace{13.8em} \ket{\psi_{1}} & \hspace{15.6em} \ket{\psi_{2}} & \hspace{18.5em} \ket{\psi_{3}} & \hspace{20.9em} \ket{\psi_{4}} & \hspace{26.1em} \ket{\psi_{5}}
+    }
   \]
   \vspace{3mm}
   \caption{Quantum circuit teleporting a quantum state \ket{\phi}.}
@@ -697,8 +691,8 @@ The circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{
 \end{equation}
 which we can rewrite as following
 \begin{align}
-\ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-&= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big).
+  \ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+  &= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big).
 \end{align}
 Alice then sends her qubits through a $\textsc{cnot}_{0, 1}$ gate, obtaining
 \begin{equation}
@@ -710,10 +704,10 @@ She then sends \ket{q_0} through a Hadamard gate, giving
 \end{equation}
 This state can be rewritten in the following way:
 \begin{equation}
-\begin{aligned}
-  \ket{\psi_3} = \dfrac{1}{2}\Big(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) \, + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \\
-  + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big).
-\end{aligned}
+  \begin{aligned}
+    \ket{\psi_3} = \dfrac{1}{2}\Big(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) \, + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \\
+    + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big).
+  \end{aligned}
 \end{equation}
 This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = 00$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
 
@@ -764,7 +758,7 @@ We can create a quantum half adder by creating sum and carry circuits, just like
     \]
     \caption{Quantum circuit for summing two bits using two \textsc{cnot} gates.}
     \label{fig:sum_quantum_circuit}
-    \end{minipage}
+  \end{minipage}
 \end{figure}
 
 To fully add two bits we need to account for the carry. The carry function $f_c(x)$ is 1 if and only if both inputs are 1 (Figure~\ref{fig:carry_truth_table}). This truth table corresponds directly to the Toffoli gate (Figure~\ref{fig:carry_quantum_circuit}).
@@ -801,13 +795,13 @@ We can combine our sum and carry circuit into one, creating a quantum half adder
 
 \begin{figure}[ht]
   \[
-  \Large
-  \Qcircuit @C=1em @R=0.5em @!R {
-    \push{\rule{0em}{1em}} & \lstick{\ket{x_0}} & \ctrl{3} & \ctrl{2} & \qw & \qw & \ket{x_0} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{x_1}} & \ctrl{2} & \qw &  \ctrl{1} & \qw & \ket{x_1} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw & \targ & \targ & \qw & \ket{y_s} \\
-    \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \qw & \qw & \ket{y_c} \\
-  }
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & \lstick{\ket{x_0}} & \ctrl{3} & \ctrl{2} & \qw & \qw & \ket{x_0} \\
+      \push{\rule{0em}{1em}} & \lstick{\ket{x_1}} & \ctrl{2} & \qw &  \ctrl{1} & \qw & \ket{x_1} \\
+      \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw & \targ & \targ & \qw & \ket{y_s} \\
+      \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \qw & \qw & \ket{y_c} \\
+    }
   \]
   \caption{Quantum half adder. The sum ends up in \ket{y_s} and the carry in \ket{y_c}.}
   \label{fig:quantum_full_adder}
@@ -816,38 +810,38 @@ We can combine our sum and carry circuit into one, creating a quantum half adder
 Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(y_s) = 0$ and $M(y_c) = 1$, giving us what we expected and thus having done a quantum half addition of two qubits.
 
 \section{Deutch-Jozsa Algorithm}
-We have shown that we can simulate classical circuits on a quantum computer. This itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set. 
+We have shown that we can simulate classical circuits on a quantum computer. This itself isn't very impressive however, we could already do that on a classical computer. In this section we will describe an algorithm with quantum speedup. Consider the four single-bit operations identity, \textsc{not}, reset and set.
 
 \begin{figure}[ht]
   \centering
   \begin{multicols}{4}
     \captionof*{table}{\textbf{Identity}\\$f_i(x) = x$}
     \begin{tabular}{c|c}
-    $x$ & $f_i(x)$ \\ \hline
-    0 & 0 \\
-    1 & 1 \\
+      $x$ & $f_i(x)$ \\ \hline
+      0 & 0 \\
+      1 & 1 \\
     \end{tabular}
 
     \captionof*{table}{\textbf{NOT}\\$f_n(x) = \neg x$}
     \begin{tabular}{c|c}
-    $x$ & $f_n(x)$ \\ \hline
-    0 & 1 \\
-    1 & 0 \\
+      $x$ & $f_n(x)$ \\ \hline
+      0 & 1 \\
+      1 & 0 \\
     \end{tabular}
 
     \captionof*{table}{\textbf{Reset}\\$f_r(x) = 0$}
     \begin{tabular}{c|c}
-    $x$ & $f_r(x)$ \\ \hline
-    0 & 0 \\
-    1 & 0 \\
+      $x$ & $f_r(x)$ \\ \hline
+      0 & 0 \\
+      1 & 0 \\
     \end{tabular}
 
     \captionof*{table}{\textbf{Set}\\$f_s(x) = 1$}
     \begin{tabular}{c|c}
-    $x$ & $f_s(x)$ \\ \hline
-    0 & 1 \\
-    1 & 1 \\
-   \end{tabular}
+      $x$ & $f_s(x)$ \\ \hline
+      0 & 1 \\
+      1 & 1 \\
+    \end{tabular}
   \end{multicols}
 
   \vspace{4mm}
@@ -885,7 +879,7 @@ On a classical computer, to determine if the black box is balanced or unbalanced
       }
     \]
     \caption*{\textbf{Reset}\\$f_r(x) = 0$}
-    
+
     \[
       \Qcircuit @C=0.7em @R=0.5em @!R {
         \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \qw & \qw \\
@@ -920,10 +914,10 @@ We can try it out by trying to determine if the identity function $f_i(x) = x$ i
 \end{equation}
 We evaluate our identity function using by applying $U_f$:
 \begin{equation}
-\begin{aligned}
-\ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\!\ket{0 \otimes f_i(0)} - \ket{0}\!\ket{1 \otimes f_i(0)} \\
-+\, &\ket{1}\!\ket{0 \otimes f_i(1)} - \ket{1}\!\ket{1 \otimes f_i(1)}\big).
-\end{aligned}
+  \begin{aligned}
+    \ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\!\ket{0 \otimes f_i(0)} - \ket{0}\!\ket{1 \otimes f_i(0)} \\
+    +\, &\ket{1}\!\ket{0 \otimes f_i(1)} - \ket{1}\!\ket{1 \otimes f_i(1)}\big).
+  \end{aligned}
 \end{equation}
 This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the state
 \begin{equation}
@@ -931,10 +925,10 @@ This state contains information about both $f_i(0)$ and $f_i(1)$! We have essent
 \end{equation}
 Finally we apply another Hadamard gate on \ket{x}:
 \begin{equation}
-\begin{aligned}
-  \ket{\psi} = \dfrac{1}{2\sqrt2}(&\ket{00} + \ket{10} - \ket{01} - \ket{11} \\
-  + \, &\ket{01} - \ket{11} - \ket{00} + \ket{10})
-\end{aligned}
+  \begin{aligned}
+    \ket{\psi} = \dfrac{1}{2\sqrt2}(&\ket{00} + \ket{10} - \ket{01} - \ket{11} \\
+    + \, &\ket{01} - \ket{11} - \ket{00} + \ket{10})
+  \end{aligned}
 \end{equation}
 \vspace*{-7mm}
 \begin{align}
@@ -943,10 +937,10 @@ Finally we apply another Hadamard gate on \ket{x}:
 \end{align}
 We end up with the final state $(\ket{10} - \ket{11})/\sqrt2$ before measurement. We can see from this state that $M(x) = 1$. Curiously, the following measurement outcomes apply:
 \begin{equation}
-\begin{aligned}
-\ket{0_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) = f(1) \\
-\ket{1_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) \not= f(1)
-\end{aligned}
+  \begin{aligned}
+    \ket{0_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) = f(1) \\
+    \ket{1_x} \otimes \dfrac{1}{\sqrt2}(\ket{0_y} - \ket{1_y}) & \, \text{ if } \, f(0) \not= f(1)
+  \end{aligned}
 \end{equation}
 That is, we get $M(x) = 1$ if $f(0) \not= f(1)$, which means $f$ is a balanced function. Likewise, we get $M(x) = 0$ if $f(0) = f(1)$, which means $f$ is an unbalanced function. Since we got a measurement of 1 for $f_i$, and given the fact that the identity operation is balanced, we can say that we effectively determined that $f_i$ is a balanced function with one call to the black box.
 
@@ -966,36 +960,36 @@ An important operation in classical computing and quantum computing as we will s
         width=7cm,
         ymin=-1,
         ymax=1,
-        xticklabels={$-2\pi$, , $-\pi$, , 
+        xticklabels={$-2\pi$, , $-\pi$, ,
             , $\pi$, , $2\pi$},
         xtick={-6.28318, -4.7123889, -3.14159, -1.5708, 1.5708, 3.14159, 4.7123889, 6.28318}
       ]
-         \addplot[red, domain=-2*pi:2*pi, samples=1000]{ cos(deg(x)) };
-       \end{axis}
-     \end{tikzpicture}
-     \caption{Time domain plot of $\cos(t)$.}
-     \label{fig:cos_time_graph}
-     
-     \begin{tikzpicture}
-       \begin{axis}[
-         title={$F(\cos(t))$},
-         xlabel={$x$},
-         axis lines=middle,
-         height=5cm,
-         width=6cm,
-         xmax=2,
-         xmin=-2,
-         ymin=0,
-         ymax=2
+        \addplot[red, domain=-2*pi:2*pi, samples=1000]{ cos(deg(x)) };
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Time domain plot of $\cos(t)$.}
+    \label{fig:cos_time_graph}
+
+    \begin{tikzpicture}
+      \begin{axis}[
+        title={$F(\cos(t))$},
+        xlabel={$x$},
+        axis lines=middle,
+        height=5cm,
+        width=6cm,
+        xmax=2,
+        xmin=-2,
+        ymin=0,
+        ymax=2
        ]
          \addplot[ycomb, blue, mark=, thick, mark=*] coordinates {
            (1, 1) (-1, 1)
          };
-       \end{axis}
-     \end{tikzpicture}
-     \caption{Frequency domain plot of $F(\cos(t))$.}
-     \label{fig:cos_freq_graph}
-   \end{multicols}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Frequency domain plot of $F(\cos(t))$.}
+    \label{fig:cos_freq_graph}
+  \end{multicols}
 \end{figure}
 
 The Fourier transform is a very useful tool in computer science, used for example in signal processing. The signal shown in Figure~\ref{fig:cos_time_graph} is a continuous signal, meaning it is assumed to extend to infinity. Computers however can only deal with finite, non-continuous signals. This means we have to discretize the continuous function into discrete counterparts as seen in Figure~\ref{fig:cos_discrete_time_graph}. We can then transform the discrete signal using the \emph{discrete Fourier transform}.
@@ -1021,12 +1015,12 @@ The Fourier transform is a very useful tool in computer science, used for exampl
   \end{tikzpicture}
   \caption{Discretized counterpart of the continuous function $\cos(t)$. Each dot represents a sample of the signal. The time interval between the samples is called the sampling interval.}
   \label{fig:cos_discrete_time_graph}
-\end{figure}  
+\end{figure}
 
 The discrete Fourier transform can be thought of as a linear operation. This means we can map a $N$-dimensional state vector to another $N$-dimensional state vector by a $N \times N$ matrix $F_N$. For a $n$ qubit state $N$ is equal to $2^n$. Such transformation may be written as
 \begin{equation}
   \ket{x} = \sum_{j=0}^{N-1}x_j\ket{j} \longrightarrow \sum_{k=0}^{N-1}y_k\ket{k},
-\end{equation} 
+\end{equation}
 where the amplitudes $y_k$ are the discrete Fourier transform of the amplitudes $x_j$. In other words, the quantum Fourier transform (QFT) transforms the computational basis states as following
 \begin{equation} \label{eq:qft}
   F_N\ket{j} = \dfrac{1}{\sqrt N}\sum_{k=0}^{N-1}e^{2\pi i jk/N}\ket{k}.
@@ -1186,10 +1180,10 @@ Suppose Alice and Bob want to share some information. They are allowed to meet u
 
 As it turns out, you can communicate two classical bits of information using one qubit. This is referred to as \emph{superdense coding}. Recall the Bell states from Section~\ref{sec:bell_states}:
 \begin{align}
-\ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
-\ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
-\ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
-\ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
+  \ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+  \ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+  \ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
+  \ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
 \end{align}
 These maximally entangled two-qubit states have variations in parity and phase. If we were somehow able to ``decode" the parity and phase of these states by mapping them to separate computational basis states, we could extract two classical bits of data from one qubit. It turns out this can be done by applying the circuit in Figure~\ref{fig:decode_bell_circ} on a Bell state. Note that this is the reverse of the circuit for creating the Bell state \ket{\Phi^+}. You can interpret the decode circuit as following: the \textsc{cnot} gate decodes the parity of \ket{q_0}\ket{q_1} to \ket{q_1}, and the Hadamard gate decodes the phase to \ket{q_0}.
 
@@ -1203,8 +1197,8 @@ These maximally entangled two-qubit states have variations in parity and phase. 
         \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \meter & \cw \\
       }
     \]
-    \caption{Circuit to decode the Bell states to separate computational basis states.}
-    \label{fig:decode_bell_circ}
+  \caption{Circuit to decode the Bell states to separate computational basis states.}
+  \label{fig:decode_bell_circ}
   \end{minipage}%
   \hspace*{.03\textwidth}
   \begin{minipage}{.5\textwidth}
@@ -1245,7 +1239,7 @@ We can send two bits of classical information with a single qubit using superden
 Quantum computers, like classical computers, suffer from \emph{noise}. That is, unwanted interactions from the outside world which causes errors in our data. For example, qubits lose their state in a very short period of time (called \emph{decoherence}). To protect against noise, there exist quantum algorithms called \emph{quantum error-correcting codes}. These algorithms encode a quantum state to make it resilient to noise. When the original state wishes to be recovered, the state can be decoded again. Applying such a code costs time and space, but gives us longer coherence times and lower error rates. To explain quantum error correction schemes, it's useful to first take a look at classical error correction.
 
 \section{Classical Error Correction}
-If you want to counter noise, you need to understand where the noise comes from. To identify a source of noise, we define a \emph{noise channel}. The most simplistic classical noise channel is the \emph{binary symmetric channel} (Figure~\ref{fig:binary_symmetric_channel}). This model assumes we have independent single-bit errors. On the left is the state of our bit. Then some time passes, after which there is a probability of $p$ that the bit has flipped due to noise, and a probability of $1 - p$ that our bit stayed in its correct state. 
+If you want to counter noise, you need to understand where the noise comes from. To identify a source of noise, we define a \emph{noise channel}. The most simplistic classical noise channel is the \emph{binary symmetric channel} (Figure~\ref{fig:binary_symmetric_channel}). This model assumes we have independent single-bit errors. On the left is the state of our bit. Then some time passes, after which there is a probability of $p$ that the bit has flipped due to noise, and a probability of $1 - p$ that our bit stayed in its correct state.
 \begin{figure}[ht]
   \centering
   \begin{tikzpicture}
@@ -1292,8 +1286,8 @@ For simplicity sake we will only look at the bit and phase flip channels. Howeve
 \subsection{Quantum Bit Flip Code}
 The idea of quantum error-correction is to encode a quantum state redundantly into a larger Hilbert space. For example, we encode a single qubit $\alpha\ket{0} + \beta\ket{1}$ as $\alpha\ket{000} + \beta\ket{111}$. For convenience we write these encoded states as following:
 \begin{align}
-\ket{0_L} &= \ket{000} \\
-\ket{1_L} &= \ket{111}.
+  \ket{0_L} &= \ket{000} \\
+  \ket{1_L} &= \ket{111}.
 \end{align}
 We refer to \ket{0_L} and \ket{1_L} as the \emph{logical} \ket{0} and \emph{logical} \ket{1} states. This encoding is achieved by the circuit in Figure~\ref{fig:logical_encode_circ}.
 \begin{figure}[ht]
@@ -1378,7 +1372,7 @@ This code can detect two errors, but only correct one. For example, consider the
   X_{d_0} &\rightarrow \alpha\ket{100} + \beta\ket{011} \label{eq:single_bit_flip} \\
   X_{d_1}X_{d_2} &\rightarrow \alpha\ket{011} + \beta\ket{100}. \label{eq:double_bit_flip}
 \end{align}
-We can detect that both states are erroneous, since for both states the error syndrome measurement results are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. The state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability that $X_{d_0}$ happened than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections will be wrong and generate an unrecoverable error.
+We can detect that both states are erroneous, since for both states the error syndrome measurement results are $M(a_0) = 1$ and $M(a_1) = 0$. When correcting an erroneous state, we always choose the least amount of errors that explains the error syndrome. There's a probability of $p$ that a single error happened, and a probability of $p^2$ that two errors happened. The state in \ref{eq:double_bit_flip} would get corrected to the wrong state $\alpha\ket{111} + \beta\ket{000}$, because there's a higher probability that $X_{d_0}$ happened than $X_{d_1}X_{d_2}$. So in the case of multiple bit flip errors, corrections can be wrong and generate an unrecoverable error.
 
 After correction we are left with an encoded state $\ket{\psi_L} = \alpha\ket{000} + \beta\ket{111}$. To get the original state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ back, we need to decode the state. This can be achieved by simply reversing the encoding circuit in Figure~\ref{fig:logical_encode_circ} (since \textsc{cnot} is Hermitian, the reverse of the encoding circuit is itself). Note that if you just want to do measurement, you can measure any of the qubits in $\ket{\psi_L}$ instead of decoding it.
 
@@ -1388,9 +1382,9 @@ The bit flip code only catches $X$ errors. If the phase of a state \ket{\psi} fl
   \[
     \Large
     \Qcircuit @C=1em @R=0.7em @!R {
-        \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{\psi}} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw \\
     }
   \]
   \caption{Quantum circuit for encoding a qubit \ket{\psi} for the three qubit phase flip code.}
@@ -1401,11 +1395,11 @@ This will encode a state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ as $\ket{\p
   \[
     \Large
     \Qcircuit @C=1em @R=0.7em @!R {
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \targ & \qw & \qw & \qw & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \qw & \targ & \targ & \qw & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-3} & \ctrl{-2} & \qw & \qw & \gate{H} & \meter & \cw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw &  \qw & \ctrl{-3} & \ctrl{-2} & \gate{H} & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \targ & \qw & \qw & \qw & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \qw & \targ & \targ & \qw & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-3} & \ctrl{-2} & \qw & \qw & \gate{H} & \meter & \cw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw &  \qw & \ctrl{-3} & \ctrl{-2} & \gate{H} & \meter & \cw \\
     }
   \]
   \caption{Measuring error syndrome with stabilizer measurements $X_1X_2$ and $X_2X_3$.}
@@ -1420,15 +1414,15 @@ We have seen a code which corrects bit flip and phase errors. How about a code w
   \[
     \Large
     \Qcircuit @C=1em @R=0.7em @!R {
-        \push{\rule{0em}{1em}} & \lstick{\ket{\psi}} & \ctrl{3} & \ctrl{6} & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
-        \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
-        \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw
+      \push{\rule{0em}{1em}} & \lstick{\ket{\psi}} & \ctrl{3} & \ctrl{6} & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
+      \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw \\
+      \push{\rule{0em}{1em}} & \lstick{\ket{0}} & \qw &  \targ & \gate{H} & \qw & \qw & \ctrl{1} & \ctrl{2} & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{0}} & \qw & \targ & \qw
     }
   \]
   \caption{Quantum circuit for encoding a qubit \ket{\psi} for the nine qubit Shor code.}
@@ -1452,7 +1446,7 @@ This results in a nine qubit code
 
 Error syndrome measurement for the Shor code gets a bit more hairy. The stabilizers are described in Figure~\ref{fig:shor_code_stabilizers}. Suppose a bit flip happens on the first qubit of a state $\ket{\psi_L} = \ket{0_L}$:
 \begin{equation}
-\ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{100} + \ket{011})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
+  \ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{100} + \ket{011})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
 \end{equation}
 The stabilizer measurement $Z_1Z_2\ket{\psi_L'}$ gives us 1, so we know a bit flip occurred on the first or second qubit. Next, the stabilizer measurement $Z_2Z_3\ket{\psi_L'}$ gives us 0, so we can conclude a bit flip happened on the first qubit and we can correct it by flipping it back.
 \begin{figure}[ht]
@@ -1472,9 +1466,9 @@ The stabilizer measurement $Z_1Z_2\ket{\psi_L'}$ gives us 1, so we know a bit fl
 
 What about a phase flip? Suppose a phase flip happens on the first qubit of a state $\ket{\psi_L} = \ket{0_L}$. This phase flip flips the sign of the first block of qubits:
 \begin{equation}
-\ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{000} - \ket{111})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
+  \ket{\psi_L'} = \dfrac{1}{2\sqrt 2}(\ket{000} - \ket{111})(\ket{000} + \ket{111})(\ket{000} + \ket{111}).
 \end{equation}
-A phase flip on \emph{any} of the first three qubits has this effect, and we can correct any of these errors with the same procedure. Error syndrome measurement for a phase flip begins with comparing the phase of the first two blocks of three qubits with the stabilizer measurement $X_1X_2X_3X_4X_5X_6\ket{\psi_L'}$. The first two blocks $(\ket{000} - \ket{111})(\ket{000} + \ket{111})$ have different signs, and the stabilizer measurement will measure 1. The second two blocks $(\ket{000} + \ket{111})(\ket{000} + \ket{111})$ have equal signs, and the stabilizer measurement $X_4X_5X_6X_7X_8X_9\ket{\psi_L'}$ measures 0. We can conclude that the phase flipped in the first block of three qubits and we can correct it by flipping the sign of the first block of three qubits. These methods to correct errors on the first qubit will work for any of the nine qubits.
+A phase flip on \emph{any} of the first three qubits has this effect, and we can correct any of these errors with the same procedure. Error syndrome measurement for a phase flip begins with comparing the phase of the first two blocks of three qubits with the stabilizer measurement $X_1X_2X_3X_4X_5X_6\ket{\psi_L'}$. The first two blocks $(\ket{000} - \ket{111})(\ket{000} + \ket{111})$ have different signs, and the stabilizer measurement will measure 1. The second two blocks $(\ket{000} + \ket{111})(\ket{000} + \ket{111})$ have equal signs, and the stabilizer measurement $X_4X_5X_6X_7X_8X_9\ket{\psi_L'}$ measures 0. We can conclude that the phase flipped in the first block of three qubits and we can correct it by flipping the sign of the first block. These methods to correct errors will work for any of the nine qubits.
 
 To describe the error syndrome measurement circuit of the Shor code, it's useful to adopt a shorthand notation:
 \[
@@ -1487,33 +1481,37 @@ To describe the error syndrome measurement circuit of the Shor code, it's useful
 \]
 We can then describe the error syndrome measurement circuit as seen in Figure~\ref{fig:shor_esm_circ}.
 
-\begin{figure}[ht]
+\newpage
+
+\begin{figure}[!ht]
   \[
     \large
     \Qcircuit @C=0.9em @R=0.7em @!R {
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw & \gate{X} & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_3}} & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_4}} & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_5}} & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_6}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_7}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_8}} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_2} = \ket{0}} & \gate{H} & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_3} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_4} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_5} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_6} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-10} & \qw & \gate{H} & \qw \\
-        \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_7} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-8} & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_0}} & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw & \gate{X} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_1}} & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_2}} & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_3}} & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_4}} & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_5}} & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \qw & \gate{X} \qwx{-1} & \gate{X} \qwx{-1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_6}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_7}} & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \gate{Z} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{d_8}} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} \qwx{-1} & \qw & \gate{X} \qwx{-1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_0} = \ket{0}} & \gate{H} & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_1} = \ket{0}} & \gate{H} & \qw & \ctrl{-8} & \qw & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_2} = \ket{0}} & \gate{H} & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_3} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \ctrl{-7} & \qw & \qw & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_4} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_5} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \ctrl{-6} & \qw & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_6} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-10} & \qw & \gate{H} & \qw \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{a_7} = \ket{0}} & \gate{H} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{-8} & \gate{H} & \qw \\
     }
   \]
   \caption{Error syndrome measurement circuit for the nine qubit Shor code.}
   \label{fig:shor_esm_circ}
 \end{figure}
 
-%\subsection{Steane Code}
-%The Shor code was the first complete quantum error-correction code presented, but it is not the most efficient.
+\newpage
+
+% \subsection{Steane Code}
+% The Shor code was the first complete quantum error-correction code presented, but it is not the most efficient. The \emph{Steane code} is a seven qubit error-correction code which can correct arbitrary single-qubit errors.
 \end{document}
