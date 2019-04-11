@@ -1,0 +1,413 @@
+\chapter{Fundamentals: A Multi-Qubit World}
+We can represent multiple qubit states using the \emph{Kronecker product}. Let $A$ be a $m \times n$ matrix and $B$ a $p \times q$ matrix, then
+\begin{equation}
+  A \otimes B =
+    \begin{pmatrix}
+      a_{11}B & \dots & a_{1n}B \\
+      \vdots & \ddots & \vdots \\
+      a_{m1}B & \dots & a_{mn}B \\
+    \end{pmatrix},
+\end{equation}
+resulting in a $mp \times nq$ matrix. We can then represent the two qubit state \ket{00} as
+\begin{equation}
+  \ket{00} = \ket{0} \otimes \ket{0} = \qstatezero{} \otimes \qstatezero{} =
+  \begin{pmatrix}
+    1\qstatezero{} \\[13pt]
+    0\qstatezero{}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1 \\
+    0 \\
+    0 \\
+    0
+  \end{pmatrix}.
+\end{equation}
+Throughout this document we will use different kinds of notation for multiple qubits depending on context, all of which are equivalent: $\ket{00} = \ket{0}\!\ket{0} = \ket{0} \otimes \ket{0}$.
+We can write a two qubit state as following in Dirac notation:
+\begin{equation}
+  \ket{ab} = \ket{a} \otimes \ket{b} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}.
+\end{equation}
+More generally, we say that a linear combination $\sum_{i} \alpha_i\ket{\psi_i}$ is a quantum state with states \ket{\psi_i} and amplitude $\alpha_i$ for state \ket{\psi_i}.
+
+Note that the state vector of two qubits is twice as big as the state vector for one qubit. This is where some of the potential power of quantum computers comes from. With $n$ qubits you can represent $2^n$ states - the state space grows exponentially with the number of qubits, unlike classical bits. For multi-qubit states the rule remains that the state vector has to be normalized. For a $n$ qubit state:
+\begin{equation}
+  \sum_{i = 0}^{2^n-1} |\alpha_i|^2 = 1.
+\end{equation}
+
+\section{Quantum State Evolution}
+Doing single-qubit operations on a multi-qubit state is possible by combining the identity and our single-qubit gate. Say we want to compute $H_1$\ket{0_0 0_1}. That is, put the second qubit through a Hadamard gate.\footnote{Note that when I say ``second" qubit, I'm talking about the most right, or least significant qubit. I will number them for this example but assume it from here on out.} To do so, the gate matrix's column width has to be equal to the quantum state vector's dimension. We can achieve this by taking the Kronecker product of the identity matrix and our single-qubit matrix (in this case $H$):
+\begin{equation}
+  H_1\ket{0_0 0_1} = (I_0 \otimes H_1)\ket{0_0 0_1}.
+\end{equation}
+Writing it out:
+\begin{align}
+  I_0 \otimes H_1 &=
+  \igate{} \otimes \hgate{} \\
+  &=
+  \dfrac{1}{\sqrt2}
+  \left[
+    \igate{}
+    \otimes
+    \begin{pmatrix}
+      1 & \phantom{-}1 \\
+      1 & -1
+    \end{pmatrix}
+  \right] \\
+&= \dfrac{1}{\sqrt2}
+  \begin{pmatrix}
+    1 & \phantom{-}1 & 0 & \phantom{-}0 \\
+    1 & -1 & 0 & \phantom{-}0 \\
+    0 & \phantom{-}0 & 1 & \phantom{-}1 \\
+    0 & \phantom{-}0 & 1 & -1 \\
+  \end{pmatrix}.
+\end{align}
+Then we can put our \ket{00} state through it:
+\begin{equation}
+  \dfrac{1}{\sqrt2}
+  \begin{pmatrix}
+    1 & \phantom{-}1 & 0 & \phantom{-}0 \\
+    1 & -1 & 0 & \phantom{-}0 \\
+    0 & \phantom{-}0 & 1 & \phantom{-}1 \\
+    0 & \phantom{-}0 & 1 & -1 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    1 \\
+    0 \\
+    0 \\
+    0
+  \end{pmatrix}
+  =
+  \dfrac{1}{\sqrt2}
+  \begin{pmatrix}
+    1 \\
+    1 \\
+    0 \\
+    0
+  \end{pmatrix},
+\end{equation}
+which can also be written in Dirac notation as $(\ket{00} + \ket{01})/\sqrt2$.
+
+\section{Partial Measurement}
+Say we measure the qubit \ket{q_0} in the following circuit:
+\[
+  \Large
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \meter & \cw \\
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \qw & \qw \\
+  }
+\]
+\noindent
+First, we put both qubits in our state \ket{00} through a Hadamard gate. This puts it in the state
+\begin{equation}
+  (H \otimes H)\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11}).
+\end{equation}
+When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. Measuring \ket{q_0} collapses the state to one of the following states:
+\begin{equation}
+  \ket{\psi} =
+  \begin{cases}
+    \begin{aligned}
+      \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = 0 \\
+      \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = 1
+    \end{aligned}
+  \end{cases}
+\end{equation}
+We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
+
+\section{Common Two-Qubit Gates}
+\subsection{CNOT Gate}
+The quantum gate controlled-\textsc{not} (\textsc{cnot}, sometimes called controlled-$X$) is comparable to a classical computer's \textsc{xor}, but it's reversible. This gate has two input qubits, the \emph{control} qubit and \emph{target} qubit. If the control qubit is set to 0, then the target qubit is left alone. If the control qubit is set to 1, then the target qubit is flipped. The circuit representation for \textsc{cnot} can be seen in Figure~\ref{fig:cnot_circuit}. Qubit \ket{q_0} represents the control qubit and \ket{q_1} represents the target qubit. It's essentially a Pauli X gate with a control qubit. \textsc{cnot} is Hermitian and belongs to the Clifford gates.
+
+\begin{figure}[ht]
+  \centering
+  \begin{minipage}{.45\textwidth}
+    \[
+      \Large
+      \Qcircuit @C=1em @R=0.5em @!R {
+        \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \targ & \qw & \gate{X} & \qw \\
+      }
+    \]
+    \caption{Two different circuit representations of \textsc{cnot}.}
+    \label{fig:cnot_circuit}
+  \end{minipage}%
+  \hspace*{.05\textwidth}
+  \begin{minipage}{.45\textwidth}
+    \[
+      U_{CX} = \cnotgate{}
+    \]
+  \caption{Matrix representation of \textsc{cnot}.}
+  \end{minipage}
+\end{figure}
+\noindent
+Let's look at an example of a \textsc{cnot} gate. Consider the following circuit:
+\[
+  \Large
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{X}  & \ctrl{1} & \qw & \qw\\
+    \push{\rule{0em}{1.5em}} & & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \targ & \qw & \qw\\
+  }
+\]
+First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate, giving
+\begin{equation}
+  \textsc{CNOT}\ket{10} = \cnotgate{}
+  \begin{pmatrix}
+    0 \\
+    0 \\
+    1 \\
+    0
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0 \\
+    0 \\
+    0 \\
+    1
+  \end{pmatrix}
+  =
+  \ket{11}.
+\end{equation}
+The target qubit was flipped because the control qubit was set to \ket{1}, giving us \ket{11}.
+
+\subsection{CZ Gate}
+\textsc{cz}, or the controlled-$Z$ gate, acts in a similar way to other controlled gates. That is, do the operation on the target qubit if the control qubit is \ket{1}, otherwise do nothing. In \textsc{cz} the operation is the Pauli Z gate. \textsc{cz} is also Hermitian and belongs to the Clifford gates.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_0}} & \ctrl{1} & \qw & \ctrl{1} & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{q_1}} & \ctrl{-1} & \qw & \gate{Z} & \qw  \\
+    }
+  \]
+\caption{Two different circuit representations of \textsc{CZ}.}
+\end{figure}
+
+\subsection{Controlled Gates}
+Controlled gates act on two or more qubits, where one or more qubits act as control for some operation. Generally, if $U$ is a gate that operates on single qubits with the following matrix representation:
+\begin{equation}
+  U =
+  \begin{pmatrix}
+    u_{00} & u_{01} \\
+    u_{10} & u_{11} \\
+  \end{pmatrix},
+\end{equation}
+then the controlled-$U$ gate is a gate that operates on two qubits where the first qubit serves as control. The general matrix representation of the controlled-$U$ then, if qubit 0 is the control and qubit 1 is the target, looks as following:
+\begin{equation}
+  C_U =
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & u_{00} & u_{01} \\
+    0 & 0 & u_{10} & u_{11} \\
+  \end{pmatrix}.
+\end{equation}
+\section{Toffoli Gate}
+The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit}), where two of the input qubits act as control bits. The third qubit is the target bit which is flipped if both control qubits are set to \ket{1}, otherwise it's left alone. For example, applying the Toffoli gate to the state \ket{110} flips the third qubit, resulting in the state \ket{111}.
+
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=0.54em @R=1em @!R {
+      \push{\rule{0em}{1em}} & & & \lstick{a} & \ctrl{1} & \qw & a\\
+      \push{\rule{0em}{1em}} & & & \lstick{b} & \ctrl{1} & \qw & b\\
+      \push{\rule{0em}{1em}} & & & \lstick{c} & \targ & \qw & & & c \otimes ab\\
+    }
+  \]
+  \caption{Circuit representation of the Toffoli gate, where $\otimes$ is addition modulo two.}
+  \label{fig:toffoli_circuit}
+\end{figure}
+\noindent
+The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented by a $8 \times 8$ matrix:
+\begin{equation}
+  U_{CCX} =
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+  \end{pmatrix}.
+\end{equation}
+
+\section{Universal Gate Sets} \label{sec:universal_gate_sets}
+In classical systems the \textsc{nand} gate is a universal gate, meaning that any other gate can be represented as a combination of \textsc{nand} gates. In quantum computing there exist universal gate sets. A universal gate set requires the full Clifford and Pauli groups, and one or more non-Clifford gates.
+
+We've seen the Pauli gates in Section \ref{pauli_gates}. On their own, Pauli gates have no interesting computational capabilities. The Clifford gates we've seen are $H$, $S$, \textsc{cnot} and \textsc{cz}. Clifford gates introduce the quantum phenomena superposition and entanglement. The Pauli and Clifford gates can be simulated efficiently by classical computers (\emph{Gottesman-Knill theorem}) - showing no increase in efficiency over classical computers.
+
+The non-Clifford gates, which are required for universal quantum computing, cannot be simulated efficiently and are exponentially hard to simulate. Some non-Clifford gates are Toffoli, $T$ and the rotation gates $R_x$, $R_y$ and $R_z$ (which do arbitrary rotations around the axes). One universal gate set that allows universal quantum computing is $\{H,\, T,\, \textsc{cnot}\}$.
+
+\section{Entanglement}
+Two qubits are \emph{entangled} if and only if the state of those two qubits can \emph{not be expressed as two individual states} (non-separable). Let's first take a look at a separable, or non-entangled state
+\begin{equation} \label{eq:non_entangled_state}
+  \ket{\psi} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11}).
+\end{equation}
+This state can be separated and expressed as the following two individual states:
+\begin{equation}
+  \ket{\psi} = \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) \otimes \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}).
+\end{equation}
+However, consider the state
+\begin{equation} \label{eq:entangled_state}
+  \ket{\psi} = \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}).
+\end{equation}
+This is an entangled state, it cannot be expressed as two individual states. We say two qubits are entangled if they have \emph{nonzero concurrence}. The concurrence of a state can be calculated as following:
+\begin{equation}
+  C(\ket{\psi}) = 2|\alpha_{00}\alpha_{11} - \alpha_{01}\alpha_{10}|.
+\end{equation}
+We can check if our entangled state (\ref{eq:entangled_state}) is indeed entangled:
+\begin{equation}
+  C\left(\dfrac{1}{\sqrt2}(\ket{00} + \ket{11})\right) = 2\left|\dfrac{1}{\sqrt2}\left(\dfrac{1}{\sqrt2}\right)\right| = 1.
+\end{equation}
+It has a non-zero concurrence, so we can say it's entangled. How about the non-entangled state in \ref{eq:non_entangled_state}?
+\begin{equation}
+  C\left(\dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})\right) = 2\left|\dfrac{1}{2}\left(\dfrac{1}{2}\right) - \dfrac{1}{2}\left(\dfrac{1}{2}\right)\right| = 0.
+\end{equation}
+A concurrence of 0, so it is not entangled.
+
+\section{The Bell States} \label{sec:bell_states}
+The \emph{Bell states} are four maximally entangled quantum states of two qubits:
+\begin{align}
+  \ket{\Phi^+} &= \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+  \ket{\Phi^-} &= \dfrac{1}{\sqrt2}(\ket{00} - \ket{11}) \\
+  \ket{\Psi^+} &= \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \\
+  \ket{\Psi^-} &= \dfrac{1}{\sqrt2}(\ket{01} - \ket{10}).
+\end{align}
+We can create a Bell state with the following circuit:
+\[
+  \Large
+  \Qcircuit @C=0.5em @R=0.5em @!R {
+    \push{\rule{0em}{1em}} & \ar@{.}[]+<4.75em,0.5em>;[d]+<4.75em,-1em> & & & & & & & & \lstick{\ket{q_0} = \ket{0}} & \qw & \qw & \gate{H} & \qw & \qw \ar@{.}[]+<0em,0.5em>;[d]+<0em,-1em> & \qw & \ctrl{1} & \qw & \qw & \qw \ar@{.}[]+<-0.7em,0.5em>;[d]+<-0.7em,-1em> \\
+    \push{\rule{0em}{1em}} & & & & & & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \qw & \qw & \qw & \qw & \qw &\targ & \qw & \qw & \qw \\
+    & \hspace{9.7em} \ket{\psi_0} & \hspace{15.3em} \ket{\psi_{1}} & \hspace{19.4em} \ket{\psi_{2}}
+  }
+\]
+\vspace*{2mm}
+
+\noindent
+We start with our state \ket{00} at \ket{\psi_0}. We put \ket{q_0} through a Hadamard gate, giving us the state $(\ket{00} + \ket{10})/\sqrt2$ at \ket{\psi_1}. Finally we \textsc{cnot} that state giving us the final Bell state $\ket{\Phi^+} = (\ket{00} + \ket{11})/\sqrt2$ at \ket{\psi_2}.
+
+The significance of Bell states becomes apparent when we start measuring qubits of a Bell state. Take the circuit we used before to create the Bell state $(\ket{00} + \ket{11})/\sqrt2$ and measure both qubits.
+\[
+  \Large
+  \Qcircuit @C=1em @R=0.5em @!R {
+    \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{1} & \meter & \cw  \\
+    \push{\rule{0em}{1em}} & & & & & & \lstick{\ket{q_1} = \ket{0}} & \qw & \targ & \meter & \cw \\
+  }
+\]
+You will find that the measurement results are correlated:
+\begin{align}
+  M(q_1) = 0 \text{ if } M(q_0) = 0 \\
+  M(q_1) = 1 \text{ if } M(q_0) = 1
+\end{align}
+If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
+
+\section{Greenberger-Horne-Zeilinger State}
+A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
+\begin{equation}
+  \ket{\textsc{GHZ}} = \dfrac{\ket{0}^{\otimes M} + \ket{1}^{\otimes M}}{\sqrt2},
+\end{equation}
+where $\ket{j}^{\otimes M}$ means the Kronecker product with itself $M$ times. For example $M = 3$:
+\begin{equation}
+  \ket{\textsc{GHZ}} = \dfrac{\ket{000} + \ket{111}}{\sqrt2}.
+\end{equation}
+GHZ states are used for example in cryptography for secret sharing.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \ctrl{2} & \qw  \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \targ & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & \lstick{\ket{0}} & \qw & \qw &  \targ & \qw \\
+    }
+  \]
+  \caption{Circuit creating a three-qubit GHZ state.}
+  \label{fig:ghz_3}
+\end{figure}
+
+\section{Calculating Parity} \label{sec:parity}
+Parity checking is one of the simplest forms of error detecting code. It tells us if the number of ones in a set of bits is even or odd. For example, 001 has a parity of 1 (odd) and 110 has a parity of 0 (even). We introduce a quantum algorithm for calculating the parity of an $n$-qubit state. For this example we'll determine the parity of a two-qubit state. Consider the circuit in Figure~\ref{fig:parity_circuit}. We will calculate the parity of \ket{q_0}\ket{q_1} with \ket{q_2}.
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_0} = \ket{0}} & \gate{H} & \ctrl{2} & \qw & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \qw & \ctrl{1} & \qw & \qw \\
+      \push{\rule{0em}{1em}} & & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ &  \targ & \meter & \cw \\
+    }
+  \]
+  \caption{Circuit for calculating parity: $\textsc{cnot}_{1,2}\textsc{cnot}_{0,2}H_1H_0\ket{000}$.}
+  \label{fig:parity_circuit}
+\end{figure}
+
+We start with putting \ket{q_0} and \ket{q_1} in an arbitrary superposition. In this case we apply a Hadamard gate to both qubits, giving us the state
+\begin{equation}
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{100} + \ket{110}).
+\end{equation}
+Then we apply a $\textsc{cnot}_{0,2}$ operation, giving
+\begin{equation}
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{010} + \ket{101} + \ket{111}),
+\end{equation}
+and a $\textsc{cnot}_{1,2}$:
+\begin{equation}
+  \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110}).
+\end{equation}
+If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
+\begin{equation}
+  \ket{\psi} =
+  \begin{cases}
+    \begin{aligned}
+      \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \otimes \ket{0} & \text{ if } M(q_2) = 0 \\
+      \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \otimes \ket{1} & \text{ if } M(q_2) = 1
+    \end{aligned}
+  \end{cases}
+\end{equation}
+Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{01} and \ket{10} have odd parity ($q_2 = 1$).
+
+\section{Quantum Teleportation}
+Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible to clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit \ket{\phi}, whose state is unknown, to Bob. Alice interacts the qubit \ket{\phi} with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state \ket{\phi}.
+
+\begin{figure}[ht]
+  \[
+    \Large
+    \Qcircuit @C=1em @R=0.5em @!R {
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_0} = \ket{\phi}} \ar@{.}[]+<0.55em,0.5em>;[d]+<0.55em,-3em> & \qw & \qw \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> & \ctrl{1} \ar@{.}[]+<0.9em,0.5em>;[d]+<0.9em,-3em> &\gate{H} \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> & \meter \ar@{.}[]+<1.5em,0.5em>;[d]+<1.5em,-3em> & \cw & \control \cw
+      \ar@{.}[]+<1.2em,0.5em>;[d]+<1.2em,-3em> \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_1} = \ket{0}} & \gate{H} & \ctrl{1} & \targ & \qw &\meter & \control \cw & \cwx \\
+      \push{\rule{0em}{1em}} & & & & \lstick{\ket{q_2} = \ket{0}} & \qw & \targ & \qw &\qw & \qw & \gate{X} \cwx & \gate{Z} \cwx &\rstick{\ket{\phi}} \qw \\
+      & \hspace{7.3em} \ket{\psi_{0}} & \hspace{13.8em} \ket{\psi_{1}} & \hspace{15.6em} \ket{\psi_{2}} & \hspace{18.5em} \ket{\psi_{3}} & \hspace{20.9em} \ket{\psi_{4}} & \hspace{26.1em} \ket{\psi_{5}}
+    }
+  \]
+  \vspace{3mm}
+  \caption{Quantum circuit teleporting a quantum state \ket{\phi}.}
+  \label{fig:teleportation}
+\end{figure}
+The circuit in Figure~\ref{fig:teleportation} teleports the unknown state $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$. We start at \ket{\psi_0} with the state
+\ket{\phi}\ket{00}. Then we create an EPR pair with \ket{q_1}\ket{q_2}, where \ket{q_1} belongs to Alice and \ket{q_2} to Bob. This gives us the following state at \ket{\psi_1}:
+\begin{equation}
+  \ket{\psi_1} = \ket{\phi}\dfrac{1}{\sqrt2}(\ket{00} + \ket{11}),
+\end{equation}
+which we can rewrite as following
+\begin{align}
+  \ket{\psi_1} &= \alpha\ket{0} + \beta\ket{1} \otimes \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \\
+  &= \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{00} + \ket{11})\Big).
+\end{align}
+Alice then sends her qubits through a $\textsc{cnot}_{0, 1}$ gate, obtaining
+\begin{equation}
+  \ket{\psi_2} = \dfrac{1}{\sqrt2}\Big(\alpha\ket{0}(\ket{00} + \ket{11}) + \beta\ket{1}(\ket{10} + \ket{01})\Big).
+\end{equation}
+She then sends \ket{q_0} through a Hadamard gate, giving
+\begin{equation}
+  \ket{\psi_3} = \dfrac{1}{2}\Big(\alpha(\ket{0} + \ket{1})(\ket{00} + \ket{11}) + \beta(\ket{0} - \ket{1})(\ket{10} + \ket{01})\Big).
+\end{equation}
+This state can be rewritten in the following way:
+\begin{equation}
+  \begin{aligned}
+    \ket{\psi_3} = \dfrac{1}{2}\Big(&\ket{00}(\alpha\ket{0} + \beta{\ket{1}}) \, + \ket{01}(\alpha\ket{1} + \beta\ket{0}) \\
+    + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big).
+  \end{aligned}
+\end{equation}
+This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = 00$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
+
+Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state \ket{\phi}, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state \ket{\phi}, so it never allows for cloning.
