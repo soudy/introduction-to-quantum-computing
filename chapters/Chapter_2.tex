@@ -208,9 +208,9 @@ The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit})
   \[
     \Large
     \Qcircuit @C=0.54em @R=1em @!R {
-      \push{\rule{0em}{1em}} & & & \lstick{a} & \ctrl{1} & \qw & a\\
-      \push{\rule{0em}{1em}} & & & \lstick{b} & \ctrl{1} & \qw & b\\
-      \push{\rule{0em}{1em}} & & & \lstick{c} & \targ & \qw & & & c \otimes ab\\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{x}} & \ctrl{1} & \qw & \rstick{\hspace*{-3mm}\ket{x}} \\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{y}} & \ctrl{1} & \qw & \rstick{\hspace*{-3mm}\ket{y}} \\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{z}} & \targ & \qw & \rstick{\hspace*{-3mm}\ket{z \otimes (x \land y)}}\\
     }
   \]
   \caption{Circuit representation of the Toffoli gate, where $\otimes$ is binary sum (\textsc{xor}).}
