@@ -92,7 +92,7 @@ The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gat
 \end{figure}
 
 \section{Measurement}
-Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a classical state \ket{j} (which in the computational basis is \ket{0} or \ket{1}). The state \ket{\psi} has ``disappeared" and all that is left is the classical state \ket{j}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
+Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a computational basis state \ket{j}. The state \ket{\psi} has ``disappeared" and the state is left in \ket{0} or \ket{1}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
 \begin{align}
   P(\ket{0}) &= \left|\alpha\right|^2 \\
   P(\ket{1}) &= \left|\beta\right|^2.
@@ -109,7 +109,7 @@ Consider the following simple single-qubit circuit:
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
-We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt 2$ \, (or \ket{-}), and finally we measure, giving us a classical state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
+We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt 2$ \, (or \ket{-}), and finally we measure, giving us a computational basis state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
 \begin{align}
   P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 &= \dfrac{1}{2} \\
   P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 &= \dfrac{1}{2}.
