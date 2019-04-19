@@ -118,7 +118,7 @@ These measurements tell us an error has occurred, and where it occurred. Assumin
   X_{d_1} \rightarrow \  &\alpha\ket{010} + \beta\ket{101} \; \text{bit flip on qubit one} \\
   X_{d_2} \rightarrow \  &\alpha\ket{001} + \beta\ket{110} \; \text{bit flip on qubit two}.
 \end{align}
-We can find out where the error occurred by the result of the error syndrome measurement. The error syndrome measurement results corresponding to the qubit at which the error occurred can be seen in Figure~\ref{fig:zz_stabilizer_measurement_results}. To correct the state, we can simply apply an $X$ operation on the flipped qubit, flipping it back to the correct state. This error correction can be achieved through classical computing.
+We can find out where the error occurred by the result of the error syndrome measurement. The error syndrome measurement results corresponding to the qubit at which the error occurred can be seen in Figure~\ref{fig:zz_stabilizer_measurement_results}. To correct the state, we can simply apply an $X$ operation on the flipped qubit, flipping it back to the correct state. Error syndromes can be decoded with the help of classical computing.
 \begin{figure}[ht]
   \centering
   \begin{tabular}{c|c|c}
