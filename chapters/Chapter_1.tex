@@ -59,18 +59,19 @@ Below are some notable single-qubit gates described and visualized.
 \end{figure}
 
 \subsection{Hadamard Gate}
-The \emph{Hadamard} ($H$) gate maps the basis states \ket{0} and \ket{1} to superposition states with equal weight:
+The \emph{Hadamard} ($H$) gate (Figure \ref{fig:hadamard_bloch}) maps the basis states \ket{0} and \ket{1} to superposition states with equal weight:
 \begin{align}
-  H\ket{0} = \ket{+} &= \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) \\
-  H\ket{1} = \ket{-} &= \dfrac{1}{\sqrt2}(\ket{0} - \ket{1}).
+  H\ket{0} &= \dfrac{1}{\sqrt2}(\ket{0} + \ket{1}) = \ket{+} \\
+  H\ket{1} &= \dfrac{1}{\sqrt2}(\ket{0} - \ket{1}) = \ket{-}.
 \end{align}
 It is the combination of two rotations, $\pi$ radians about the Z-axis followed by $\pi/2$ radians about the Y-axis. This gate is sometimes described as a ``square root of \textsc{not}" gate. The Hadamard gate belongs to the Clifford gates.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.165]{images/hadamard_gate.eps}
+  \includegraphics[scale=0.17]{images/hadamard_gate.eps}
   \vspace{1mm}
   \caption{Hadamard gate visualized on the Bloch sphere.}
+  \label{fig:hadamard_bloch}
 \end{figure}
 
 \subsection{Phase Gates}
@@ -109,7 +110,7 @@ Consider the following simple single-qubit circuit:
 \caption{A simple quantum circuit. The output of measuring a qubit is a classical bit, which is distinguished from a qubit by drawing a double-line wire. A visualization of this circuit on the Bloch sphere can be seen in Figure~\ref{fig:gate_rotations}.}
 \end{figure}
 \noindent
-We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt 2$ \, (or \ket{-}), and finally we measure, giving us a computational basis state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
+We start with computing $H\ket{0} = \ket{+}$, followed by $Z\ket{+} = (\ket{0} - \ket{1})/\sqrt 2$ \, (or \ket{-}). Finally we measure, giving us a computational basis state \ket{j} and collapsing the state. Which state we will see is not determined in advance; the only thing we can say is that we will see \ket{j} with probability $|a_j|^2$:
 \begin{align}
   P(\ket{0}) = \left|\dfrac{1}{\sqrt2}\right|^2 &= \dfrac{1}{2} \\
   P(\ket{1}) = \left|\dfrac{-1}{\sqrt2}\right|^2 &= \dfrac{1}{2}.
@@ -118,9 +119,9 @@ Giving us equal probabilities of our state being measured as \ket{0} or \ket{1}.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale=0.335]{images/simple_circuit.eps}
+  \includegraphics[scale=0.375]{images/simple_circuit.eps}
   \vspace{2mm}
-  \caption{States of our qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H$\ket{0} $\rightarrow$ $ZH$\ket{0}.}
+  \caption{States of the qubit throughout the circuit from left to right: \ket{0} $\rightarrow$ $H$\ket{0} $\rightarrow$ $ZH$\ket{0}.}
   \label{fig:gate_rotations}
 \end{figure}
 

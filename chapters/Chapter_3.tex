@@ -45,6 +45,7 @@ We can create a quantum half adder by creating sum and carry circuits, just like
     \label{fig:sum_quantum_circuit}
   \end{minipage}
 \end{figure}
+\newpage
 
 To fully add two bits we need to account for the carry. The carry function $f_c(x)$ is 1 if and only if both inputs are 1 (Figure~\ref{fig:carry_truth_table}). This truth table corresponds directly to the Toffoli gate (Figure~\ref{fig:carry_quantum_circuit}).
 
@@ -91,7 +92,7 @@ We can combine our sum and carry circuit into one, creating a quantum half adder
   \caption{Quantum half adder. The sum ends up in \ket{y_s} and the carry in \ket{y_c}.}
   \label{fig:quantum_full_adder}
 \end{figure}
-\noindent
+
 Let's check if this circuit works. Say we want to add $\ket{x_0} = \ket{1}$ and $\ket{x_1} = \ket{1}$. We would expect to get 0 as sum and 1 as carry. Our initial state is \ket{1100}. We apply a Toffoli gate, setting the carry qubit to 1: \ket{1101}. Then we set the sum qubit by doing a $\textsc{cnot}_{0,2}$ and a $\textsc{cnot}_{1,2}$ ending up with the state \ket{1101}. Measuring the sum and carry qubits gives $M(y_s) = 0$ and $M(y_c) = 1$, giving us what we expected and thus having done a quantum half addition of two qubits.
 
 \section{Deutch-Jozsa Algorithm}
@@ -357,7 +358,7 @@ A more general circuit of the QFT for a $n$ qubit state is described below in Fi
 \begin{figure}[ht]
   \begin{adjustwidth}{-2.5cm}{-2.5cm}
     \[
-      \Qcircuit @C=0.8em @R=0.5em @!R {
+      \Qcircuit @C=0.9em @R=0.5em @!R {
         \push{\rule{0em}{1em}} & & \lstick{\ket{x_0}} & \gate{H} & \gate{R_2} & \qw & \dots & & \gate{R_{n-1}} & \gate{R_n} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw \\
         \push{\rule{0em}{1em}} & & \lstick{\ket{x_1}} & \qw & \ctrl{-1} & \qw & \dots & & \qw & \qw & \gate{H} & \qw & \dots & & \gate{R_{n-2}} & \gate{R_{n-1}} & \qw & \dots & & \qw & \qw & \qw & \qw \\
         \rstick{\vdots} & & & & \vdots & & & & & & & & & & & \\
@@ -403,9 +404,9 @@ A controlled-$U^{2^j}$ operator then transforms a state as following
 \begin{figure}[ht]
   \[
     \Large
-    \Qcircuit @C=1em @R=1em @!R {
-      \push{\rule{0em}{1em}} & \lstick{\ket{k}} & \gate{H} & \ctrl{1} & \qw & \hspace{7.8em} \dfrac{1}{\sqrt2}\left(\ket{0} + e^{2\pi i2^j \varphi}\ket{1}\right) \\
-      \push{\rule{0em}{1em}} & \lstick{\ket{u}} & \qw {/} & \gate{U^{2^j}} & \qw & \ket{u} \\
+    \Qcircuit @C=1em @R=0.8em @!R {
+      \lstick{\ket{k}} & \gate{H} & \ctrl{1} & \qw & \hspace{7.8em} \dfrac{1}{\sqrt2}\left(\ket{0} + e^{2\pi i2^j \varphi}\ket{1}\right) \\
+      \lstick{\ket{u}} & \qw {/} & \gate{U^{2^j}} & \qw & \ket{u} \\
     }
   \]
   \caption{Controlled-$U^{2^j}$ operation on a qubit \ket{k} and eigenstate \ket{u}.}
