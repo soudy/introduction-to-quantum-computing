@@ -39,7 +39,7 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
 \newpage
 
 \section{Single-Qubit Quantum Gates}
-Single-qubit quantum gates can be seen as counter-clockwise rotations on the Bloch sphere. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary operation is a valid gate which acts on $n$ qubits. We will often use circuit notation to describe the transformation of state \ket{\psi} to \ket{\psi'} by a unitary operation $U$ as following:
+Single-qubit quantum gates can be seen as counter-clockwise rotations on the Bloch sphere. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary operation is a valid gate which acts on $n$ qubits. We will often use circuit notation to describe a transformation $\ket{\psi'} = U$\ket{\psi} as following:
 \[
   \Large
   \Qcircuit @C=1em @R=0em {
@@ -93,7 +93,7 @@ The probability of measuring a \ket{0} or \ket{1} is unchanged after a phase gat
 \end{figure}
 
 \section{Measurement}
-Measuring a quantum state \ket{\psi} \emph{collapses} the quantum superposition to a computational basis state \ket{j}. The state \ket{\psi} has ``disappeared" and the state is left in \ket{0} or \ket{1}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
+Measuring a quantum state \ket{\psi} in the computational basis \emph{collapses} the quantum superposition to a basis state \ket{j}. The state \ket{\psi} has ``disappeared" and the state is left in \ket{0} or \ket{1}. The probabilistic result of a measurement of a quantum state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ can be calculated based on the probability amplitudes:
 \begin{align}
   P(\ket{0}) &= \left|\alpha\right|^2 \\
   P(\ket{1}) &= \left|\beta\right|^2.

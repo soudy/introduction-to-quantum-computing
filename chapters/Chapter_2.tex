@@ -150,7 +150,7 @@ Let's look at an example of a \textsc{cnot} gate. Consider the following circuit
 \]
 First we put \ket{q_0} (the control qubit) in the \ket{1} state by applying an $X$ gate, giving us the state \ket{10}. Then we apply the \textsc{cnot} gate, giving
 \begin{equation}
-  \textsc{CNOT}\ket{10} = \cnotgate{}
+  \textsc{cnot}\ket{10} = \cnotgate{}
   \begin{pmatrix}
     0 \\
     0 \\
@@ -210,14 +210,14 @@ The Toffoli gate has three inputs and outputs (Figure \ref{fig:toffoli_circuit})
     \Qcircuit @C=0.54em @R=1em @!R {
       \push{\rule{0em}{1em}} & & & \lstick{\ket{x}} & \ctrl{1} & \qw & \rstick{\hspace*{-3mm}\ket{x}} \\
       \push{\rule{0em}{1em}} & & & \lstick{\ket{y}} & \ctrl{1} & \qw & \rstick{\hspace*{-3mm}\ket{y}} \\
-      \push{\rule{0em}{1em}} & & & \lstick{\ket{z}} & \targ & \qw & \rstick{\hspace*{-3mm}\ket{z \otimes (x \land y)}}\\
+      \push{\rule{0em}{1em}} & & & \lstick{\ket{z}} & \targ & \qw & \rstick{\hspace*{-3mm}\ket{z \oplus (x \land y)}}\\
     }
   \]
-  \caption{Circuit representation of the Toffoli gate, where $\otimes$ is binary sum (\textsc{xor}).}
+  \caption{Circuit representation of the Toffoli gate, where $\oplus$ is binary sum (\textsc{xor}).}
   \label{fig:toffoli_circuit}
 \end{figure}
 \noindent
-The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented by a $8 \times 8$ matrix:
+The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented by an $8 \times 8$ matrix:
 \begin{equation}
   U_{CCX} =
   \begin{pmatrix}
@@ -235,7 +235,7 @@ The Toffoli, or controlled-controlled-X (\textsc{ccx}) gate can be represented b
 \section{Universal Gate Sets} \label{sec:universal_gate_sets}
 In classical systems the \textsc{nand} gate is a universal gate, meaning that any other gate can be represented as a combination of \textsc{nand} gates. In quantum computing there exist universal gate sets. A universal gate set requires the full Clifford and Pauli groups, and one or more non-Clifford gates.
 
-We've seen the Pauli gates in Section \ref{pauli_gates}. On their own, Pauli gates have no interesting computational capabilities. The Clifford gates we've seen are $H$, $S$, \textsc{cnot} and \textsc{cz}. Clifford gates introduce the quantum phenomena superposition and entanglement. The Pauli and Clifford gates can be simulated efficiently by classical computers (\emph{Gottesman-Knill theorem}) - showing no increase in efficiency over classical computers.
+We've seen the Pauli gates in Section \ref{pauli_gates}. On their own, Pauli gates have no interesting computational capabilities. The Clifford gates we have seen are $H$, $S$, \textsc{cnot} and \textsc{cz}. Clifford gates introduce the quantum phenomena superposition and entanglement. The Pauli and Clifford gates can be simulated efficiently by classical computers (\emph{Gottesman-Knill theorem}) - showing no increase in efficiency over classical computers.
 
 The non-Clifford gates, which are required for universal quantum computing, cannot be simulated efficiently and are exponentially hard to simulate. Some non-Clifford gates are Toffoli, $T$ and the rotation gates $R_x$, $R_y$ and $R_z$ (which do arbitrary rotations around the axes). One universal gate set that allows universal quantum computing is $\{H,\, T,\, \textsc{cnot}\}$.
 

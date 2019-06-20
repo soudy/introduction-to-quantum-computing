@@ -10,10 +10,10 @@ Any classical circuit can be simulated by a quantum circuit. We can show this by
     \Large
     \Qcircuit @C=1em @R=0.5em {
       \push{\rule{0em}{1em}} & & \lstick{\ket{x}} & \multigate{1}{U_f} & \qw & \ket{x} \\
-      \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \ghost{U_f} & \qw & & \hspace*{5.7mm} \ket{y \otimes f(x)}
+      \push{\rule{0em}{1em}} & & \lstick{\ket{y}} & \ghost{U_f} & \qw & & \hspace*{5.7mm} \ket{y \oplus f(x)}
     }
   \]
-  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. This transformation can be described as $U_f\ket{x}\!\ket{y} = \ket{x}\!\ket{y \otimes f(x)}$. The $\otimes$ symbol in this context means the binary sum (\textsc{xor}).}
+  \caption{Create output qubits for every input qubit in \ket{x} and store the result of $f(x)$ in \ket{y}. This transformation can be described as $U_f\ket{x}\!\ket{y} = \ket{x}\!\ket{y \oplus f(x)}$. The $\oplus$ symbol in this context means the binary sum (\textsc{xor}).}
   \label{fig:add_output_qubit}
 \end{figure}
 We can create a quantum half adder by creating sum and carry circuits, just like in classical computers. The truth table of the sum function $f_s(x)$ can be found in Figure \ref{fig:sum_truth_table}. We can implement this as a quantum circuit using \textsc{cnot} gates as seen in Figure \ref{fig:sum_quantum_circuit}.
@@ -191,7 +191,7 @@ With these definitions we can start using the Deutch-Jozsa algorithm to efficien
       \push{\rule{0em}{1em}} & & & & \lstick{\ket{y} = \ket{1}} & \gate{H} & \ghost{U_f} &  \qw & \qw & \qw
     }
   \]
-  \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm. $U_f$ is the quantum circuit which transforms \ket{x}\ket{y} to \ket{x}\ket{y \otimes f(x)}.}
+  \caption{Quantum circuit to determine if $f$ is a balanced or unbalanced function using the Deutch-Jozsa algorithm. $U_f$ is the quantum circuit which transforms \ket{x}\ket{y} to \ket{x}\ket{y \oplus f(x)}.}
   \label{fig:deutch_jozsa_circuit}
 \end{figure}
 We can try it out by trying to determine if the identity function $f_i(x) = x$ is balanced or unbalanced. We start with putting \ket{x} and \ket{y} through a Hadamard gate:
@@ -201,8 +201,8 @@ We can try it out by trying to determine if the identity function $f_i(x) = x$ i
 We evaluate our identity function using by applying $U_f$:
 \begin{equation}
   \begin{aligned}
-    \ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\!\ket{0 \otimes f_i(0)} - \ket{0}\!\ket{1 \otimes f_i(0)} \\
-    +\, &\ket{1}\!\ket{0 \otimes f_i(1)} - \ket{1}\!\ket{1 \otimes f_i(1)}\big).
+    \ket{\psi} = \dfrac{1}{2}\big(&\ket{0}\!\ket{0 \oplus f_i(0)} - \ket{0}\!\ket{1 \oplus f_i(0)} \\
+    +\, &\ket{1}\!\ket{0 \oplus f_i(1)} - \ket{1}\!\ket{1 \oplus f_i(1)}\big).
   \end{aligned}
 \end{equation}
 This state contains information about both $f_i(0)$ and $f_i(1)$! We have essentially evaluated two values of $f_i(x)$ simultaneously, a feature known as \emph{quantum parallelism}. Actually applying the function $f_i(x)$, which as we can see in Figure~\ref{fig:single_bit_quantum_circuits} is just a $\textsc{cnot}_{0, 1}$, gives us the state
