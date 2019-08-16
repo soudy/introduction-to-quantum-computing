@@ -4,11 +4,13 @@
 \epigraph{It is tempting to say that a quantum computer is one whose operation is governed by the laws of quantum mechanics. But since the laws of quantum mechanics govern the behavior of all physical phenomena, this temptation must be resisted. Your laptop operates under the laws of quantum mechanics, but it is not a quantum computer.}{--- N. David Mermin}
 
 \section{The Qubit}
-A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. In classical bits this is 0 or 1. Two possible states for a qubit are \ket{0} and \ket{1} (denoted in \emph{Dirac notation}), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, called \emph{superpositions}. The state of a qubit can be denoted as following:
+A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. A classical bit can be either 0 or 1. Equivalently, a qubit can be in the state \ket{0} or \ket{1} (denoted in \emph{Dirac}, or \emph{ket} notation), which correspond to the states 0 and 1 for a classical bit. The difference between bits and qubits is that a qubit can be in other states than \ket{0} or \ket{1}, called \emph{superpositions}. A qubit in a superposition is in both \ket{0} and \ket{1} at the same time. This phenomena can be found in for example the spin of an electron or the polarization of a photon. The state of a qubit can be described as following:
 \begin{equation}
   \ket{\psi} = \alpha\ket{0} + \beta\ket{1},
 \end{equation}
-where $\alpha$ and $\beta$ are complex numbers. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us that we can only obtain much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The sum of all probabilities is always equal to 1:
+where $\alpha$ and $\beta$ are complex numbers. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us that we can only obtain much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}.
+
+The sum of all probabilities must always equal to 1:
 \begin{equation}
   |\alpha|^2 + |\beta|^2 = 1.
 \end{equation}
@@ -16,7 +18,7 @@ For example, a qubit in the state
 \begin{equation}
   \dfrac{1}{\sqrt2}\ket{0}+\dfrac{1}{\sqrt2}\ket{1}
 \end{equation}
-gives 0 fifty percent of the time ($|1/\sqrt2|^2$), and 1 fifty percent of the time. This state is often denoted by \ket{+}.
+gives 0 fifty percent of the time, and 1 fifty percent of the time ($|1/\sqrt2|^2 = 0.5$). This state is often denoted in ket notation by \ket{+}.
 
 \section{The Bloch Sphere}
 The Bloch sphere is a geometrical representation of a qubit's state. It's a spherical coordinate system in which a quantum state can be described as
@@ -35,8 +37,6 @@ The numbers $\theta$ and $\phi$ define a point on the three-dimensional sphere (
   \caption{Bloch sphere representation of a qubit.}
   \label{fig:bloch}
 \end{figure}
-\par
-\newpage
 
 \section{Single-Qubit Quantum Gates}
 Single-qubit quantum gates can be seen as counter-clockwise rotations on the Bloch sphere. These gates only have one limitation: they have to be \emph{unitary}, that is $U^\dagger U = UU^\dagger = I$, where $U^\dagger$ is the conjugate transpose of $U$ and $I$ the identity operation. Therefore, any $2^n \times 2^n$ unitary operation is a valid gate which acts on $n$ qubits. We will often use circuit notation to describe a transformation $\ket{\psi'} = U$\ket{\psi} as following:
@@ -130,7 +130,7 @@ Earlier we showed that we can represent a quantum state as
 \begin{equation}
   \ket{\psi} = \alpha\ket{0} + \beta\ket{1}.
 \end{equation}
-The quantum states \ket{\psi}, \ket{0} and \ket{1} in the formula above are vectors. We define \ket{0} and \ket{1}, the computational basis states, as following:
+The kets \ket{\psi}, \ket{0} and \ket{1} in the formula above represent vectors. We define \ket{0} and \ket{1}, the computational basis states, as following:
 \setlength\multicolsep{0pt}
 \begin{equation}
   \ket{0} = \qstatezero{}; \quad \ket{1} = \qstateone{}.
@@ -180,7 +180,7 @@ And we find that $X\ket{0} = \ket{1}$. Or, more general:
   X\begin{pmatrix}\alpha \\ \beta\end{pmatrix} = \begin{pmatrix}\beta \\ \alpha\end{pmatrix}.
 \end{equation}
 
-You can combine quantum gates by multiplying their matrices. For example, let's verify that $H$ is self-inverse by applying it to itself:
+You can combine quantum gates by multiplying their matrices. For example, let's verify that the Hadamard gate is self-inverse (that is, applying it twice is equal to doing nothing) by applying it to itself:
 \begin{equation}
   H^2 = \hgate{} \hgate{} = \igate{} = I.
 \end{equation}
