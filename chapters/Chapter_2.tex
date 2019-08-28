@@ -102,17 +102,17 @@ First, we put both qubits in our state \ket{00} through a Hadamard gate. This pu
 \begin{equation}
   (H \otimes H)\ket{00} = \dfrac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11}).
 \end{equation}
-When we measure \ket{q_0} we have a 50/50 probability of getting a 0 or 1. Measuring \ket{q_0} collapses the state to one of the following states:
+When we measure \ket{q_0} we have a 50/50 probability of getting \ket{0} or \ket{1}. Measuring \ket{q_0} collapses the state to one of the following states:
 \begin{equation}
   \ket{\psi} =
   \begin{cases}
     \begin{aligned}
-      \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = 0 \\
-      \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = 1
+      \dfrac{1}{\sqrt2}(\ket{\uline{0}0} + \ket{\uline{0}1}) & \text{ if } M(q_0) = \ket{0} \\
+      \dfrac{1}{\sqrt2}(\ket{\uline{1}0} + \ket{\uline{1}1}) & \text{ if } M(q_0) = \ket{1}
     \end{aligned}
   \end{cases}
 \end{equation}
-We have two possible states for $q_0$ after measurement: 0 or 1. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
+We have two possible states for \ket{q_0} after measurement: \ket{0} or \ket{1}. Qubit \ket{q_1} will stay in superposition because we haven't measured it. Notice how the first qubits (underlined) in both states are the same. This makes sense, we've measured that one so we're certain of its state.
 
 \section{Common Two-Qubit Gates}
 \subsection{CNOT Gate}
@@ -298,10 +298,10 @@ The significance of Bell states becomes apparent when we start measuring qubits 
 \]
 You will find that the measurement results are correlated:
 \begin{align}
-  M(q_1) = 0 \text{ if } M(q_0) = 0 \\
-  M(q_1) = 1 \text{ if } M(q_0) = 1
+  M(q_1) = \ket{0} \text{ if } M(q_0) = \ket{0} \\
+  M(q_1) = \ket{1} \text{ if } M(q_0) = \ket{1}
 \end{align}
-If you measure \ket{q_0} to be 0, \ket{q_1} will also be 0 and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring \ket{q_0} as 0 means \ket{q_1} will be 1).
+If you measure \ket{q_0} to be \ket{0}, \ket{q_1} will also be \ket{0} and vice versa. Note that in our example entangled state they correlate as being equal, but for the entangled state $(\ket{01} + \ket{10})/\sqrt2$ they correlate as being opposites (measuring \ket{q_0} as \ket{0} means \ket{q_1} will be \ket{1}).
 
 \section{Greenberger-Horne-Zeilinger State}
 A Greenberger-Horne-Zeilinger (GHZ) state is a certain type of entangled state. It is a $M > 2$ system state:
@@ -353,17 +353,17 @@ and a $\textsc{cnot}_{1,2}$:
 \begin{equation}
   \ket{\psi} = \dfrac{1}{2}(\ket{000} + \ket{011} + \ket{101} + \ket{110}).
 \end{equation}
-If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity $q_2$. Let's take a look at the possible states after measuring \ket{q_2}:
+If you look closely at this state, you can see that \ket{q_2} corresponds to the parity of \ket{q_0}\ket{q_1}. We have essentially calculated the parities of all possible states of \ket{q_0}\ket{q_1} in parallel. However, we cannot observe a quantum state to extract all the possible states' information. We are limited to measuring one outcome. When we measure \ket{q_2} the state partially collapses leaving only the states with parity \ket{q_2}. Let's take a look at the possible states after measuring \ket{q_2}:
 \begin{equation}
   \ket{\psi} =
   \begin{cases}
     \begin{aligned}
-      \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \otimes \ket{0} & \text{ if } M(q_2) = 0 \\
-      \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \otimes \ket{1} & \text{ if } M(q_2) = 1
+      \dfrac{1}{\sqrt2}(\ket{00} + \ket{11}) \otimes \ket{0} & \text{ if } M(q_2) = \ket{0} \\
+      \dfrac{1}{\sqrt2}(\ket{01} + \ket{10}) \otimes \ket{1} & \text{ if } M(q_2) = \ket{1}
     \end{aligned}
   \end{cases}
 \end{equation}
-Measuring a 0 leaves us with even parity states and measuring a 1 leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($q_2 = 0$), \ket{01} and \ket{10} have odd parity ($q_2 = 1$).
+Measuring \ket{0} leaves us with even parity states and measuring \ket{1} leaves us with odd parity states. \ket{00} and \ket{11} have even parity ($\ket{q_2} = \ket{0}$), \ket{01} and \ket{10} have odd parity ($\ket{q_2} = \ket{1}$).
 
 \section{Quantum Teleportation}
 Quantum teleportation it a technique for moving arbitrary quantum states around. It uses an \emph{EPR pair} (a pair of qubits that is in a Bell state) that is shared between the sender and receiver. Note that it is impossible to clone a qubit state. This is referred to as the \emph{no-cloning theorem}. Quantum teleportation works as following: Alice and Bob generate an EPR pair and both take one qubit before they get separated. Alice wants to deliver a qubit \ket{\phi}, whose state is unknown, to Bob. Alice interacts the qubit \ket{\phi} with her half of the EPR pair, and then measures the two qubits in her possession. At this point, Alice's qubits are in one of the four classical states 00, 01, 10 or 11. She sends this information to Bob. Bob then performs one of four operations on his half of the EPR pair, recovering Alice's quantum state \ket{\phi}.
@@ -408,6 +408,6 @@ This state can be rewritten in the following way:
     + \, &\ket{10}(\alpha\ket{0} - \beta\ket{1}) + \ket{11}(\alpha\ket{1} - \beta\ket{0})\Big).
   \end{aligned}
 \end{equation}
-This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = 00$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures 00, Bob doesn't have to do anything. If Alice measures 01, Bob can fix his state by applying an $X$ gate. If Alice measures 10, Bob can fix his state by applying a $Z$ gate. And if Alice measures 11, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
+This expression breaks down in four terms. The first term has Alice's qubits in state \ket{00} and Bob's qubit in state $\alpha\ket{0} + \beta\ket{1}$, which is our original state \ket{\phi}. So in the case that Alice measures $M(q_0q_1) = \ket{00}$ at \ket{\psi_4}, Bob's qubit will be in state \ket{\phi}. Depending on Alice's measurement at \ket{\psi_4}, Bob may have to ``fix" his state to recover \ket{\phi} by applying the appropriate gate(s). For example, if Alice measures \ket{00}, Bob doesn't have to do anything. If Alice measures \ket{01}, Bob can fix his state by applying an $X$ gate. If Alice measures \ket{10}, Bob can fix his state by applying a $Z$ gate. And if Alice measures \ket{11}, Bob can fix his state by first applying an $X$ gate and then a $Z$ gate. After fixing his state, Bob ends up with Alice's state \ket{\phi} at \ket{\psi_5}.
 
 Note that quantum teleportation does \emph{not} allow for faster than light communication. This is because Bob needs to be told of the result of Alice's measurements through a classical channel in order to complete the teleportation. Also note that we did not clone the quantum state \ket{\phi}, we merely moved it. Teleporting a state depends on the measurement and thus collapsing of the original state \ket{\phi}, so it never allows for cloning.

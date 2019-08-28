@@ -8,17 +8,17 @@ A quantum bit (\emph{qubit}) - like a classical bit - has a \emph{state}. A clas
 \begin{equation}
   \ket{\psi} = \alpha\ket{0} + \beta\ket{1},
 \end{equation}
-where $\alpha$ and $\beta$ are complex numbers. We cannot examine a qubit to determine its quantum state. Quantum mechanics tells us that we can only obtain much more restricted information about the quantum state. When we measure a qubit we get either 0, with probability $|\alpha|^2$, or 1, with probability $|\beta|^2$. The special states \ket{0} and \ket{1} are known as \emph{computational basis states}.
+where $\alpha$ and $\beta$ are complex numbers. Here $\alpha$ and $\beta$ are the \emph{probability amplitudes}, and \ket{0} and \ket{1} are special states known as the \emph{computational basis states}.
 
-The sum of all probabilities must always equal to 1:
+We cannot examine a qubit to determine its amplitudes. Quantum mechanics tells us that we can only obtain much more restricted information about the quantum state. When we measure a qubit we get either \ket{0} with probability $|\alpha|^2$, or \ket{1} with probability $|\beta|^2$. The sum of the absolute square of all amplitudes must always equal to 1:
 \begin{equation}
   |\alpha|^2 + |\beta|^2 = 1.
 \end{equation}
-For example, a qubit in the state
+For example, measuring a qubit in the state
 \begin{equation}
   \dfrac{1}{\sqrt2}\ket{0}+\dfrac{1}{\sqrt2}\ket{1}
 \end{equation}
-gives 0 fifty percent of the time, and 1 fifty percent of the time ($|1/\sqrt2|^2 = 0.5$). This state is often denoted in ket notation by \ket{+}.
+gives \ket{0} fifty percent of the time, and \ket{1} fifty percent of the time ($|1/\sqrt2|^2 = 0.5$). This state is often denoted in ket notation by \ket{+}.
 
 \section{The Bloch Sphere}
 The Bloch sphere is a geometrical representation of a qubit's state. It's a spherical coordinate system in which a quantum state can be described as
